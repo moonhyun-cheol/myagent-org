@@ -1,0 +1,13 @@
+/tools/keys/
+/deploy/
+.env
+.env.*
+node_modules/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
+.DS_Store
+Thumbs.db
+~$*
+_tmp*

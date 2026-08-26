@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MY Agent organization module",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "version",
+    "update_sequence",
+    "install_root",
+    "required_core_api"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "kind": { "const": "organization-module" },
+    "version": { "type": "string", "minLength": 1 },
+    "update_sequence": { "type": "integer", "minimum": 1 },
+    "install_root": { "const": "modules/organization" },
+    "required_core_api": { "type": "string", "minLength": 1 },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}
