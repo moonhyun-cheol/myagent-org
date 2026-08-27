@@ -1,14 +1,14 @@
 # 이식 지도 — 조직 모듈 `myagent-org`
 
-버전은 `repo-target.json` / `VERSION.txt` / `manifest.json`이 같다. 지금:
+작업은 **이 저장소만** 한다. 구 저장소 CQR_PA는 보관용이며 여기서 개발하지 않는다.
 
 **이 저장소: organization-module `1.0.0-beta.1` · `update_sequence` 5 · GitHub `moonhyun-cheol/myagent-org`**
 
-구 저장소 **CQR_PA `1.4.0-beta.1` seq 1**의 *조직* 수정만 여기 넣는다. 앱 본체 수정은 `myagent`다.
+구 저장소에 남은 *조직* 수정만 여기 넣는다. 앱 본체 수정은 `myagent`다.
 
 ## 어디로
 
-| CQR_PA에서 고친 것 | 넣는 곳 | 이 저장소 경로 |
+| 구 저장소에서 고친 것 | 넣는 곳 | 이 저장소 경로 |
 |---|---|---|
 | 컨셉 RA 스킬·프롬프트 | **여기** | `agent-module/skills/brand-concept.md`, `agent-module/prompt_concept/` |
 | 시장조사 스킬·파이프라인 | **여기** | `agent-module/skills/market-research.md`, `agent-module/market_research/` |
