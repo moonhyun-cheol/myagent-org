@@ -8,6 +8,7 @@
     "admin:update-keygen": "node tools/update-admin.mjs keygen",
     "admin:update-key-status": "node tools/update-admin.mjs status",
     "publish:update": "node tools/publish-module-update.mjs",
-    "verify:module-pack": "node tools/verify-module-pack.mjs"
+    "verify:module-pack": "node tools/verify-module-pack.mjs",
+    "verify:repo-target": "node tools/verify-repo-target.mjs"
   }
 }
