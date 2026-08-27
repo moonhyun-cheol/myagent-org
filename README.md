@@ -1,30 +1,20 @@
 # myagent-org
 
-Independent **organization module** update stream for [MY Agent](https://github.com/moonhyun-cheol/myagent).
+**1.0.0-beta.1** · seq **5** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
 
-This repository is not the core app. Core updates and module updates are signed, versioned, and published separately.
+MY Agent 조직 모듈만 다룹니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent)입니다.
 
-## Layout
+| | |
+|---|---|
+| 소스 | `agent-module/` (스킬, 컨셉 RA, 시장조사, 브랜드 데이터) |
+| 버전 | `manifest.json` · [repo-target.json](repo-target.json) |
+| 1.4 보관본 이식 | [PORT.md](PORT.md) |
 
-- `agent-module/` — organization pack source (skills, 컨셉 RA, 시장조사 파이프라인)
-- `manifest.json` — module version and `update_sequence`
-- `channels/` — signed feed published on release (`npm run publish:update` writes `channels/{channel}.json`)
-- `schema/` — `module.json` and organization skills-manifest contracts
-- `tools/publish-module-update.mjs` — packs `agent-module/` into `modules/organization`
-
-Excel/RAG 코퍼스(`.chroma`, NAS extracts)는 이 git에 넣지 않습니다. 너무 크고 자주 바뀝니다.
-
-## End-user install
-
-MY Agent 설정 → 스킬 → 조직 모듈에서 이 저장소가 만든 서명 ZIP을 고르면 추가됩니다. 피드 JSON은 필요 없습니다.
-
-## Commands
+설정 → 스킬에서 이 저장소 릴리스 zip을 한 번 고르면 설치됩니다. 이후 앱이 켜질 때 seq가 더 큰 모듈 zip만 자동 적용합니다. `.chroma` / Excel / NAS 추출은 git에 넣지 않습니다.
 
 ```bash
-npm run admin:update-keygen
-npm run admin:update-key-status
 npm run verify:module-pack
 npm run publish:update
 ```
 
-The module private signing key stays in `tools/keys/` and must not be committed.
+서명 개인키는 `tools/keys/` (커밋 금지).
