@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 2,
+    "update_sequence": 3,
     "minimum_supported_sequence": 1,
-    "version": "1.0.1",
+    "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-08-27T00:51:24.406Z",
+    "published_at": "2026-08-27T01:26:02.511Z",
     "asset": {
       "repository": "moonhyun-cheol/MY_CUSTOM_CODEX-COMPANY",
-      "release_tag": "update-2",
-      "name": "MYAgent-organization-v1.0.1-module.zip",
-      "size": 599326,
-      "sha256": "7de1196fd025b88238bf9ccb6fdc2c9076b855d567956bd2670fd1315069af72"
+      "release_tag": "update-3",
+      "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
+      "size": 600157,
+      "sha256": "2c106858ffca48b3a1e4edaa3047458f10db86035f7b664c473ddff882e49ff3"
     },
-    "payload_manifest_sha256": "0ec6baef0f1f9db006d05b70bcfdc69ea9177bc25376209943e33c2e3de672c6",
+    "payload_manifest_sha256": "c02a8766b8836ea489717ce34f3a163b67f5961faf1d6add4d9d2d7d7ae086a5",
     "release_notes": ""
   },
-  "signature": "ixGjjiALI9ugyp39mPl3pw4mEcBvn4kh3qwFpp4iC2csVu3wcQ6WK9sY3lqStpeKzimJsgNBIdmuOZWPgJJFTHu8xR8MWdbhoVKk3DvjCcP5NBxoe6YvzdewmrJOrqYjeeKGb0+fHIkwYMtO/Q/ad19IZapbjLQmc6NBIAsDNXv7oMftNavnlGq31Z7cC6dwvaUXxOzLCB0rGYdQG4q8htzZ4RBLfQcP27iHIEFulgikqwLXWA/EP9CB9wDTAAcMrxI6jXvr51zJNGYJzoLPV+10tryr2+FJ8c5i8cwH+Rx+8G9VJGOzlcyK9VL6M+2S4ejs9zRqTwj8M/wDQoQ8P+/Yv3AtIxIIWlcNunJ8dpHfvnr1S+fWPEPq0cCgwgVTZN1iBcAWHkkAQzDArvNL269KgTt/xxPdVzKEGYUB2iU9xB5EqIfxy5hMpi/yMmjgCZnNEBnwrxHLdE3FVIpeteZDi9ON0upYPmf8Jnb2emznwPTXazgs8TDe1Xlv0wzk"
+  "signature": "aFjJ+LsaG5eBrxYIfz5gswLfzA4XZM1XFLx+tyivthVY/JQ2rvNkuoVPph3aYCoY8hoNrEJ0X52OSa/gWvwuMpDIj01g397b1ytbefj8ay80kpQeSVBJPzVbtPh3lAzygwOY9YKXgazDztKdb8QMTv7dic5zX4fklxXI18NiYt/BAJrGbI3ots1hBXNFs5/+Wuyd/4FyBpdH914JiTLI4oiTSEGnvyiBeKdQUU0srvcG4TVZ8rj4EM5cYYnBexOJiN7uSCDnrUOt5el1Pms7h/snuLyEBi4WXF9UDf0Tj6uzBU6IqyDwaMiji7JJYvPPL/Ja09TzZNcaDuLS9Q+4CxSOXlquDkmJe7b4RcVWtZB62gYXcGWyjyH+qQ2R+E5z0Dwk+hN9uy+coZrR1L9ElPwuoWajx0I5cUXmB2ez3O0n9UD0OgGLWzv0A/B/Jj5YPCmvLC+ybP3fNZZVdkaop+OlceYltYyPO1D7dw2nZc/WpdDSk5Nmmswm82KjxXgE"
 }
