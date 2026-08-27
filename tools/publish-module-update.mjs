@@ -19,14 +19,14 @@ import {
   sha256File,
   verifySignedEnvelope,
 } from './update/update-signing.mjs';
+import { INSTALL_ROOT, stageAgentModule } from './pack-agent-module.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, 'deploy', 'output');
 const stageDir = path.join(outDir, 'module-stage');
 const productManifestPath = path.join(root, 'manifest.json');
-const defaultSource = path.resolve(root, '..', 'cqr_brand_manager');
 const sourceRoot = path.resolve(
-  process.env.MY_AGENT_ORGANIZATION_MODULE_SOURCE || defaultSource,
+  process.env.MY_AGENT_ORGANIZATION_MODULE_SOURCE || root,
 );
 const privateKeyPath = path.resolve(
   process.env.MY_AGENT_MODULE_UPDATE_SIGNING_KEY
@@ -39,37 +39,24 @@ function fail(message) {
   process.exit(1);
 }
 
-function run(command, args, options = {}) {
-  const result = spawnSync(command, args, {
-    encoding: 'utf8',
-    ...options,
-  });
-  if (result.status !== 0) {
-    fail(result.stderr?.toString().trim() || `${command} failed`);
-  }
-  return result;
-}
-
 if (!existsSync(privateKeyPath)) fail(`module signing private key missing: ${privateKeyPath}`);
 if (!existsSync(publicKeyPath)) fail(`module signing public key missing: ${publicKeyPath}`);
-if (!existsSync(path.join(sourceRoot, '.git'))) {
-  fail(`organization source checkout missing: ${sourceRoot}`);
-}
 
 const product = JSON.parse(readFileSync(productManifestPath, 'utf8'));
 const updateSequence = Number(product.update_sequence);
 const minimumSupportedSequence = Number(product.minimum_supported_sequence ?? 1);
 const version = String(product.version ?? '').trim();
 const channel = String(product.update_channel ?? 'beta').trim().toLowerCase();
-const installRoot = String(product.install_root ?? 'modules/organization').replaceAll('\\', '/');
+const installRoot = String(product.install_root ?? INSTALL_ROOT).replaceAll('\\', '/');
 const githubRepository = String(
   process.env.MY_AGENT_MODULE_UPDATE_GITHUB_REPO ?? product.update_repository ?? '',
 ).trim();
+const updateFeedUrl = String(product.update_feed_url ?? '').trim();
 if (!Number.isSafeInteger(updateSequence) || updateSequence < 1) {
   fail('manifest.json update_sequence must be a positive safe integer');
 }
 if (!version) fail('manifest.json version is required');
-if (installRoot !== 'modules/organization') fail('install_root must be modules/organization');
+if (installRoot !== INSTALL_ROOT) fail(`install_root must be ${INSTALL_ROOT}`);
 
 const privateKeyPem = readFileSync(privateKeyPath, 'utf8');
 const publicKeyPem = readFileSync(publicKeyPath, 'utf8');
@@ -79,30 +66,15 @@ if (!verifySignedEnvelope(probeEnvelope, publicKeyPem)) {
 }
 
 if (existsSync(stageDir)) rmSync(stageDir, { recursive: true, force: true });
-mkdirSync(path.join(stageDir, installRoot), { recursive: true });
-
-const archiveZip = path.join(outDir, '_source-archive.zip');
-mkdirSync(outDir, { recursive: true });
-if (existsSync(archiveZip)) rmSync(archiveZip, { force: true });
-run('git', ['archive', '--format=zip', `--output=${archiveZip}`, 'HEAD'], { cwd: sourceRoot });
-
 const extractDir = path.join(stageDir, installRoot);
-const expand = spawnSync(
-  'powershell',
-  [
-    '-NoProfile',
-    '-Command',
-    [
-      "$ErrorActionPreference = 'Stop'",
-      `Expand-Archive -LiteralPath '${archiveZip.replace(/'/g, "''")}' -DestinationPath '${extractDir.replace(/'/g, "''")}' -Force`,
-    ].join('; '),
-  ],
-  { encoding: 'utf8' },
-);
-if (expand.status !== 0) {
-  fail(expand.stderr?.toString().trim() || 'failed to extract organization source archive');
+mkdirSync(extractDir, { recursive: true });
+
+let staged;
+try {
+  staged = stageAgentModule(sourceRoot, extractDir);
+} catch (error) {
+  fail(error instanceof Error ? error.message : String(error));
 }
-rmSync(archiveZip, { force: true });
 
 writeFileSync(
   path.join(extractDir, 'module.json'),
@@ -113,7 +85,10 @@ writeFileSync(
     update_sequence: updateSequence,
     install_root: installRoot,
     required_core_api: String(product.required_core_api ?? ''),
-    capabilities: ['skills', 'brand-context', 'research-pipeline'],
+    update_feed_url: updateFeedUrl,
+    update_channel: channel,
+    brand_manual_url: String(product.brand_manual_url ?? '').trim() || undefined,
+    capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',
 );
@@ -124,6 +99,11 @@ const payloadDocument = buildPayloadManifest(stageDir, {
   version,
   channel,
 });
+for (const file of payloadDocument.files) {
+  if (file.path !== 'update-payload.json' && !file.path.startsWith(`${installRoot}/`)) {
+    fail(`payload path escapes ${installRoot}: ${file.path}`);
+  }
+}
 const payloadEnvelope = createSignedEnvelope(payloadDocument, privateKeyPem);
 if (!verifySignedEnvelope(payloadEnvelope, publicKeyPem)) {
   fail('generated module payload signature verification failed');
@@ -171,8 +151,13 @@ if (!verifySignedEnvelope(feedEnvelope, publicKeyPem)) {
   fail('generated module feed signature verification failed');
 }
 
+mkdirSync(outDir, { recursive: true });
 const feedPath = path.join(outDir, `update-feed-${channel}.json`);
-writeFileSync(feedPath, `${JSON.stringify(feedEnvelope, null, 2)}\n`, 'utf8');
+const channelFeedPath = path.join(root, 'channels', `${channel}.json`);
+const feedText = `${JSON.stringify(feedEnvelope, null, 2)}\n`;
+writeFileSync(feedPath, feedText, 'utf8');
+mkdirSync(path.dirname(channelFeedPath), { recursive: true });
+writeFileSync(channelFeedPath, feedText, 'utf8');
 writeFileSync(
   path.join(outDir, 'LATEST_SECURE_UPDATE.json'),
   `${JSON.stringify({
@@ -182,14 +167,18 @@ writeFileSync(
     version,
     zip_path: zipPath,
     feed_path: feedPath,
+    channel_feed_path: channelFeedPath,
     github_repository: githubRepository,
     github_release_tag: feedDocument.asset.release_tag,
     github_asset_name: feedDocument.asset.name,
     source_root: sourceRoot,
+    pack_source: staged.sourceKind,
+    capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',
 );
 
 console.log('Organization module payload ->', zipPath);
 console.log('Organization module feed    ->', feedPath);
-console.log('Packed source               ->', sourceRoot);
+console.log('Channel feed                ->', channelFeedPath);
+console.log('Packed source               ->', sourceRoot, `(${staged.sourceKind})`);

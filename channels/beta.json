@@ -1,0 +1,22 @@
+{
+  "algorithm": "RSA-PSS-SHA256",
+  "document": {
+    "schema": "my-agent-module-feed/v1",
+    "kind": "organization-module",
+    "update_sequence": 2,
+    "minimum_supported_sequence": 1,
+    "version": "1.0.1",
+    "channel": "beta",
+    "published_at": "2026-08-27T00:51:24.406Z",
+    "asset": {
+      "repository": "moonhyun-cheol/MY_CUSTOM_CODEX-COMPANY",
+      "release_tag": "update-2",
+      "name": "MYAgent-organization-v1.0.1-module.zip",
+      "size": 599326,
+      "sha256": "7de1196fd025b88238bf9ccb6fdc2c9076b855d567956bd2670fd1315069af72"
+    },
+    "payload_manifest_sha256": "0ec6baef0f1f9db006d05b70bcfdc69ea9177bc25376209943e33c2e3de672c6",
+    "release_notes": ""
+  },
+  "signature": "ixGjjiALI9ugyp39mPl3pw4mEcBvn4kh3qwFpp4iC2csVu3wcQ6WK9sY3lqStpeKzimJsgNBIdmuOZWPgJJFTHu8xR8MWdbhoVKk3DvjCcP5NBxoe6YvzdewmrJOrqYjeeKGb0+fHIkwYMtO/Q/ad19IZapbjLQmc6NBIAsDNXv7oMftNavnlGq31Z7cC6dwvaUXxOzLCB0rGYdQG4q8htzZ4RBLfQcP27iHIEFulgikqwLXWA/EP9CB9wDTAAcMrxI6jXvr51zJNGYJzoLPV+10tryr2+FJ8c5i8cwH+Rx+8G9VJGOzlcyK9VL6M+2S4ejs9zRqTwj8M/wDQoQ8P+/Yv3AtIxIIWlcNunJ8dpHfvnr1S+fWPEPq0cCgwgVTZN1iBcAWHkkAQzDArvNL269KgTt/xxPdVzKEGYUB2iU9xB5EqIfxy5hMpi/yMmjgCZnNEBnwrxHLdE3FVIpeteZDi9ON0upYPmf8Jnb2emznwPTXazgs8TDe1Xlv0wzk"
+}
