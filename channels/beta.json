@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 5,
+    "update_sequence": 6,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-08-27T02:22:54.174Z",
+    "published_at": "2026-08-27T07:49:07.657Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-5",
+      "release_tag": "update-6",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 600495,
-      "sha256": "5ae30653bc6352bcf3b2206491d43f8c46aab13c1c15b08c1a5c4a49b7a94193"
+      "size": 805579,
+      "sha256": "1d7a41d985c09fba93dd9fea940713398966e0155b75ba67c270cdc12eca4977"
     },
-    "payload_manifest_sha256": "a8dd14f5a0433cff9257873d9c0b38e89fa641ada9f92953d417b6f4a046018c",
+    "payload_manifest_sha256": "d2365f76c803470b4f0bfc23542f5f8ee87655fe2d9fefa45bda0b30c8c1437d",
     "release_notes": ""
   },
-  "signature": "NvQK8seqDtHVHJP7yaVvc9Onw/0FNTvJzvd3ov7fi6mWqp5nvCIAn23gbWRuDU/Rz1Jmfv3tLDwY+ki6dUqH/8IAAC2hmL5+7eJIrGqgyb5Vz9phxYijoTY7Qf3OW2RyTuqynsFCmDfwWvfB8nmbffb1EGLpYDZplpz9ygoE11UDFzO4ghsi71XaOoHnlEk6wTUVt4udL5d6zGu+jSr+5JiTJKzgcx/IgmIRJWQsTYiJY4XCdEIXz3IBCHiIvrSnlQkINtS+UTbB/UT2t9ouzLy/DEeggcHj1a7CGLSUnTJg06gIjzzlhCDs9WoYqxSIvQtKX2RAqNr4408x/DKn3P2NTLtN4DtpK5BSsmZyuHKeL5vNF3ED5X9W65OJ0o3EaWjUDZBfLG0n7YJxe8KH49Mr/v+UWeK1ImP9yR7jUdtmmoN+lawkM56rjnsOuqdrYItlxDb/3VhFF5nLGguP0zdmpLIZErLxQ8iOyZf5D/F8g9AZNRzov0mz6GmVuEMU"
+  "signature": "iREna/YeiG6ACKF5E6qriepKQ492PRku+zUoxU9i6EsKTxHk0J0lanvhIz8j2iV7nHIh3zbhjsnid5kuGaLqZFUbKYJ3VdUJtF378dgzFqco5EOH/dCP4gtEKRjUZXH+A7Oqwz6PgK/vdLwG/6Ik4b2c48IylrltlC8kefvLNFLSTxf58CnTxXPn/J3ftrxaR3yJqcBhEAKwTsh3W7OLo2cQ6vgAMn98GoaT+aSmfZMByyAn6WvCvwOIY4FE2W8WD6M+cIhuB1zETXRJCa7AgvDF/SLXY1IRH9Gt3gad23tOykThqX4qQvXHvSCRYIfHUEPqwa2k4tcECsRa32xIDw7He/4LQJ8uJ2/qy/1+rUVzxGSQh2k+2mRcNt/2w6k2EAwi9+ch5MD5ZOov3sxArwWrZE7CV77v8XBHv6nklz1tr4lnfF7IFsM2Pvd0BqKZWWqw3zAfZu9wg2oQ7gmWkfh2RfGh+sd/g6Al2Dko2QY1rLUY9kRMoSBTZR6Dd6Q7"
 }
