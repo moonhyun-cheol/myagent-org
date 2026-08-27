@@ -24,10 +24,10 @@
       "feature": "chat",
       "brand_files": [
         "skills/brand-concept.md",
+        "data/model_row_index.txt",
         "prompt_concept/AGENTS.md",
         "prompt_concept/MY_prompt.md",
-        "data/CQR_INTERNAL_STRATEGY_v3.1.md",
-        "data/model_row_index.txt"
+        "data/CQR_INTERNAL_STRATEGY_v3.1.md"
       ],
       "bundle_files": []
     }
