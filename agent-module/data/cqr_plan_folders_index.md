@@ -1,0 +1,298 @@
+# CQR planning decks by model
+# Source: \\Nas\공용_시장조사팀\01_상품기획파트\05_상품개발\★CQR기획안★
+# Indexed: 2026-08-27T16:32:49
+# Mode: shallow depth<=1 (NAS-light)
+
+## Top-level
+- [DIR] _brand_manual
+- [DIR] _brand_manual_versions
+- [MODEL] BL403
+- [MODEL] BT402
+- [MODEL] BZ401
+- [MODEL] BZ405
+- [FILE] CQR 기획안 Template_ver1.xlsx | 15074107 | 2025-06-18
+- [FILE] CQR 기획안 Template_ver2.0.xlsx | 8339511 | 2025-12-02
+- [FILE] CQR 기획안 Template_ver2.1.xlsx | 8293150 | 2026-03-24
+- [FILE] CQR상의개발방향_251105.xlsx | 61148101 | 2025-12-30
+- [FILE] CQR상의개발방향_260109.xlsx | 65349626 | 2026-02-24
+- [FILE] CQR팬츠개발방향_251201.xlsx | 97056659 | 2026-01-14
+- [FILE] CQR팬츠개발방향_260115.xlsx | 103405445 | 2026-02-24
+- [FILE] CQR팬츠개발방향_260224.xlsx | 103850834 | 2026-02-26
+- [FILE] CQR팬츠개발방향_260226.xlsx | 103839907 | 2026-03-03
+- [FILE] CQR팬츠개발방향_260304.xlsx | 99374688 | 2026-03-05
+- [FILE] CQR팬츠개발방향_260305.xlsx | 101620303 | 2026-03-05
+- [FILE] CQR팬츠개발방향_260309.xlsx | 101982200 | 2026-03-09
+- [MODEL] HKJ003
+- [MODEL] HKZ202
+- [MODEL] HKZ204
+- [MODEL] HKZ210
+- [MODEL] HKZ305
+- [MODEL] HLP200
+- [MODEL] HLP831
+- [MODEL] HLP832
+- [MODEL] HLP900
+- [MODEL] HLP905
+- [MODEL] HLP910
+- [MODEL] HLP920
+- [MODEL] HOF110
+- [MODEL] HOF113
+- [MODEL] HOF120
+- [MODEL] HOF123
+- [MODEL] HOH321
+- [MODEL] HOH322
+- [MODEL] HOK909
+- [MODEL] TFP503
+- [MODEL] TFP571
+- [MODEL] TFP572
+- [MODEL] TFP600
+- [MODEL] TFP641
+- [MODEL] TLP001
+- [MODEL] TLP471
+- [MODEL] TLP731
+- [MODEL] TLP760
+- [MODEL] TLP761
+- [MODEL] TOK002
+- [MODEL] TOK004
+- [MODEL] TOK012
+- [MODEL] TOK100
+- [MODEL] TOK171
+- [MODEL] TOL234
+- [MODEL] TOS101
+- [MODEL] TOS111
+- [MODEL] TOS120
+- [MODEL] TOS121
+- [MODEL] TOS130
+- [MODEL] TOS230
+- [MODEL] TOS301
+- [MODEL] TOS303
+- [MODEL] TOS411
+- [MODEL] TOS430
+- [MODEL] TOS511
+- [MODEL] TSP600
+- [MODEL] TSP640
+- [MODEL] TSP641
+- [MODEL] TWP308
+- [MODEL] TWP320
+- [MODEL] TWP330
+- [MODEL] TWP707
+- [MODEL] TWP708
+- [MODEL] TWP720
+- [MODEL] TXP110
+- [MODEL] TXP111
+- [MODEL] TXP202
+- [MODEL] TXP406
+- [MODEL] TXP410
+- [MODEL] TXP411
+- [MODEL] TXP441
+- [MODEL] TXP901
+- [MODEL] TXS101
+- [MODEL] TXS103
+- [MODEL] TXS804
+- [MODEL] TXS903
+- [DIR] TZH620
+- [DIR] TZH621
+- [DIR] TZH641
+- [MODEL] WFP601
+- [MODEL] WFP611
+- [MODEL] WHP830
+- [FILE] ~$CQR 기획안 Template 2.xlsx | 165 | 2025-11-28
+
+## Model folders (74)
+BL403, BT402, BZ401, BZ405, HKJ003, HKZ202, HKZ204, HKZ210, HKZ305, HLP200, HLP831, HLP832, HLP900, HLP905, HLP910, HLP920, HOF110, HOF113, HOF120, HOF123, HOH321, HOH322, HOK909, TFP503, TFP571, TFP572, TFP600, TFP641, TLP001, TLP471, TLP731, TLP760, TLP761, TOK002, TOK004, TOK012, TOK100, TOK171, TOL234, TOS101, TOS111, TOS120, TOS121, TOS130, TOS230, TOS301, TOS303, TOS411, TOS430, TOS511, TSP600, TSP640, TSP641, TWP308, TWP320, TWP330, TWP707, TWP708, TWP720, TXP110, TXP111, TXP202, TXP406, TXP410, TXP411, TXP441, TXP901, TXS101, TXS103, TXS804, TXS903, WFP601, WFP611, WHP830
+
+## Extension counts (shallow)
+- .xlsx: 94
+- .pptx: 73
+- .md: 13
+- .docx: 4
+- .db: 4
+- .pdf: 3
+
+## Recent files (top 187, depth<=1)
+- 2026-08-19 | 12433828 | TXP441/MY-260123_00_신티에스_NS드라이 2차_Main work sheet_260714.xlsx
+- 2026-08-19 | 871517 | TXP441/CQR_NS드라이2차_이미지컨셉변경_260819.pptx
+- 2026-08-13 | 5955755 | TSP641/MY-260226-02_J&H_이C_라이트플렉스팬츠12차_Main work sheet_260512.xlsx
+- 2026-08-13 | 90732 | _brand_manual_versions/v3.1.11_CQR_Internal_Strategy_v3.1_260811.md
+- 2026-08-13 | 7422102 | TLP471/MY-260406-00_J&H_벤처플렉스팬츠3차_Main work sheet_260420.xlsx
+- 2026-08-13 | 408207 | TLP471/25FW_CQR_상품기획_벤쳐플렉스_저가화이트.pptx
+- 2026-08-13 | 88865 | _brand_manual_versions/v3.1.10_CQR_Internal_Strategy_v3.1_260811.md
+- 2026-08-12 | 6833941 | TXP411/MY-230911-00_J&H_이D_CN경량바지8차_작업지시서_240110(최종).xlsx
+- 2026-08-12 | 17523076 | TFP641/MY-251229-00_J&H_이C_라이트플렉스팬츠11차_Main work sheet_260109.xlsx
+- 2026-08-12 | 12433828 | TXP406/MY-260123_00_신티에스_NS드라이 2차_Main work sheet_260714.xlsx
+- 2026-08-12 | 5234271 | TXP410/MY-230911-00_J&H_이D_CN경량바지8차_작업지시서_231129(APP).xlsx
+- 2026-08-12 | 87430 | _brand_manual_versions/v3.1.9_CQR_Internal_Strategy_v3.1_260811.md
+- 2026-08-12 | 87481 | _brand_manual_versions/v3.1.8_CQR_Internal_Strategy_v3.1_260811.md
+- 2026-08-11 | 113609 | _brand_manual_versions/v3.1_CQR_Internal_Strategy_v3.1_260811.md
+- 2026-08-11 | 114719 | _brand_manual_versions/v2.9.8_CQR_Internal_Strategy_v2_9_260807.md
+- 2026-08-11 | 115623 | _brand_manual_versions/v2.9.7_CQR_Internal_Strategy_v2_9_260807.md
+- 2026-08-11 | 115625 | _brand_manual_versions/v2.9.5_CQR_Internal_Strategy_v2_9_260807.md
+- 2026-08-11 | 7608164 | TXP441/25FW_CQR_상품기획_NS드라이.pptx
+- 2026-08-11 | 18675052 | TXP111/MY-250704_00_J&H_이C_어센드팬츠2차_Main work sheet_251111.xlsx
+- 2026-08-11 | 14915365 | TXP111/25SS_CQR_상품기획_어센드팬츠_디자인fix.pptx
+- 2026-08-11 | 114610 | _brand_manual_versions/v2.9_CQR_Internal_Strategy_v2_9_260807.md
+- 2026-08-11 | 106771 | _brand_manual_versions/v2.8_CQR_Internal_Strategy_v2_8_260806.md
+- 2026-08-11 | 95769 | _brand_manual_versions/v2.7_CQR_Internal_Strategy_v2_7_260804.md
+- 2026-08-10 | 22000787 | HOF123/MY-260211-03_플란넬 셔츠2026_worksheet_260520(최종).xlsx
+- 2026-08-10 | 31954076 | HOF123/컨셉재정리_260130-1.pptx
+- 2026-08-10 | 18675052 | TXP410/MY-250704_00_J&H_이C_어센드팬츠2차_Main work sheet_251111.xlsx
+- 2026-08-10 | 14915365 | TXP410/25SS_CQR_상품기획_어센드팬츠_디자인fix.pptx
+- 2026-08-10 | 22000787 | HOF113/MY-260211-03_플란넬 셔츠2026_worksheet_260520(최종).xlsx
+- 2026-08-10 | 31954076 | HOF113/컨셉재정리_260130-1.pptx
+- 2026-08-10 | 31954076 | HOF110/컨셉재정리_260130-1.pptx
+- 2026-08-10 | 22000787 | HOF110/MY-260211-03_플란넬 셔츠2026_worksheet_260520(최종).xlsx
+- 2026-08-10 | 115140 | _brand_manual/CQR_Internal_Strategy_v2_9_260810.md
+- 2026-08-10 | 115140 | _brand_manual/CQR_Internal_Strategy_v2_9_260807.md
+- 2026-08-07 | 10853797 | TOS101/MY-251020-03_신티에스_인터락메쉬145폴로2차_worksheet_260415_.xlsx
+- 2026-08-07 | 23575994 | TOS101/26SS_CQR_상품기획_인터락메쉬_반팔티_251001.pptx
+- 2026-08-07 | 8890700 | HLP200/MY-251208-01_J&H_이C_나일론겹바지2026_Main work sheet_원단지변경업데이트_260129.xlsx
+- 2026-08-07 | 3647878 | HLP200/25FW_CQR_상품기획_립스탑겹바지_나일론겹바지.pptx
+- 2026-08-07 | 9509117 | WFP601/MY-260325-00_PC고신축사3차_worksheet_260727(최종).xlsx
+- 2026-08-07 | 8774803 | WFP601/25FW_CQR_상품기획_PC고신축사_캡틴_디자인fix.pptx
+- 2026-08-07 | 7608164 | TXP406/25FW_CQR_상품기획_NS드라이.pptx
+- 2026-08-07 | 2749400 | TOS511/MY-260406-01_모션셔츠3차_worksheet_260703(최종).xlsx
+- 2026-08-07 | 26065711 | TOS511/CQTOSPR_260410.pptx
+- 2026-08-07 | 20706617 | TLP761/MY-260720-01_J&H_CQR플렉스팬츠21차_worksheet_260724.xlsx
+- 2026-08-07 | 7898815 | TLP761/순한맛컨셉_260323.pptx
+- 2026-08-07 | 20706617 | TLP760/MY-260720-01_J&H_CQR플렉스팬츠21차_worksheet_260724.xlsx
+- 2026-08-07 | 7898815 | TLP760/순한맛컨셉_260323.pptx
+- 2026-08-07 | 20706617 | TLP731/MY-260720-01_J&H_CQR플렉스팬츠21차_worksheet_260724.xlsx
+- 2026-08-07 | 7898815 | TLP731/순한맛컨셉_260323.pptx
+- 2026-08-07 | 7304153 | TZH641/MY-260605-00_라플부니햇2차_worksheet_260608.xlsx
+- 2026-08-07 | 70056101 | TZH641/25FW_CQR_상품기획_택티컬부니햇_re2.pptx
+- 2026-08-07 | 7304153 | TZH621/MY-260605-00_라플부니햇2차_worksheet_260608.xlsx
+- 2026-08-07 | 70056101 | TZH621/25FW_CQR_상품기획_택티컬부니햇_re2.pptx
+- 2026-08-07 | 7304153 | TZH620/MY-260605-00_라플부니햇2차_worksheet_260608.xlsx
+- 2026-08-07 | 70056101 | TZH620/25FW_CQR_상품기획_택티컬부니햇_re2.pptx
+- 2026-08-07 | 10026142 | TXS903/MY-260420-01_신티에스_이C_나일론컴포트2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 5511475 | TXS903/나일론컴포트_반바지_260309.pptx
+- 2026-08-07 | 12385034 | TXS804/MY-251110-01_J&H_이C_CN냉감팬츠9차_Main work sheet_260129.xlsx
+- 2026-08-07 | 1190123 | TXS804/25FW_CQR_상품기획_CN냉감_반바지_TXS803_재촬영.pptx
+- 2026-08-07 | 18675052 | TXS103/MY-250704_00_J&H_이C_어센드팬츠2차_Main work sheet_251111.xlsx
+- 2026-08-07 | 809216 | TXS103/26SS_CQR_상품기획_어센드_반바지.pptx
+- 2026-08-07 | 18675052 | TXS101/MY-250704_00_J&H_이C_어센드팬츠2차_Main work sheet_251111.xlsx
+- 2026-08-07 | 809216 | TXS101/26SS_CQR_상품기획_어센드_반바지.pptx
+- 2026-08-07 | 11320702 | TXP901/신티에스_나일론컴포트_main work sheet_250910.xlsx
+- 2026-08-07 | 5511475 | TXP901/나일론컴포트_반바지_260309.pptx
+- 2026-08-07 | 8537762 | TXP111/MY-241104-00_J&H_이C_어센드팬츠1차_Main work sheet_최종_250306.xlsx
+- 2026-08-07 | 18098653 | TSP641/MY-251229-00_J&H_이C_라이트플렉스팬츠11차_Main work sheet_260212.xlsx
+- 2026-08-07 | 15482624 | TSP641/25SS_CQR_상품기획_캐주얼조거_디자인fix.pptx
+- 2026-08-07 | 4871080 | TSP641/CQR 기획안_라플TFP600_260112-공유용.pptx
+- 2026-08-07 | 12842207 | TSP640/MY-250814-01_J&H_이C_라이트플렉스팬츠9차_Main work sheet_251217.xlsx
+- 2026-08-07 | 15482624 | TSP640/25SS_CQR_상품기획_캐주얼조거_디자인fix.pptx
+- 2026-08-07 | 18098653 | TSP600/MY-251229-00_J&H_이C_라이트플렉스팬츠11차_Main work sheet_260212.xlsx
+- 2026-08-07 | 15482624 | TSP600/25SS_CQR_상품기획_캐주얼조거_디자인fix.pptx
+- 2026-08-07 | 10648889 | TOS430/J&H_택티컬 스판셔츠 3차_가작업지시서_260416.xlsx
+- 2026-08-07 | 26065711 | TOS430/CQTOSPR_260410.pptx
+- 2026-08-07 | 13543140 | TOS303/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOS303/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOS301/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOS301/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOS111/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOS111/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOS101/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOS101/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOK100/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOK100/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOK012/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOK012/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOK004/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOK004/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 13543140 | TOK002/MY-260703-00_신티에스_인터락메쉬145 3차_worksheet_260713.xlsx
+- 2026-08-07 | 9568559 | TOK002/인터락메쉬컴뱃_상품기획_260521.pptx
+- 2026-08-07 | 8730752 | TLP471/MY-250529-02_J&H_이C_벤처플렉스 2차_Main work sheet_250915.xlsx
+- 2026-08-07 | 5955755 | TFP641/MY-260226-02_J&H_이C_라이트플렉스팬츠12차_Main work sheet_260512.xlsx
+- 2026-08-07 | 15482624 | TFP641/25SS_CQR_상품기획_캐주얼조거_디자인fix.pptx
+- 2026-08-07 | 21219925 | HOF113/MY-260420-00_신티에스_이C_쉐르파3L소프트쉘 2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 23322992 | HOF113/3Lshell기획_260114-공유용.xlsx.pptx
+- 2026-08-07 | 21219925 | HLP920/MY-260420-00_신티에스_이C_쉐르파3L소프트쉘 2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 23322992 | HLP920/3Lshell기획_260114-공유용.xlsx.pptx
+- 2026-08-07 | 21219925 | HLP910/MY-260420-00_신티에스_이C_쉐르파3L소프트쉘 2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 23322992 | HLP910/3Lshell기획_260114-공유용.xlsx.pptx
+- 2026-08-07 | 21219925 | HLP905/MY-260420-00_신티에스_이C_쉐르파3L소프트쉘 2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 23322992 | HLP905/3Lshell기획_260114-공유용.xlsx.pptx
+- 2026-08-07 | 21219925 | HLP900/MY-260420-00_신티에스_이C_쉐르파3L소프트쉘 2차_Main work sheet_260526.xlsx
+- 2026-08-07 | 23322992 | HLP900/3Lshell기획_260114-공유용.xlsx.pptx
+- 2026-08-07 | 4312333 | HKZ210/MY-260223-00_신티에스_이C_그리드플리스5차(HKZ210)_Main work sheet_260325.xlsx
+- 2026-08-07 | 16649478 | HKZ210/hkz_paa_260730.pptx
+- 2026-08-07 | 5902068 | HKJ003/MY-260108-00_신티에스_립스탑경량자켓3차_worksheet_260511(최종).xlsx
+- 2026-08-07 | 4779199 | HKJ003/25FW_CQR_상품기획_립스탑경량자켓_디자인fix.pptx
+- 2026-08-06 | 20841000 | HKZ204/MY-251224-00_GRIEED FLEECE_Main work sheet_260206.xlsx
+- 2026-08-06 | 7147853 | HKZ204/CQR 기획안_그리드플리스풀집후드_260109-공유용.pptx
+- 2026-08-05 | 9509117 | WFP611/MY-260325-00_PC고신축사3차_worksheet_260727(최종).xlsx
+- 2026-08-05 | 10853797 | TOS130/MY-251020-03_신티에스_인터락메쉬145폴로2차_worksheet_260415_.xlsx
+- 2026-08-05 | 15101058 | HLP832/MY-260211-04_J&H_이C_NP투톤2차_Main work sheet_260604.xlsx
+- 2026-08-05 | 15101058 | HLP831/MY-260211-04_J&H_이C_NP투톤2차_Main work sheet_260604.xlsx
+- 2026-08-04 | 18675052 | TXP110/MY-250704_00_J&H_이C_어센드팬츠2차_Main work sheet_251111.xlsx
+- 2026-08-04 | 14915365 | TXP110/25SS_CQR_상품기획_어센드팬츠_디자인fix.pptx
+- 2026-07-30 | 6714288 | HKZ305/금담_폴리스웨터 4차_MAIN WORK SHEET_260611.xlsx
+- 2026-07-30 | 16117786 | HKZ305/hkz_paa_260730.pptx
+- 2026-07-30 | 18472014 | TLP001/MY-250627-01_J&H_이C_립스탑팬츠38차_Main work sheet_251017_최종업데이트.xlsx
+- 2026-07-29 | 12280707 | TFP572/MY-260303-00_플렉스팬츠20차_worksheet_260528(최종).xlsx
+- 2026-07-29 | 12280707 | TFP571/MY-260303-00_플렉스팬츠20차_worksheet_260528(최종).xlsx
+- 2026-07-29 | 12280707 | TFP503/MY-260303-00_플렉스팬츠20차_worksheet_260528(최종).xlsx
+- 2026-07-28 | 5813086 | WHP830/MY-260508-00_NP투톤 3차(여성용)_worksheet_260601.xlsx
+- 2026-07-28 | 11155967 | WHP830/26FW_CQR여성팬츠_260506-공유용NP투톤11.pptx
+- 2026-07-16 | 10853797 | TOS121/MY-251020-03_신티에스_인터락메쉬145폴로2차_worksheet_260415_.xlsx
+- 2026-07-16 | 10853797 | TOS120/MY-251020-03_신티에스_인터락메쉬145폴로2차_worksheet_260415_.xlsx
+- 2026-07-16 | 42429600 | TOS101/tos101.pptx
+- 2026-07-14 | 41346337 | TOL234/26SS_N트리코트메쉬_260713(컨셉다시).pptx
+- 2026-07-13 | 41346337 | TOS230/26SS_N트리코트메쉬_260713(컨셉다시).pptx
+- 2026-07-10 | 83543 | _brand_manual/CQR_Internal_Strategy_v2.4_260710.docx
+- 2026-07-08 | 3599559 | HOH322/MY-260312-00_J&H_LT플리스2026_worksheet_260701(최종).xlsx
+- 2026-07-08 | 10963847 | HOH322/26FW_CQR_상품기획_LT플리스풀오버(초안)_250721.pdf
+- 2026-07-02 | 218858 | _brand_manual/CQR_Internal_Strategy_v2.4_0623_2(임시).docx
+- 2026-06-25 | 2928353 | HOH321/MY-260312-00_J&H_LT플리스2026_worksheet_260407.xlsx
+- 2026-06-25 | 10963847 | HOH321/26FW_CQR_상품기획_LT플리스풀오버(초안)_250721.pdf
+- 2026-06-10 | 17163281 | TXP202/MY-250618-00_신티에스_NS드라이 1차_worksheet_251209(최종).xlsx
+- 2026-06-10 | 7608164 | TXP202/25FW_CQR_상품기획_NS드라이.pptx
+- 2026-06-05 | 21837361 | BL403/최종작지_01-1.xlsx
+- 2026-06-05 | 7737488 | BL403/CQR 기획안_tacticalboots_251217-공유용.pptx
+- 2026-06-05 | 21837361 | BZ405/최종작지_01-1.xlsx
+- 2026-06-05 | 7737488 | BZ405/CQR 기획안_tacticalboots_251217-공유용.pptx
+- 2026-06-05 | 21973505 | BZ401/최종작지_01-1.xlsx
+- 2026-06-05 | 7733109 | BZ401/CQR 기획안_tacticalboots_251217-공유용.pptx
+- 2026-06-05 | 21973505 | BT402/최종작지_01-1.xlsx
+- 2026-06-05 | 7733109 | BT402/CQR 기획안_tacticalboots_251217-공유용.pptx
+- 2026-06-04 | 13553859 | TWP720/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TWP708/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TWP707/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TWP330/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TWP308/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TLP001/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-06-04 | 13553859 | TWP320/CQR_SAPPER_Industry_Strategy_260529_visual [Repaired].pptx
+- 2026-05-22 | 58907 | _brand_manual/CQR_Internal_Strategy_v2.1_0522-2.docx
+- 2026-05-20 | 541702 | WFP601/WFP601캐릭터_260320.pptx
+- 2026-05-18 | 16024730 | TFP600/MY-251229-00_J&H_이C_라이트플렉스팬츠11차_Main work sheet_260313.xlsx
+- 2026-05-18 | 4871080 | TFP600/CQR 기획안_라플TFP600_260112-공유용.pptx
+- 2026-05-15 | 2105313 | TOS230/MY-260108-02_N트리코트메쉬_worksheet_260406.xlsx
+- 2026-05-15 | 6563296 | TOS230/26SS_N트리코트메쉬_251230-공유용.pptx
+- 2026-05-14 | 20041917 | HOF120/MY-260211-03_플란넬 셔츠2026_worksheet_260310.xlsx
+- 2026-05-14 | 2210858 | HOF120/컨셉재정리_260204.pdf
+- 2026-05-14 | 2105313 | TOL234/MY-260108-02_N트리코트메쉬_worksheet_260406.xlsx
+- 2026-05-14 | 6563296 | TOL234/26SS_N트리코트메쉬_251230-공유용.pptx
+- 2026-05-13 | 9075515 | HOK909/MY-260108-01_신티에스_이C_쉐르파3L소프트쉘 1차_Main work sheet_260211.xlsx
+- 2026-05-13 | 13205945 | HOK909/3Lshell기획_251215-공유용.xlsx.pptx
+- 2026-05-13 | 5353088 | HKZ305/금담_폴리스웨터 4차_가작업지시서_260415.xlsx
+- 2026-05-13 | 10078353 | HKZ305/25FW_CQR_상품기획_그리드플리스_집업PR.pptx
+- 2026-05-13 | 18472745 | TLP001/MY-250627-01_J&H_이C_립스탑팬츠38차_Main work sheet_250901_최종업데이트.xlsx
+- 2026-04-27 | 55696 | _brand_manual/CQR_Internal_Strategy_v2.0_초안_0427.docx
+- 2026-04-27 | 2083646 | TOK171/J&H_폴리소로나 2차_MAIN WORK SHEET_260323.xlsx
+- 2026-04-27 | 13333702 | TOK171/26SS_CQR_상품기획_폴리소로나_0423.pptx
+- 2026-04-24 | 10648889 | TOS411/J&H_택티컬 스판셔츠 3차_가작업지시서_260416.xlsx
+- 2026-04-24 | 26065711 | TOS411/CQTOSPR_260410.pptx
+- 2026-04-23 | 2084180 | TOK171/J&H_폴리소로나 2차_MAIN WORK SHEET_260323 - 복사본.xlsx
+- 2026-04-23 | 20876510 | HKZ202/MY-251224-00_GRIEED FLEECE_Main work sheet_260206.xlsx
+- 2026-04-23 | 7147853 | HKZ202/CQR 기획안_그리드플리스풀집후드_260109-공유용.pptx
+- 2026-03-24 | 8293150 | CQR 기획안 Template_ver2.1.xlsx
+- 2026-03-09 | 101982200 | CQR팬츠개발방향_260309.xlsx
+- 2026-03-05 | 101620303 | CQR팬츠개발방향_260305.xlsx
+- 2026-03-05 | 99374688 | CQR팬츠개발방향_260304.xlsx
+- 2026-03-03 | 103839907 | CQR팬츠개발방향_260226.xlsx
+- 2026-02-26 | 103850834 | CQR팬츠개발방향_260224.xlsx
+- 2026-02-24 | 65349626 | CQR상의개발방향_260109.xlsx
+- 2026-02-24 | 103405445 | CQR팬츠개발방향_260115.xlsx
+- 2026-01-14 | 97056659 | CQR팬츠개발방향_251201.xlsx
+- 2025-12-30 | 61148101 | CQR상의개발방향_251105.xlsx
+- 2025-12-02 | 8339511 | CQR 기획안 Template_ver2.0.xlsx
+- 2025-11-28 | 165 | ~$CQR 기획안 Template 2.xlsx
+- 2025-06-18 | 15074107 | CQR 기획안 Template_ver1.xlsx
