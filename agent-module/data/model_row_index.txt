@@ -45,6 +45,7 @@ TOS120 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | 인터락메�
 TOS130 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | N트리코트메쉬 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
 TOS230 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | 인터락메쉬165->145 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
 TOS411 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS420 | L | 확인필요(라인) | - | 확인필요 | - | - |  | 확인필요
 TOS510 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
 TOS511 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
 HKJ002 | W | Liberator-Black | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
