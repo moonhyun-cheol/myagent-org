@@ -1,6 +1,6 @@
 {
   "name": "my-custom-codex-company",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "private": true,
   "type": "module",
   "description": "Independent organization-module update stream for MY Agent",
