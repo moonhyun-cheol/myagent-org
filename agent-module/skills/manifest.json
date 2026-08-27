@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "overlays": {
+    "web_landing": {
+      "brand_files": ["brand/web-landing-context.md"]
+    }
+  },
+  "skills": {
+    "market_research": {
+      "label": "시장조사",
+      "mode": "org:market_research",
+      "feature": "chat",
+      "brand_files": [
+        "skills/market-research.md",
+        "market_research/CQR_MARKET_INJECT.md",
+        "data/CQR_INTERNAL_STRATEGY_v3.1.md"
+      ],
+      "bundle_files": [],
+      "pipeline_script": "pipelines/market_research.py"
+    },
+    "brand_concept": {
+      "label": "컨셉 RA",
+      "mode": "org:brand_concept",
+      "feature": "chat",
+      "brand_files": [
+        "skills/brand-concept.md",
+        "prompt_concept/AGENTS.md",
+        "prompt_concept/MY_prompt.md",
+        "data/CQR_INTERNAL_STRATEGY_v3.1.md",
+        "data/model_row_index.txt"
+      ],
+      "bundle_files": []
+    }
+  }
+}

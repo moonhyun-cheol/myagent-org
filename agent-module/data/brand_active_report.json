@@ -1,0 +1,47 @@
+{
+  "active_total": 9090,
+  "active_brands": [
+    {
+      "brand": "CQR",
+      "count": 8505,
+      "sample": "CQR Men's Quick Dry Tactical Pants, Water Resistant Outdoor Pants, Lightweight Stretch Cargo Work Hiking Pants, Rocky Ca"
+    },
+    {
+      "brand": "TSLA",
+      "count": 546,
+      "sample": "TSLA Men's UPF 50+ Compression Shirts, Cool Dry Long Sleeve Athletic Tops, Sports Baselayer Workout Shirt, Black, Large"
+    },
+    {
+      "brand": "AMAZON",
+      "count": 26,
+      "sample": "CQR Men's Flannel Shirt Jacket Long Sleeve, Winter Warm Outdoor Casual Plaid Jacket Coat with Pockets, Sherpa Stealth Am"
+    },
+    {
+      "brand": "ATIKA",
+      "count": 13,
+      "sample": "atika Women's Casual Harem Shorts, Premium Ultra Buttery Soft Shorts, Elastic High Waisted Comfortable Short with Pocket"
+    }
+  ],
+  "all_brands_top50": [
+    [
+      "TSLA",
+      33743
+    ],
+    [
+      "CQR",
+      26174
+    ],
+    [
+      "ATIKA",
+      1717
+    ],
+    [
+      "AMAZON",
+      47
+    ],
+    [
+      "OTHER/NO-TITLE",
+      1
+    ]
+  ]
+}

@@ -1,0 +1,607 @@
+# Source: CQR개발방향_260522.xlsx
+Sheets: Shirts, Pants_ripstop, Pants_LT, Shorts_LT, Shorts_old, Sheet1, FW_Jacket, FW_Tops, FW_Pants, Sapper, GHOSTGRID, LT시리즈, kuiu, 원단, layer, 프린트, Sheet3
+
+## Shirts
+카테고리
+KR20021_CQTOK001_PR | KR04121_CQTOS101_PR | KR04061_CQTOK004_PR | KR20062_CQTOS401_PR | KR19111_CQTOS421_PR | KR21011_CQTOS201_PR | KR19111_CQTOL003_PR
+B0D7C5Q2FD | B0DR29G391 | B084MCQQPS | B08BRBPFL3 | B081R3SW8H | B08S78CYZG | B0822GZZ8R | ** 선후디 들어오면 후디pr 분리하기
+라인 | Covert | Lib-Black | Lib | Lib-Modern | Lib-Modern | Lib-Modern | Covert | Lib-Modern | Covert
+-> Exp-Rider | Lib-Modern
+-> Covert | Covert | Lib-Modern | Lib-Modern
+모델명 | TOK100 | TOK002
+TOK001 (주황) | TOK171 | TOK271 | TOS101 | TOS120/121 | TOS130 | TOS230 | TOK004 | TOL102 | TOS411 | TOS510 | TOS511
+상품명 | Journeyman | Driftmark | Supervisor | Metro | Supervisor | Journeyman | VORRA
+FOB | 3.4 (ETP)
+-> 3.37 (ETP) | 4.63 (미정) | 5.13 (VN) | 2.59 (ETP) | 2.79 (ETP) | 5.02 (ETP) | 8.99 (VN) | 3.74(ETP) | 8.35 | 6.5 | 7.1 | 7.7 | 8.6
+컨셉 | 라인업 추가? | 라인업 추가?
+배경 | Southern Small Town — Federal Agent | MILITARY-CAMP | EXPEDITION RIDER
+Sea Cliff / Wave-cut Face | DETECTIVE | COVERT
+- Intelligence Analysis Room | MILITARY-CAMP | MILITARY-CAMP
+컨셉 | 특징/컨셉 | 픽업트럭 | 미국촬영(교관) | 실전 요원들 활동
+* Chest rig | 지휘관 컨셉
+(CSI: Miami)
+판매 부진/ 단종검토 | RANGER
+ARMY 사격훈련 | 프린트 | SS CAT | 소규모 모던팀
+(출동 / 회의) | 미국촬영 | KHK : FOB-사막
+SGN : 전방전개-수송비행단(그린존)
+BLK : 도심 (Lenco)
+ONV : 항만 (Lenco)
+CHC : FOB-산악 | Ground Truth Operator
+** "현장에서 직접 검증된 실제 데이터" 를 뜻하는 실제 전문 용어 | 마이애미 호반장
+도시의 진실을 읽는 사람
+지역 | - 미국 남부 소도시
+(건물옆/ 주차장/ 버려진 창고/ 농장 등) | 컬러별상이 | 해안가 (파식절벽) | MAIAMI
+(수면 / 야자수 /햇빛 /건물) | FBI 사무실 /
+FBI operation center | CAMP PEARY / THE FARM | 컬러별상이
+온도 | 22~30도 | 20~27°C | 25~33도 | N/A | 22~30도 | Scouting (7월~8월 초) : 10~32
+Archery Season (8월 말~9월) : 8~30
+슬로건 | Deeds, not words | Proven. Not performed | Quiet Authority | First to Know | Action, not Title | Forged Sharpness
+캐릭터 | 코디_하의 | 전술벨트+홀스터+ 전술팬츠(TLP/TFP) | 반바지(TSP6) ? | 긴바지(TXP805) | 긴바지(카고X) | 카고팬츠 | 전술벨트+홀스터+ 전술팬츠(TLP/TFP)
+로드아웃 | 택티컬캡 + 선글라스
+전술시계 + (장갑) | 차량→Ford Raptor
+카메라→sony a7 IV
+워치→Garmin/suunto
+택티컬가방 | 스마트워치
+선글라스 | X | 선글 +
+전술벨트만(홀스터x) | 택티컬캡 + 선글라스
+전술시계 + (장갑) | 쌍안경 트리스탠드
+헌팅카모 캡모자
+트레일캠
+트럭
+활
+목적 | 다른 모든 사람이 물러날 때 앞으로 나가는 사람 | 자연에서 Ground Truth 를 찾는 자 | 현장에서 진실을 읽는 사람 | 현장이 보내온 것들을
+작전으로 만드는 사람 | 작전이 시작되기 전에
+이미 결정하는 사람 | 다른 모든 사람이 물러날 때 앞으로 나가는 사람 | 시즌이 열리기 전, 이미 산을 읽고 있는 사람
+임시슬로건 | Battle Flex
+도식화
+레퍼런스
+핏
+원단 | 인터락메쉬165->145 | 인터락메쉬165->145 | 폴리소로나150 | 벤투라135 | 인터락메쉬165->145 | 인터락메쉬165->145 | 인터락메쉬165->145 | N트리코트메쉬 | 인터락메쉬165->145 | NS드라이 | 택티컬스판 | 모션(P90/S10,135) | 모션(P90/S10,135)
+NS드라이(우븐타공) | 인터락메쉬145 | C59/P39/SP2 145-150gsm | 니트 져지 | 니트 져지 | 니트 져지 | 인터락메쉬145 | 인터락메쉬145
+니트 메쉬 | 니트 메쉬
+원단명
+ISSUE | 2025-09-15 신티 인터락메쉬 프린트 개발중
+(변경사항) | 2025-10-20 신티 인터락메쉬 145로 변경 | ㄷ
+담당디자이너 | 안은지K | 안은지K | 안은지K | 안은지K | 안은지K | 안은지K | 안은지K | 이승연P | 이승연P | 이승연P
+후크(1번)_
+
+## Pants_ripstop
+카테고리
+라인 | Liberator - | Liberator - Legacy | Liberator - Modern | Liberator - Black | Liberator - Black | Liberator - Black/Modern | Liberator - Modern
+기존 | KR05011_CQTLP002_PR | KR04041_CQTLP107_PR | KR04031_CQTLP710_PR | KR04061_CQTFP500_PR | 라이트플렉스 | 라이트플렉스
+HRTG_PT | B0DSBHR6BP | CRGO_PT | B0CFQ571ND | FLX_CRGO_PT | B0CXJ59F15 | FLX_UTL_PT | B0DKHW1XN9 | CASL_UTL_PT | B0D2NTW631 | CASL_FLX_JGR | B0F321G41R | W_FLX_CRGO_PT | B0D97LPS5H
+* 002 컨셉 이상. 단종. | (기존 : 모던 느낌이 섞여있음) | B0DFN19NFD
+모델명 | TLP002
+(단종검토..?) | 신규모델추가 | TLP117 | TLP127 | TLP125
+TLP135 | TLP731 | TLP761
+TLP763 | TLP760
+TLP762 | TFP503 | TFP571
+TFP572 | TFP530 | TFP500 | TFP600
+상품명
+FOB | 10.6 | ??? | 9.65 | 9.83 | 13.5 | 11.2 | 11.3 | 15.7 | 10.11 | 15.7 | 9.7 | 10.55 | 10.55
+컨셉 | 신규 어떤모델..?
+M65 Pants ?
+배경 | ⭐ TACTICAL URBAN
+ [PAA] Urban Overwatch | X | X | COVERT
+ [PAA] COVERT STATION
+특징/컨셉 | Fatigue Pants
+자유로운코디 | 기본 카고 | 사격장컨셉
++미국촬영본 | 맥 포켓 | Captain
+기본 카고 | Breacher
+맥 카고 | 맥 포켓 1개
+사격장컨셉
+* 재 촬영 필요? | 개인 | 소규모 | 맥시코 소노라사막
+(가을) | 건물하강
+헬리콥터하강 | 해외 | 사막
+(이라크사막)
+캐릭터 | 캐릭터 | 시카리오
+/ 알레한드로 길릭 | 미션임파서블
+/ 이단헌트
+로드아웃 | 오토바이.헬멧 | COMMAND | COMMAND
+(태블렛)
+목적
+임시슬로건 | SUB ROSA,
+ABOVE ALL
+도식화 | 기획안필요
+
+샘플없이 개발요청
+허벅지아래 크게
+UBP OR M65
+레퍼런스
+핏 | Relaxed | Regular | Regular | Regular | Regular | Regular | Regular | Streight | Streight | Streight | Streight
+(Beyond) | (Beyond) | (Beyond) | (Beyond) | (Beyond) | (Beyond) | (Beyond)
+원단사양 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 고신축사 ver. | 고신축사 ver. | 라이트플렉스
+립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 립플렉스 (타공) | 립플렉스 (타공) | 립플렉스 (타공) | 립플렉스 | 립플렉스 | 립플렉스
+라이트플렉스 | 라이트플렉스 | 라이트플렉스 | 라이트플렉스 | 라이트플렉스 | 립플렉스 | 립플렉스 | 립플렉스 | 스트레치우븐(패널)
+(임시) 플렉스사용 - 소진용
+ISSUE | 2025-09-08 헝리원단 사용시 포켓 덥다 | 2025-09-08 GUSSET 6CM 통일 | 2025-09-09 원단믹스조합 다시검토 해야함 | 2025-09-12 TFP620 근접 -> 사막 / 640 1선경호 -> 정글
+(변경사항) | 2026-02-24 M65 ->마다 샘플로 진행? (대표님 쪽지) | 2025-09-08 GUSSET 7CM -> 6CM로 통일 | 2025-09-08 클러치 AATCC 적용x | 2025-09-08 클러치 AATCC 적용x | 2025-12-24 TFP600 타공추가 (11차)
+2025-09-09 카고포켓 안쪽 홀스티치 2개 추가 & 위치 미세조정 | 2025-09-10 TLP760 포켓 디자인 요청 | 2025-09-25 571/572 니패드 ?
+2025-09-10 카고디자인 미세변경 요청 - 39차 적용(레거시스럽게) | 2025-09-16 플렉스/라이트플렉스 헝리 개발요청 | 2025-11-26 571 니패드 컨셉이 필요한지 확인
+2025-09-18 39차 프린트 : 거셋 다이아몬드 유지 | 2025-09-19 니패드 디자인으로 추가검토 (D3O P12) | 2025-12-12 19차 : TFP503/571 립플+라플+립스탑+립플타공 4MIX
+2025-09-29 거셋 립플로 요청 (water-resistant 관세적용 위함) - 40차부터 | 2025-11-26 18차 : TLP760 니패드 적용x (19차에 적용필요) | 2026-05-07 립플 => 뒷주머니 속주머니 만들지 말것 *땀찬다* / 사이드심 타공
+2025-12-01 거셋 립플 적용시 미세타고 진행 | 2025-11-26 크러치 립플렉스타공할지 논의필요(은지과장요청) | 2026-05-28 립플 요꼬재단 요청 (더 잘 늘어남)
+2025-12-12 19차 : TLP760 플렉스 소진 / TLP731 립플+라플+립스탑
+담당디자이너 | 이승연P | 이승연P | 이승연P | 이승연P | 이승연P | 안은지K | 안은지K | 안은지K | 안은지K | 안은지K | 이승연P | 이승연P | 이승연P
+#NAME?
+
+## Pants_LT
+카테고리 | 3계절(여름메인) | 카테고리 | 3계절(가을메인) | 3계절(여름메인) | 컨버터블
+라인 | Expedition-Alpinist | 라인 | Expedition-Alpinist / hunting | Expedition-Alpinist | Expedition-Alpinist | Expedition-Rider | Covert
+기존 | KR19111_CQTXP401_PR | 기존 | KR05031_CQTXP900_PR | KR05041_CQTXP110_PR | KR21111_CQTXP402_PR | KR05011_CQTLP471_PR | KR04051_CQTXP805_PR
+HKNG_VNT_PT | B081SGCF2H | HKNG_FLX_PT | B0F381PJTR | HKNG_VNT_JGR | B0F5H7QQGQ | HKNG_CONVTBL | B09MB4Q8DN | CASL_MOTN_PT | B0DSBHMTNB | CASL_VNT_PT | B0D529LXLX
+Rider | Rider
+모델명 | TXP441 | TXP202 | TXP203 | 모델명 | TXP700 | TXP710 | TXP900 | TXP102 | TXP110 | TXP140 | TXP406 | TXP410 | TLP470
+상품명 | Runyon | Rocky PRO | Rocky ALP | 상품명 | Dakota | Montana | Sierra | Bolt | Crux | Peak | Runyon | Runyon Pro | VentureLT
+FOB | 10.6(IN)
+10.56(ETP-2차) | 11.51(ETP-1차) | 12.49(ETP-1차) | FOB | 11.2 (ETP) | 8 | 9.2 | 10.5 | 10.55 (IN)
+11.10 (ETP-2차) | 11.7
+-> 11.25(어센드) | 11.3 | 12.1 | 11.05
+이미지 | 숲길하이킹 | 돌산등반 | 이미지 | NS드라이
+고가버전으로? | 웨스턴 동일컨셉
+배경 | 여름 평지 밀림 개척 | 여름
+[PAA] 고지대-여름-사막산악정상 | 배경 | Outdoor
+ [PAA] 고지대-가을-만추 수목한계 통신거점 | Outdoor
+능선_북대서양 | 여름 평지 밀림 개척
+컨셉 | 컨셉 | 하이킹
+(TXS204동일) | 트레킹 | 돌산 | 컨셉 | 헌팅 | 헌팅 | 하이킹 | Climbing
+숲길/완만한 등산 | Climbing
+볼더링 | Climbing
+암벽 | 트레킹 | Hiking
+지형특징(고도) | x | 능선 | 정산부근 | 지형특징(고도) | 갈대밭 새 사냥 | 숲속 사슴추적 | 능선 | x
+지역 | 계곡, 숲가운데 | 암석. 수목한계선이상 | 지역 | 가을의 갈대밭,건조한 환경
+* VALO | 침엽수림, 짙은 숲, 초원, 수풀이 우거진 곳
+* VERDE | 수목한계선.
+
+나무가 사라지고 암석만 남는 지점.
+인프라가 전무하고, 통신이 두절되기 시작하는 경계선 | 계곡, 숲가운데
+온도 | 20~30 | 15~25 | 5~15 | 온도 | 낮: 5 ~ 20°C | 낮: 5 ~ 15C | 낮: -0 ~10°C | 10~15 | 20~30
+캐릭터 | 코디_상의 | 반팔 | 긴팔
+(!최소 : 선셔츠, 라운드긴팔
+맥스 : 바람막이) | 아웃터
+(방수자켓,얇은패딩) | 코디_상의 | 아웃터
+(그리드플리스) | 아웃터
+(바람박이, 방수자켓)
+메고 뛴다. | 아웃터
+(얇은패딩/소프트쉘)
+비니
+* 모자 | 긴팔(!최소 : 선셔츠, 라운드긴팔
+맥스 : 바람막이) | 반팔
+로드아웃 | 쌕(가벼운느낌)
+20L 이하 배낭(파이어니어) | 중간배낭 | 큰 배낭 | 로드아웃 | 쌕
+(가벼운느낌)
+
+컴파운드보우
+(손에 쥐고 살금살금) | 큰배낭
+(메고 뛴다/빠른걸음) | - 그룹명 : signal loadout 통신형 로드아웃 G3
+- 임무본질 : 통신 단말·중계 거점
+- 시각정체성 : 스크린·RF 자산 중심 | 중간배낭 | 쌕(가벼운느낌)
+20L 이하 배낭(파이어니어)
+목적 | 이동로개척
+Trail Pioneer | 이동경로 정찰 | 고지 확보 | 목적 | 잠입 이동
+* 살금살금 | 추적 및 수색
+*액티브한 느낌 | 통신 단말·중계 거점 | 이동경로 정찰 | 이동로개척
+Trail Pioneer
+임시 슬로건 | 임시 슬로건 | Control the Ground. | Field Ready. Always. | BEYOUND "THE PEAK"
+도식화 | 도식화
+레퍼런스 | 벨트포함 | 레퍼런스 | KUIU Switchback | KUIU Kutana | 아크테릭스감마 | CN경량 | CN경량
+핏 | 핏 | ** 공임으로 인한 디자인 변경 필요함
+원단사양 | NS드라이 | NS드라이 | NS드라이 | 트루워크T1 | 원단사양 | 나일론도비 | 나일론도비 | 나일론컴포트 | 트루워크T2 | 어센드 | 어센드 | 어센드 | NS드라이
+N86/S14 Plain | N86/S14 Plain | N86/S14 Plain | 686 팬츠 | N90/S10 Double weave | N90/S10 Double weave | N95/S5 Twill | 테톤팬츠 브러쉬 안긁은거 | N87/ SP13 Ripstop | N87/ SP13 Ripstop | N87/ SP13 Ripstop | N86/S14 Plain | N87/ SP13 Ripstop | C98/S2 Twill
+147gsm | 147gsm | 147gsm | 190 GSM | 190 GSM | 210gsm | 160gsm | 160gsm | 160gsm | 147gsm | 160gsm | 335gsm | 335gsm | OUTRIDER
+130~150 | 190~210 | 150~160
+원단명 | AERO-FLEX | AERO-FLEX | AERO-FLEX | 원단명 | FLEXOR | FLEXOR | COMFORT-FLEX | COMFORT-FLEX
+ISSUE | 2025-10-30 CN경량 립스탑ver. (회의시 요청) | ISSUE | 2025-11-06 나일론컴포트 / 나일론도비 => TRUWERK T1,T2로 개발요청 | 2025-12-01 NS드라이 원단으로 변경검토 | 2025-11-06 무릎/밑단 수정 | 2025-10-30 NS하이브리드 립스탑ver. 진행 (160~170)
+(변경사항) | 2025-12-01 CN경량 -> NS드라이 원단으로 변경 | (변경사항) | 176gsm | 2026-01-08 NS드라이 / 어센드 각각 한 스타일씩 ? | 2025-12-01 NS하이브리드 립스탑 => DROP
+(기존 J&H 패턴으로 진행, 기존품번)
+1618
+161.8
+담당디자이너 | 담당디자이너 | 안은지K | 이승연P | 이승연P | 이승연P | 이승연P
+후크(1번)_ | 후크(1번)_
+신티 | 신티 | 신티 | 신티(POP) | 신티(POP) | J&H | J&H
+EXPEDITION 하의 라인
+TXP PR | 2026-01-08 00:00:00
+1 | 2 | 3 | 6 | 4 | 오리지널 | CQR대체 라인업
+아웃도어 | 하이브리드 | 아웃도어 | 아웃도어 | OR ferrosi | 160 / mini ripstop | 어센드 | 링크프리 => 원백트래블PT
+3계절(초경량) | 3계절(여름메인) | 3계절(여름메인) | 4계절(한겨울) | 4계절(간절기) | 비행기팬츠
+150 대 | 230 대 | 190 대 | 아크테릭스 감마LT | 147
+저가(폴리스판) | 고가 (나일론스판) | 중가(나일론스판) | 고가(나일론스판) | 고가(나일론스판) | 아크테릭스 감마 | 192
+원단 | 원단
+AS-IS | X | 도비 (150) | CN경량(132) | AS-IS
+TO-BE | 비욘드경량 | 도비 | 아크테릭스 감마 LT (147) | 파타고니아 퀀더리(160) - 오리지날
+최종 우리 원단 : NS소프트(145) - FIX | TO-BE | kuhl 소프트쉘 (248)
+Rab 어센더 AS (207) | 1. 아크테릭스 감마(192)
+2. Rab 인클라인(182)
+기타 후보 | Rab 어센더 LT (108) | Rab 버넌트(150) - 겹쳐서 보류 | 기타 후보
+패턴 | 패턴
+AS-IS | X | Kuhl + 아크테릭스 | 비욘드(플렉스) | AS-IS
+TO-BE | Kuhl + 아크테릭스 | 아크테릭스 감마 LT | 1. 비욘드(플렉스) 줄인버전
+2. 아크테릭스 감마 LT | TO-BE
+진행 상황 | 신규 원단 수배 필요 | 원단 픽스 + 패턴 샘플 의뢰 (8/29) | 진행 상황 | 신규 원단 수배 필요
+REI rank
+
+## Shorts_LT
+카테고리 | 컨셉 ? | \\nas\공용_디자인팀\임시_회의용\QR EXPEDITION ALPINIST_ CONCEPT
+메인라인 | Covert | Covert | Expedition-Alpinist | 추가 | 추가
+FLX_CRGO_ST | B0D531LN8J | CASL_UTL_ST | B0DS4V7P3Y | HKNG_CRGO_ST | B0CYLHPZXY
+KR04051_CQTSP600_PR | KR05011_CQTXS803_PR | KR19111_CQTSP202_PR
+Covert | Black
+모델명 | TSP600 | TSP620 | TSP640
+TSP641 | TXS803
+TXS804 | TXS903 | TXS001→
+TXS002 | TXS204 | TXS201 | TXS303
+→ TXS101
+상품명 | Sedona | Vanta | Rocky
+FOB | 6.95 | 7.9 | 10.55 / 11.70 | 10.6 (J&H) | ETP | 9.23
+(ETP-1차)
+컨셉 | 컨셉
+배경 | 기존배경유지
+2026-06-05 | 기존배경유지
+2026-06-05 | 기존배경유지
+2026-06-05 | 아웃도어 - 깊은 숲 개척
+캠핑/ 여행 | 하이킹 | 트레킹 | 돌산 등반
+고도 | x | x | 저고도 | x | 능선 | 정산부근
+지역 | 공항 | 도심속 이동
+(콘크리트구조물- 건물, 다리밑, 창고) | 계곡, 숲가운데 | 암석. 수목한계선이상
+온도 | 여름 (25~30) | 여름 (20~30)
+** TXS803보다 낮은온도ok | 25~30 | 10~15 | 0~10
+캐릭터 | 코디_상의 | 폴로셔츠(반팔)
+택티컬스판셔츠 | 라운드반팔
+선셔츠 / 바막 | 반팔 | 긴팔(!최소 : 선셔츠, 라운드긴팔
+맥스 : 바람막이) | 아웃터
+(얇은패딩,플리스자켓)방수자켓
+장비 | 몰리가방
+캐리어
+로우컷 신발 | 선글라스
+캡모자
+크로스백 가방
+(최소장비) | 쌕(가벼운느낌)
+20L 이하 배낭(파이어니어) | 중간배낭 | 큰 배낭
+목적 | 임무지역으로 출국
+(정적인 이동) | 도심추적
+(역동적 느낌) | 이동로개척
+Trail Pioneer | 이동경로 정찰 | 고지 확보
+임시 슬로건 | Signal To move | PURPOSE IN MOTION | GO OFF-TRAIL | CLAIM THE PEAK
+특징/컨셉 | 컨셉 ? | 컨셉 ? | 컨셉 ? | 벤트ㅇ | 벤트x | 단종검토 | 단종
+(-> 201대체)
+도식화
+핏
+원단사양 | 라이트플렉스 | 라이트플렉스 | 라이트플렉스 | CN냉감 | 나일론컴포트 | PS반바지
+(PS팬츠) | 도비 | NS드라이 | 나일론립스탑→
+어센드팬츠
+립플렉스(거셋) | 립플렉스(거셋) | 립플렉스(거셋) | C61/N36/S3 | N95/S5 Twill
+180gsm | 210gsm
+원단명 | COMFORT-FLEX
+ISSUE
+(변경사항)
+담당디자이너 | 이승연P | 이승연P | 이승연P
+후크(1번)_
+https://tacticalgear.com/tru-spec-24-7-series-xpedition-pants-coyote~1?queryID=9674c8b380d227012b366abafb425120#/28150/0,0,25547/1
+폴리.고신축사205
+PC.고신축사(여자)- 배색
+PC고신축사(여자)
+
+## Shorts_old
+컨셉 ?
+라인 | Covert | Covert | Expedition-Alpinist
+기존
+FLX_CRGO_ST | B0D531LN8J | HKNG_CRGO_ST
+KR19111_CQTSP202_PR
+컨셉 | 숲길하이킹
+캠핑/여행 | 돌산 등반
+모델명 | TSP600 | TSP620 | TSP640
+TSP641 | TXS803
+TXS804 | TXS002 | TXS201 | TXS101
+FOB | 6.95 | 7.9 | 10.55 | 9.23 (ETP-1차)
+특징/컨셉 | 컨셉 ? | 컨셉 ? | 컨셉 ? | 단종검토 | Hiking
+도식화
+핏
+원단사양 | 라이트플렉스 | 라이트플렉스 | 라이트플렉스 | CN냉감 | PS반바지
+(PS팬츠) | NS드라이 | 어센드팬츠
+립플렉스(거셋) | 립플렉스(거셋) | 립플렉스(거셋) | C61/N36/S3
+180gsm
+ISSUE
+(변경사항)
+담당디자이너 | 이승연P | 이승연P | 이승연P
+후크(1번)_
+https://tacticalgear.com/tru-spec-24-7-series-xpedition-pants-coyote~1?queryID=9674c8b380d227012b366abafb425120#/28150/0,0,25547/1
+폴리.고신축사205
+PC.고신축사(여자)- 배색
+PC고신축사(여자)
+
+## Sheet1
+활동 | 환경 | 대표 동작 | 필수장비 | 기능방향
+Alpinist | *Hiking | 편안하게 걷는 산행
+* 하루 이내 (Day Hike) | 근교산, 공원, 완만한 등산로 | 휴식, 건강, 자연감상 | 경량화된 복장, 간단한 백팩, 트레킹화만 필요 | 내구성,편안함
+"모든 야외 활동의 총칭" | Trail Running => 버림 | 불규칙한 자연 지면을 빠르게 이동하는 러닝/하이킹 혼합형
+* 짧은 구간 중심 (1~3시간 내외) | 산길, 흙길, 비포장로 | 빠른 워킹, 런닝, 점프 / * 트레일 러닝, 패스트 하이킹, 마운틴런 | 트레일러닝화, 경량 팬츠, 기능성 탑
+*Trekking | 며칠 이상 이어지는 장거리 도보여행
+* 2일~수주 이상 (Multi-day) | 험준 산악지형, 오지, 고산 | 탐험, 도전, 여정 | 백패킹 장비(텐트, 침낭, 식량 등), 트레킹화·스틱 | “기후 대응형 기능성” 중심 (통기, 발수, 속건 등) | d
+*Climbing | 수직면을 오르는 등반 | 암벽, 절벽, 실내 암벽장 | 다리 벌리기, 벽 짚기, 몸 비틀기 | “움직임과 마찰 대응형 구조” 중심 (거셋, 신축, 보강 등)
+(1) Rock Climbing (암벽등반) | 바위 지형을 로프·하네스로 오르는 대표적인 등반 | 로프 필수, 안전 확보 장비 사용 | 로프, 하네스, 카라비너, 초크백 | 내마모성
+Sport Climbing | 볼트 고정로프 기반의 암벽등반 | 인공 확보 장비 사용
+Trad Climbing | 인공 확보 장비 없이 전통 방식으로 등반 '트래드 랙'이라고 불리는 추가 장비를 휴대 | 자연적 루트 중심
+Bouldering | 저고도 암석 위 등반 | 로프 없이 매트 사용
+Free Climbing | 장비는 안전용, 몸으로만 오르는 등반
+(2) Ice Climbing (빙벽등반) | 얼음 표면 등반 | 아이스툴, 크램폰 사용
+(3) Mountaineering (산악등반) | 고산지대 등반, 설산, 빙벽 혼합 | 아이젠, 피켈, 하네스, 로프 | *RAB
+(4) Scrambling (스크램블링) | 하이킹과 클라이밍의 중간 단계 | 하이킹 중 암벽 구간을 로프 없이 손발로 오르는 모든 행위가 여기에 해당 | 손과 발을 사용하지만 로프는 없음
+Rider | Camping
+Motorcycle
+Cowboy
+Hunter
+
+## FW_Jacket
+카테고리 | Men's Hiking & Outdoor Recreation Softshell Jackets | Men's Hiking & Outdoor Recreation Softshell Jackets | Men's Active & Performance Insulated Jackets | Men's Windbreakers | Men's Fleece Jackets & Coats | Men's Windbreakers | Men's Cotton Lightweight Jackets
+PR | KR05081_CQHOK832_PR | KR04031_CQHOK802_PR | KR23061_CQHKJ001_PR | KR04071_CQHKJ501_PR | KR23051_CQHKZ201_PR | NEW (바막) | KR21051_CQHOK740_PR
+루트 PR | Softshell_Jacket | Softshell_Jacket | LT_JK | Flight_Jacket | Fleece_Jacket
+ASIN | #N/A | B0CY8MXDKT | B0C7ZDPZDW | B0DB7XLWD7 | B0C44MKXSJ | B095WCTJ7F
+라인 | Covert | Covert | Covert | Lib-Modern | Lib-Modern | Exp-Rider | Lib-Black | Lib-Black | Covert | Covert | Lib-Legacy | Lib-Legacy | Lib-Black
+모델명 | HOK833 | HOK832 | HOK808 | HOK809 | HOK817 | HOK909 | HKJ003 | HKJ002 | HOS001 | HKJ501 | HKJ502 | HKJ503 | HKZ200
+상품명 | Urban | Operator X | Stealth | Modern | Operator | Denali
+(디날리) | Frame | Veil | Layer | Watcher | Navigator | Navigator AF | Guardian
+FOB
+(직전 차수) | 16.41 / 17.21 | 20.29 / 20.92 | 17.38 | 21.81 | 23.11 | 13.15 (ETP) | 22.11 | 23.4 | 21.2 | 22.1 | 23.9 | 24.74 | 11.97
+컨셉
+특징/컨셉 | 도시속 무전
+(001 미국촬영본있음) | 눈산 + 픽업트럭 | 사무실 | 총 안들고 느낌만 | 사격장/미국촬영
+풀장착
++ 총들고 | 비밀기지 정찰
+지형특징(고도) | 눈 살짝
+지역 | 숲속
+온도
+코디_상의 | 비니
+장비 | 글록
+목적 | 적 비밀 기지 침투 전 정찰을 통해 정보수집
+임시 슬로건 | Cipher in Armor | Elite in Armor | Cipher in Armor | Always on Target | Always on Target | Warmth Locked In | Command Boldly | Undercover Still Edge | Undercover Still Edge | Fleece Tough | Built to LAYER / Easy LAYER Essential | CHASE-PROOF PERFORMANCE
+도식화
+레퍼런스 | UF PRO Hunter FZ Softshell
+원단 | 플레인소프트쉘 | 쉐르파3L소프트쉘 | 립스탑경량패딩 | 립스탑경량패딩 | 립스탑경량패딩 | 항공점퍼 | 항공점퍼 | 항공점퍼
+92%P, 8%SP
+원단명 | ARCTLOFT
+ISSUE
+(변경사항)
+담당디자이너
+발주수량 | 2026
+2027
+2028
+
+## FW_Tops
+카테고리 | Men's Button-Down Shirts | Men's Button-Down Shirts | Men's Athletic Hoodies | Men's Pullover Sweaters | Men's Pullover Sweaters | Men's Balaclavas | Men's Hiking Socks
+KR03122_CQHOF110_PR | KR19111_CQHOS210_PR | KR21121_CQHOH352_PR | KR04091_CQHKZ303_PR | KR05071_CQHKZ921_PR | KR19111_CQHUD504_PR | KR23051_CQHZC203_PR | KR19121_CQTZS70_PR
+B0DTHFMFP7 | B0CJR1XYHL | B09P51H83P | B0DVYF8XG8 | B0FH6DZ46M | B0C454WTHG | B082MV9LVD
+라인 | Exp-Hunter | Exp-Hunter | Exp-Hunter | Exp-Hunter | Exp-Rider | ??? | Exp-Rider | Lib - Legacy | Covert | Covert | Covert | Expedition | Expedition
+모델명 | HOF110 | HOF113 | HOF120 | HOF123 | HOS219 | HOF200 | HOH321 | HOH322 | HKZ300 | HKZ303 | HKZ210 | HKZ999-1 | HKZ999-2
+상품명 | Stagridge
+(스태그릿지) | Stagridge
+(스태그릿지) | Stonridge
+(스톤릿지) | Stonridge
+(스톤릿지) | Outland | Enforcer
+(엔포서) | Rover
+(로버) | Nullion
+(눌리온) | Valley | Crest | Basin | Apex | Fortress
+FOB | 2024-7.85(IN)
+2025-7.50(MY)
+2026-9.15(미정) | 2024-8.10(IN)
+2025-7.74(MY) | 2024-8.55(IN)
+2025-8.15(MY) | 2025-6.00 (MY) | 2026-9.65 / 9.46
+(IN OR VN) | 8.05
+(J&H가견적) | 9.75
+(J&H가견적) | 폴리 / 6.22 | 폴리 / 6.86 | 미정 | 폴리 / 7.88 | 울플리스 / 15.75 | 그리드 / 10.3
+컨셉
+배경 | EXPEDITION HUNTER
+ [PAA] The Warm Side of Wild(Flannel) | EXPEDITION HUNTER
+ [PAA] The Warm Side of Wild(Flannel)
+or
+[PAA] Together in the Wild(Flannel)
+컨셉 | 특징/컨셉 | 남자+여자 커플
+(반려견 옵션)
+* 체크 | 남자+여자 커플
+(반려견 옵션)
+* 솔리드 | 남자만 등장
+(반려견 옵션)
+*옴브레 | 남자만 등장
+(반려견 옵션)
+*솔리드 / 스웨이드 | 캠핑 | 모터사이클 | 레거시 | 단종? | 겨울캠핑 | 겨울 사진작가 | 사격장
+지역 | 하이데저트 | 사격장
+온도 | 가을 : 2°C ~ 10°C | 가을 : 2°C ~ 10°C
+캐릭터 | 코디_하의 | CVT 팬츠류 (TXP9)
+조거 | 과거 군복 요소
+(카모팬츠)
+장비 | 오토바이
+장갑
+헬멧
+오토바이수리용품 | 전술헬멧
+체스트릭
+선글라스
+가민시계
+글로브
+퍼스트라인
+살로몬부츠 & 반스
+목적 | 헌신/배려심 | 헌신/배려심 | 확신/주도적 | 확신/주도적 | 길을 만드는 사람
+→ 길 없는 곳에 길을 만든다 | Mission preparation
+→ 위협을 억제하고 질서를 유지
+임시슬로건 | Where we belong | The warm side of Wild | Safe in the Wild | Soft as Nature,
+Warm as a Campfire. | Equipped for freedom | Ready for Action | Into the Drift | Rise in the Flow | Chase the Apex | Wrapped in Wool | Fleece Tough | STAY AHEAD,
+STAY DRY | STAY AHEAD,
+STAY DRY
+도식화
+레퍼런스 | 파타고니아 | 콜롬비아
+/ 국내브랜드 | US Military ECWCS
+원단 | 플라넬 | 플라넬 | 플라넬 | 플라넬 | 폴라플리스 | 폴라플리스 | LT풀오버 | LT풀오버 | 폴리스웨터 | 폴리스웨터 | 그리드플리스 | 폴리스웨터 | 울플리스
+C100 | C100 | C100 | C100 | P100 | P100 | P81C16S3, | P81C16S3 | P100 | P100 | P95/S5 | P100 | Face: 61P, 24W, 15N | P95/S5
+코듀로이 | 코듀로이 | 코듀로이 | 코듀로이 | 220 GSM | 230GSM내외 | 260 GSM | 260 GSM | Back: 100P
++ 스웨이드
+원단명 | Bush Blend | Nullfleece | Nullfleece | GRID FLEX | Storm Blend | GRID FLEX
+ISSUE
+(변경사항)
+담당디자이너
+발주수량 | 2026
+2027
+2028
+
+## FW_Pants
+카테고리 | Men's Hiking Pants | Men's Hiking Pants | Men's Casual Pants
+라인 | Expedition | 립스탑겹바지 | 나일론겹바지
+기존 | KR05071_CQHLP831_PR | KR04081_CQHLP004_PR | KR04081_CQHLP003_PR
+HKNG_FLCE_PT | FLCE_CRGO_PT | CASL_FLCE_PT
+B09MB3M2WC | B0D4PV8Y6Q | B0D62BK5HC
+Alpinist | Alpinist | Rider | Alphinist | Sapper | Sapper | Exp-Hunter | Covert | Covert | Black
+모델명 | HLP831 | HLP832
+HLP833 | HLP905 | HLP920 | HLP920 | HLP010 | HLP011 | HLP910 | HLP999 | HLP201 | HLP200 | HLP900
+상품명 | Teton
+(테톤) | Teton Alpha
+(테톤 알파) | Yukon
+(유콘) | Katmai
+(카트마이) | Ouray
+(우레이) | Ouray Peak
+(우레이픽) | Kodiak
+(코디악) | Brume
+(브룸) | Brume Edge
+(브룸엣지) | Gracr
+(그레이셔)
+FOB | 12.1 (IN) | 14.85 /17.3 (IN) | 9.82 (ETP) / 최종X | 15.09 (ETP) / 최종X | 11.60 (IN) | 12.30 (IN) | 8.27 (ETP) / 최종X | 11.40 (IN)
+*기존 HLP005 : 10.60 ( 국내전용) | 12.00 (IN) | 12.25 (IN) | 8.34 (ETP) / 최종X
+이미지
+컨셉 | 컨셉 | 아이스클라이밍
+(빙벽등반) | 스키 마운티니어링
++ 밀리터리스키 | 오버랜드 | 남극 프로그램
+민간오퍼레이션
+*벨트포함 | 겨울차 성에제거
+(픽업트럭) | 삽으로 눈치움 | 헌팅
+(HUNTING BLIND) | 플라넬컨셉과 동일하게 갈까..???? | 약간 포멀한 느낌의 캐주얼
+팅커테일러솔저스파이 | 좀더 강한 캐주얼
+본아이덴티티 | 007 요원
+지형특징(고도) | 빙벽 | x | x | x | x
+지역 | 눈배경 | 남극 | 눈 배경
+
+약간만 눈을 덮어서 추위가 느껴지게. 블랙색상 돌이 노출되도록 | 좀더 초겨울 | 야외 위주 / 더 겨울 | 눈배경
+온도
+캐릭터 | 코디_상의 | 3L 레인자켓 | 소프트쉘 자켓 | 소프트쉘자켓
+그리드플리스 | 블랙 자켓
+장비 | 헬멧
+하네스
+아이스툴
+로프
+하강기
+빙벽용등산화
+크램폰
+카라비너 | 헤어밴드/비니/헬멧
+스키고글
+등산백팩
+스키보드
+아이스픽
+로프
+크램폰
+스키부츠 | 짐 많이
+(촬영장비포함)
+오프로더 자동차
+스노우체인
+텐트등 체류장비 | 남극 민간필드 비행기 | 아이스 스크래퍼 | 두터운 장갑 | 헌팅블라인드
+컴파운드보우
+사냥용 총기
+쌍안경
+비니
+백팩 | 가민 GPS
+글록 (?)
+비니
+블랙 부츠?
+
+* 총을 직접적으로 들지 않아야 함
+목적 | 테러의 배후를 쫓는 요원
+임시 슬로건 | Face the Freeze | Reach the Summit | Warmth Locked In
+-> 더 쎈거 필요 | Unbound by Frost | Rough Gets Warm | Rough Gets Warm | Operate Through The Freeze | Chill Guard | Frost Guard | Operate in Sub-Zero
+도식화
+레퍼런스
+핏
+원단사양 | NP투톤 | NP투톤 | 쉐르파3L | 쉐르파3L | 립스탑겹바지 | 립스탑겹바지 | 나일론겹바지 | 나일론겹바지 | 쉐르파3L
+N70/P22/S8 | N70/P22/S8 | 립플렉스 | 립플렉스
+255gsm | 255gsm
+원단명
+ISSUE
+(변경사항)
+담당디자이너 | 이승연P | 이승연P
+발주수량 | 2026
+2027
+2028
+309.0098007
+
+## Sapper
+카테고리
+라인
+기존 | KR20101_CQTWP302_PR
+모델명 | TLP001 | TWP308 | TWP320/TWP330 | TWP707/TWP708 | TWP720
+상품명 | PROXY | ELEVON | FRONTLINE | PIONEER | KYNEX
+FOB | 7.3 | 10 | 9.98 | 11 | 11.95 | 15.3 | 11.2
+이미지
+배경 | SAPPER
+ [PAA] 행성표면 탐사유닛 | SAPPER
+ (PAA) 발사시설 (야외) | [PAA] 대형 회전익기 정비 | (PAA) F-22/F-35 스텔스기 정비 | SAPPER
+ (PAA) 로켓/발사체 | SAPPER
+ [PAA] 군사드론-정비 | SAPPER
+ (PAA) 로봇
+컨셉 | 컨셉 | Launch pad Technician
+광활한 필드, 먼 발치서 모니터링 | Aeronautical Maintenance
+비행기, 전투기 수리 정비 | Spacecraft Assembly Technician
+로켓/발사체
+캐릭터 | 코디_상의
+장비
+목적
+임시 슬로건 | PRECISION. PURPOSE. | GROUNDED STRENGTH
+도식화
+레퍼런스
+핏
+원단사양
+원단명
+ISSUE
+(변경사항)
+담당디자이너
+후크(1번)_
+신티 | 신티 | 신티
+2026-01-16 00:00:00 | analog professional >> hi tech 분야 professional
+모델 | PR내 단계 | 단가 | 원단 | 현재 컨셉 | 변경 컨셉(안) | 컬러
+TLP001 | 화이트 | 7.3 | 립스탑 | 목공 | Robotics Engineer
+Drone Engineer
+소프트웨어 - 모니터링 위주 | 6 (BLK CHC GKP KHH PNV SGN)
+TWP320 | 연베이지 | 9.98 | 립스탑 | 바이크수리 | Aeronautical Maintenance
+비행기, 전투기 수리 정비
+
+카모 ver
+Tactical Aircraft Maintenance
+Military drone technician | 11 (BLK CBR CHC COG FWT GKP KHK PNV SGN STN TDR)
+TWP330 | 프린트 | 11 | 립스탑 | 바이크수리 | 2 (UTC WOV)
+TWP720 | 베이지 | 11.2 | 플렉스 | 목공소 | Robotics Engineer
+Drone Engineer
+하드웨어 - 수리 점검 위주 | 5 (BLK CHC COG DBN ONV)
+TWP308 | 연블루 | 10 | 립스탑 | 현장 노동자 | Launch pad Technician
+광활한 필드, 먼 발치서 모니터링 | 7 (BLK CHC COG FWT KHK PNV SGN)
+TWP707 | 블루 | 11.95 | 플렉스 | 엔지니어(비행기, 로봇) | Spacecraft Assembly Technician
+로켓 조립
+
+카모 ver
+Rocket Researcher, Space Engineering (US Army)
+DEVCOM (미 국방 연구개발사령부) | 10 (BLK CBR CHC COG DBN FWT KHK MBL ONV SGN)
+TWP708 | 프린트 | 15.3 | 플렉스 | 모던? | 1 (UTC)
+TWP302 PR
+https://www.amazon.com/dp/B08L93ZKJC
+발주시리즈 > | 카테고리
+신규
+라인 | Sapper | Sapper
+기존 | 립스탑팬츠
+WRK_CRGO_PT | B08L93ZKJC | COVERALL | B08Y5MRGP5 | https://truewerk.com/products/t1-mens-light-weight-summer-workwear-pants?srsltid=AfmBOorT7dJ7Bhil7oxT0r4lzkXGbkjL9lqcng4S9-eunGYn45_Aggq4
+컨셉
+모델명 | TWP707
+TWP708 | TWP720 | TLP001 | TWP320
+TWP330 | TWP308 | TWO601 | TWO602
+11.95 (17차)-3MIX | 12.4 (14차) | 7.3 (38차) | 9.98 (38차)
+13.50 (38차) | 10.0 (36차)
+특징/컨셉 | 바이크수리 | 목공소 | 막일(목공소) | 바이크수리 | Roughneck
+변경사항 | 3MIX | 거셋:립플 | 워크팬츠X | 거셋:립플 | 단종검토 ????
+도식화 | 벤처 플렉스 추가 ?
+계절감 섞임??
+신규PR로 ?
+핏 | 판매 2순위 | * 판매 1순위 | 제일 판매부진
+(한때 1순위..)
+원단사양 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 립스탑 | 트루워크T1 | 트루워크2 | 라이트플렉스 | 라이트플렉스
+립플렉스 (무릎/엉덩이_ | 립플렉스 | 립플렉스(Gusset) | 립플렉스(Gusset) | 립플렉스(Gusset) | 테톤팬츠 브러쉬 안긁은거
+라플 (17차) | 코듀라 | 코듀라

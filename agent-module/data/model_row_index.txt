@@ -1,0 +1,113 @@
+# Model row index (structured)
+
+Use for model matching, Garment-TPO Gate, and scene brief. Prefer this over raw sheet scan.
+Line names normalized to Strategy v3.1 canon. See `data/CQR_LINEUP_V31_OVERLAY.md`.
+
+model | tier | line | temp | fabric | region | background | asin | sheet
+--- | --- | --- | --- | --- | --- | --- | --- | ---
+TFP500 | M | Liberator-Modern | - | 라이트플렉스 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TFP503 | M | Liberator-Modern | - | 고신축사 ver. | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TFP530 | M | Liberator-Modern | - | 라이트플렉스 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TFP571 | M | Liberator-Modern | - | 고신축사 ver. | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TFP572 | M | Liberator-Modern | - | 라이트플렉스 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TFP600 | M | Liberator-Modern | - | 라이트플렉스 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TLP002 | M | 확인필요(Liberator -) | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0DSBHR6BP | Pants_ripstop
+TLP117 | M | Liberator-Legacy | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0CFQ571ND | Pants_ripstop
+TLP125 | M | Liberator-Black | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0DKHW1XN9 | Pants_ripstop
+TLP127 | M | Liberator-Modern | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0CXJ59F15 | Pants_ripstop
+TLP135 | M | Liberator-Black | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0D2NTW631 | Pants_ripstop
+TLP731 | M | 확인필요(Liberator - Black/Modern) | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0F321G41R | Pants_ripstop
+TLP760 | M | Liberator-Modern | - | 립스탑 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TLP761 | M | Liberator-Modern | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0D97LPS5H | Pants_ripstop
+TLP762 | M | Liberator-Modern | - | 립스탑 | - | ⭐ TACTICAL URBAN |  | Pants_ripstop
+TLP763 | M | Liberator-Modern | - | 립스탑 | - | ⭐ TACTICAL URBAN | B0DFN19NFD | Pants_ripstop
+TLP470 | M | Covert | 20~30 | 어센드 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP102 | M | Covert | 낮: -0 ~10°C | 나일론도비 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP110 | M | Covert | 10~15 | 나일론컴포트 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP140 | M | Covert | 20~30 | 트루워크T2 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP202 | M | 확인필요(라인) | 15~25 | NS드라이 | 암석. 수목한계선이상 | 여름 | B0F381PJTR | Pants_LT
+TXP203 | M | 확인필요(Expedition-Alpinist / hu) | 5~15 | NS드라이 | 지역 | 여름 | B0F5H7QQGQ | Pants_LT
+TXP406 | M | Covert | 20~30 | 어센드 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP410 | M | Covert | 20~30 | 어센드 | 가을의 갈대밭,건조한 환경 | 여름 |  | Pants_LT
+TXP441 | M | Expedition-Alpinist | 20~30 | NS드라이 | 계곡, 숲가운데 | 여름 평지 밀림 개척 | B081SGCF2H | Pants_LT
+TXP700 | M | Expedition-Alpinist | 온도 | 트루워크T1 | 가을의 갈대밭,건조한 환경 | 여름 | B09MB4Q8DN | Pants_LT
+TXP710 | M | Expedition-Alpinist | 낮: 5 ~ 20°C | 원단사양 | 가을의 갈대밭,건조한 환경 | 여름 | B0DSBHMTNB | Pants_LT
+TXP900 | M | Expedition-Rider | 낮: 5 ~ 15C | 나일론도비 | 가을의 갈대밭,건조한 환경 | 여름 | B0D529LXLX | Pants_LT
+TOK001 | L | 확인필요(Lib) | 25~33도 | 폴리소로나150 | - 미국 남부 소도시 | EXPEDITION RIDER | B084MCQQPS | Shirts
+TOK002 | L | Liberator-Black | 20~27°C | 인터락메쉬165->145 | - 미국 남부 소도시 | - | B0DR29G391 | Shirts
+TOK004 | M | Covert | Scouting (7월~8월 초) : 10~32 | NS드라이 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOK100 | L | Covert | 22~30도 | 인터락메쉬165->145 | - 미국 남부 소도시 | Southern Small Town — Federal Agent | B0D7C5Q2FD | Shirts
+TOK171 | L | Liberator-Modern | N/A | 벤투라135 | - 미국 남부 소도시 | EXPEDITION RIDER | B08BRBPFL3 | Shirts
+TOK271 | L | Liberator-Modern | 22~30도 | 인터락메쉬165->145 | - 미국 남부 소도시 | EXPEDITION RIDER | B081R3SW8H | Shirts
+TOL102 | L | Covert | Scouting (7월~8월 초) : 10~32 | 택티컬스판 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS101 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | 인터락메쉬165->145 | - 미국 남부 소도시 | EXPEDITION RIDER | B08S78CYZG | Shirts
+TOS120 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | 인터락메쉬165->145 | - 미국 남부 소도시 | EXPEDITION RIDER | B0822GZZ8R | Shirts
+TOS130 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | N트리코트메쉬 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS230 | L | Liberator-Modern | Scouting (7월~8월 초) : 10~32 | 인터락메쉬165->145 | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS411 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS510 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+TOS511 | L | Covert | Scouting (7월~8월 초) : 10~32 | 모션(P90/S10,135) | - 미국 남부 소도시 | EXPEDITION RIDER |  | Shirts
+HKJ002 | W | Liberator-Black | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HKJ003 | W | Liberator-Black | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HKJ501 | W | Covert | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HKJ502 | W | Liberator-Legacy | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HKJ503 | W | Liberator-Legacy | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HKZ200 | W | Liberator-Black | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HOK808 | M | Covert | - | 립스탑경량패딩 | 숲속 | - | B0DB7XLWD7 | FW_Jacket
+HOK809 | M | Liberator-Modern | - | 립스탑경량패딩 | 숲속 | - | B0C44MKXSJ | FW_Jacket
+HOK817 | M | Liberator-Modern | - | 립스탑경량패딩 | 숲속 | - | B095WCTJ7F | FW_Jacket
+HOK832 | C | Covert | - | 쉐르파3L소프트쉘 | 숲속 | - | B0C7ZDPZDW | FW_Jacket
+HOK833 | W | Covert | - | 플레인소프트쉘 | 숲속 | - | B0CY8MXDKT | FW_Jacket
+HOK909 | W | Expedition-Rider | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+HOS001 | W | Covert | - | 항공점퍼 | 숲속 | - |  | FW_Jacket
+TLP001 | M | Sapper | - | 립스탑 | - | SAPPER |  | Sapper
+TWP308 | M | Sapper | - | 립스탑 | - | SAPPER |  | Sapper
+TWP320 | M | Sapper | - | 립스탑 | - | SAPPER |  | Sapper
+TWP330 | M | Sapper | - | 립스탑 | - | SAPPER |  | Sapper
+TWP707 | M | Sapper | - | 립스탑 | - | SAPPER |  | Sapper
+TWP708 | M | Sapper | - | 트루워크T1 | - | SAPPER |  | Sapper
+TWP720 | M | Sapper | - | 트루워크2 | - | SAPPER |  | Sapper
+HKJ001 | W | Liberator-Black | - | 항공점퍼 | 숲속 | LO-CR / YKK reshoot |  | NEW_A+
+HKZ204 | W | Covert | - | grid fleece | - | RAVEN grid heat management |  | NEW_A+
+HKZ305 | W | Covert | - | 폴리스웨터 | - | 3COLOR MOVE UNRESTRICTED |  | NEW_A+
+TOS121 | L | Liberator-Modern | - | 인터락메쉬165 | - | LO-TRN training (GO HARDER) |  | NEW_A+
+TOS612 | M | Liberator-Modern | - | combat shirt | - | LO-SR field (colorway) |  | NEW_A+
+WFP611 | M | Liberator-Modern | - | PC고신축사 | - | VANGUARD (colorway) |  | NEW_A+
+WHP830 | C | Expedition-Alpinist | cold | thermal stretch softshell | - | women cold-weather trail |  | NEW_A+
+HKZ210 | W | Covert | 가을 : 2°C ~ 10°C | 그리드플리스 | 사격장 | EXPEDITION HUNTER |  | FW_Tops
+HKZ300 | W | Expedition-Rider | 가을 : 2°C ~ 10°C | 폴리스웨터 | 사격장 | EXPEDITION HUNTER |  | FW_Tops
+HKZ303 | W | 확인필요(Covert) | 가을 : 2°C ~ 10°C | 폴리스웨터 | 사격장 | EXPEDITION HUNTER |  | FW_Tops
+HLP010 | M | Expedition-Alpinist | - | 립스탑겹바지 | 눈 배경 | - |  | FW_Pants
+HLP011 | W | Expedition-Alpinist | - | 나일론겹바지 | 눈 배경 | - |  | FW_Pants
+HLP200 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - |  | FW_Pants
+HLP201 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - |  | FW_Pants
+HLP831 | W | Expedition-Alpinist | - | NP투톤 | 눈배경 | - | B09MB3M2WC | FW_Pants
+HLP832 | W | Expedition-Alpinist | - | NP투톤 | 남극 | - | B0D4PV8Y6Q | FW_Pants
+HLP833 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - | B0D62BK5HC | FW_Pants
+HLP900 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - |  | FW_Pants
+HLP905 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - |  | FW_Pants
+HLP910 | W | Expedition-Alpinist | - | 나일론겹바지 | 눈 배경 | - |  | FW_Pants
+HLP920 | M | Expedition-Alpinist | - | 립스탑겹바지 | 눈 배경 | - |  | FW_Pants
+HLP999 | C | Expedition-Alpinist | - | 쉐르파3L | 눈 배경 | - |  | FW_Pants
+HOF110 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | 플라넬 | 하이데저트 | EXPEDITION HUNTER | B0DTHFMFP7 | FW_Tops
+HOF113 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | 플라넬 | 사격장 | EXPEDITION HUNTER | B0CJR1XYHL | FW_Tops
+HOF120 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | 플라넬 | 사격장 | EXPEDITION HUNTER | B09P51H83P | FW_Tops
+HOF123 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | 플라넬 | 사격장 | EXPEDITION HUNTER | B0DVYF8XG8 | FW_Tops
+HOF200 | W | ??? | 가을 : 2°C ~ 10°C | 폴라플리스 | 사격장 | EXPEDITION HUNTER | B0C454WTHG | FW_Tops
+HOH321 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | LT풀오버 | 사격장 | EXPEDITION HUNTER | B082MV9LVD | FW_Tops
+HOH322 | W | Expedition-Hunter | 가을 : 2°C ~ 10°C | LT풀오버 | 사격장 | EXPEDITION HUNTER |  | FW_Tops
+HOS219 | W | Expedition-Rider | 가을 : 2°C ~ 10°C | 폴라플리스 | 사격장 | EXPEDITION HUNTER | B0FH6DZ46M | FW_Tops
+TSP600 | M | Covert | 여름 (25~30) | 라이트플렉스 | 공항 | 기존배경유지 | B0D531LN8J | Shorts_LT
+TSP620 | M | Covert | 여름 (20~30) | 라이트플렉스 | 도심속 이동 | 기존배경유지 | B0DS4V7P3Y | Shorts_LT
+TSP640 | M | Expedition-Alpinist | 여름 (20~30) | 라이트플렉스 | 도심속 이동 | 기존배경유지 | B0CYLHPZXY | Shorts_LT
+TSP641 | M | Expedition-Alpinist | 여름 (20~30) | CN냉감 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS002 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS101 | M | Expedition-Alpinist | - | PS반바지 | - | - | B0D531LN8J | Shorts_old
+TXS201 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS204 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS303 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS803 | M | Covert | 여름 (20~30) | 나일론컴포트 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS804 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+TXS903 | M | Covert | 여름 (20~30) | PS반바지 | 도심속 이동 | 기존배경유지 |  | Shorts_LT
+
+Total rows parsed: 104. Showing 104. Ambiguous (확인필요): 6.

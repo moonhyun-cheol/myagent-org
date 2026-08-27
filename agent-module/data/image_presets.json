@@ -1,0 +1,84 @@
+{
+  "presets": {
+    "five_four_2k": {
+      "display_nxn": "2048x1638",
+      "aspect_ratio": "5:4",
+      "width": 2048,
+      "height": 1638
+    },
+    "gemini_five_four_2k": {
+      "display_nxn": "2304x1856",
+      "aspect_ratio": "5:4",
+      "width": 2304,
+      "height": 1856
+    },
+    "landscape_4k": {
+      "display_nxn": "3840x2160",
+      "aspect_ratio": "16:9",
+      "width": 3840,
+      "height": 2160
+    },
+    "landscape_2k": {
+      "display_nxn": "2560x1440",
+      "aspect_ratio": "16:9",
+      "width": 2560,
+      "height": 1440
+    },
+    "square_2k": {
+      "display_nxn": "2048x2048",
+      "aspect_ratio": "1:1",
+      "width": 2048,
+      "height": 2048
+    },
+    "portrait_4k": {
+      "display_nxn": "2160x2880",
+      "aspect_ratio": "3:4",
+      "width": 2160,
+      "height": 2880
+    },
+    "portrait_2k": {
+      "display_nxn": "1536x2048",
+      "aspect_ratio": "3:4",
+      "width": 1536,
+      "height": 2048
+    },
+    "mobile_story": {
+      "display_nxn": "1080x1920",
+      "aspect_ratio": "9:16",
+      "width": 1080,
+      "height": 1920
+    },
+    "ultrawide_5k": {
+      "display_nxn": "5120x2160",
+      "aspect_ratio": "21:9",
+      "width": 5120,
+      "height": 2160
+    },
+    "cinema_4k": {
+      "display_nxn": "4096x2160",
+      "aspect_ratio": "17:9",
+      "width": 4096,
+      "height": 2160
+    },
+    "bfl_five_four_2k": {
+      "display_nxn": "2048x1632",
+      "aspect_ratio": "5:4",
+      "width": 2048,
+      "height": 1632
+    }
+  },
+  "models": {
+    "gemini-3-pro-image-preview": {
+      "preset": "gemini_five_four_2k"
+    },
+    "imagen-4.0-generate-001": {
+      "preset": "five_four_2k"
+    },
+    "grok-imagine-image-pro": {
+      "preset": "five_four_2k"
+    },
+    "flux.2max": {
+      "preset": "bfl_five_four_2k"
+    }
+  }
+}
