@@ -1,18 +1,18 @@
 # Minyoung NAS Brand Index
 
-Snapshot source: \\Nas\공용_시장조사팀\06_amazon.com\06_alllisting\20260612_KR_alllisting_051024.txt
-Snapshot date: 2026-06-12
+Snapshot source: \\Nas\공용_시장조사팀\06_amazon.com\06_alllisting\20260827_KR_alllisting_051017.txt
+Snapshot date: 2026-08-27
 
 ## Summary
 
 | Brand | Total listings | Active listings | Primary category |
 |---|---:|---:|---|
-| CQR | 26,221 | 8,505 | Tactical/outdoor/workwear/hiking apparel |
-| TSLA | 33,743 | 546 | Athletic/compression/running/swim/yoga apparel |
-| ATIKA | 1,717 | 13 | Women's sandals, yoga/activewear, casual dresses |
-| Other | 1 | 0 | Empty/inactive orphan row |
+| CQR | 26,500 | 8,181 | Tactical/outdoor/workwear/hiking apparel |
+| TSLA | 33,147 | 451 | Athletic/compression/running/swim/yoga apparel |
+| ATIKA | 1,718 | 2 | Women's sandals, yoga/activewear, casual dresses |
+| Other | 48 | 26 | Empty/inactive orphan row |
 
-Active total: 9,090
+Active total: 8,660
 
 ## Verdict
 

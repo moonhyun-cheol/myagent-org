@@ -1,39 +1,47 @@
 {
-  "active_total": 9090,
+  "source_file": "\\\\Nas\\공용_시장조사팀\\06_amazon.com\\06_alllisting\\20260827_KR_alllisting_051017.txt",
+  "snapshot_date": "2026-08-27",
+  "row_count": 61413,
+  "status_breakdown": {
+    "Active": 8660,
+    "Inactive": 52429,
+    "Incomplete": 324
+  },
+  "active_total": 8660,
   "active_brands": [
     {
       "brand": "CQR",
-      "count": 8505,
-      "sample": "CQR Men's Quick Dry Tactical Pants, Water Resistant Outdoor Pants, Lightweight Stretch Cargo Work Hiking Pants, Rocky Ca"
+      "count": 8181,
+      "sample": "CQR Men's Quick Dry Tactical Polo Shirt, Lightweight Breathable Performance Polo, Short Sleeve UPF 50+ Outdoor Golf Shir"
     },
     {
       "brand": "TSLA",
-      "count": 546,
-      "sample": "TSLA Men's UPF 50+ Compression Shirts, Cool Dry Long Sleeve Athletic Tops, Sports Baselayer Workout Shirt, Black, Large"
+      "count": 451,
+      "sample": "TSLA Women's Yoga & Dress Pants, Office Business Casual Work Slacks, Stretch Straight Leg/Bootcut Pants with 4 Pockets, "
     },
     {
       "brand": "AMAZON",
       "count": 26,
-      "sample": "CQR Men's Flannel Shirt Jacket Long Sleeve, Winter Warm Outdoor Casual Plaid Jacket Coat with Pockets, Sherpa Stealth Am"
+      "sample": "CQR Men's Flannel Shirt Jacket Long Sleeve, Winter Warm Outdoor Casual Plaid Jacket Coat with Pockets, Sherpa Amazon Gre"
     },
     {
       "brand": "ATIKA",
-      "count": 13,
+      "count": 2,
       "sample": "atika Women's Casual Harem Shorts, Premium Ultra Buttery Soft Shorts, Elastic High Waisted Comfortable Short with Pocket"
     }
   ],
   "all_brands_top50": [
     [
       "TSLA",
-      33743
+      33147
     ],
     [
       "CQR",
-      26174
+      26500
     ],
     [
       "ATIKA",
-      1717
+      1718
     ],
     [
       "AMAZON",
