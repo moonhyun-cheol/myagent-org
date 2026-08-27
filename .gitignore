@@ -19,5 +19,4 @@ _tmp*
 # Local updater + raw inputs only. Generated snapshots under agent-module/data/ stay tracked.
 /_local/
 /agent-module/data/source/
-/agent-module/data/po_clothing_index.txt
 /agent-module/data/po_sample_*.txt
