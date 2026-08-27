@@ -1,6 +1,6 @@
-# MY_CUSTOM_CODEX-COMPANY
+# myagent-org
 
-Independent **organization module** update stream for [MY Agent](https://github.com/moonhyun-cheol/MY_CUSTOM_CODEX).
+Independent **organization module** update stream for [MY Agent](https://github.com/moonhyun-cheol/myagent).
 
 This repository is not the core app. Core updates and module updates are signed, versioned, and published separately.
 
