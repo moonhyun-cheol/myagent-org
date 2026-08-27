@@ -1,0 +1,16 @@
+{
+  "decisions": [
+    {
+      "concept_id": "A",
+      "action": "approve",
+      "notes": "TLP125 sibling refresh — lightweight hot-weather cargo; mac pocket 1pc left thigh"
+    },
+    {
+      "concept_id": "B",
+      "action": "reject",
+      "notes": "Urban EDC shorts out of scope for this brief"
+    }
+  ],
+  "override_notes": "Position below TLP125 at $49.99; launch SGN+BLK",
+  "request_research": null
+}

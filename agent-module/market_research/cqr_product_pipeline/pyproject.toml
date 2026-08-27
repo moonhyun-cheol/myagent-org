@@ -1,0 +1,41 @@
+[project]
+name = "cqr-product-pipeline"
+version = "0.1.0"
+description = "CQR market research → feasibility → product planning pipeline"
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=0.2",
+    "langgraph-checkpoint-sqlite>=2.0",
+    "langchain>=0.3",
+    "langchain-community>=0.3",
+    "langchain-ollama>=0.2",
+    # CQR_PA injects LLM_PROVIDER=openai (Open WebUI OpenAI-compatible gateway).
+    # Without this, market research always falls back to the category skeleton.
+    "langchain-openai>=0.2",
+    "langchain-chroma>=0.2",
+    "langchain-text-splitters>=0.3",
+    "chromadb>=0.5",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "ddgs>=9.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cqr-ingest = "cqr_product_pipeline.rag.ingest:main"
+cqr-feasibility = "cqr_product_pipeline.cli.run_feasibility:main"
+cqr-pipeline = "cqr_product_pipeline.cli.run_pipeline:main"
+cqr-research = "cqr_product_pipeline.cli.run_research:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cqr_product_pipeline"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MY Agent organization skills manifest",
+  "type": "object",
+  "required": ["version"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "overlays": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "brand_files": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "skills": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["label", "mode"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "mode": { "type": "string", "pattern": "^org:[a-z0-9-]{1,63}$" },
+          "feature": { "type": "string" },
+          "brand_files": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "bundle_files": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "pipeline_script": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -6,6 +6,10 @@ node_modules/
 **/.venv/
 **/__pycache__/
 **/.pytest_cache/
+**/.chroma/
+**/.checkpoints/
+**/output/
+**/output_run*/
 *.pyc
 .DS_Store
 Thumbs.db

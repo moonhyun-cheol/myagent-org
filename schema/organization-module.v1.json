@@ -17,9 +17,13 @@
     "update_sequence": { "type": "integer", "minimum": 1 },
     "install_root": { "const": "modules/organization" },
     "required_core_api": { "type": "string", "minLength": 1 },
+    "update_feed_url": { "type": "string", "minLength": 1 },
+    "update_channel": { "type": "string", "minLength": 1 },
+    "brand_manual_url": { "type": "string", "minLength": 1 },
     "capabilities": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
     }
   },
   "additionalProperties": false
