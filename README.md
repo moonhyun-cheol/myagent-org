@@ -2,26 +2,29 @@
 
 Independent **organization module** update stream for [MY Agent](https://github.com/moonhyun-cheol/MY_CUSTOM_CODEX).
 
-This repository is not the core app. Core updates and module updates are signed, versioned, and published separately. Additional module repositories can be attached later without changing the core.
+This repository is not the core app. Core updates and module updates are signed, versioned, and published separately.
 
 ## Layout
 
+- `agent-module/` — organization pack source (skills, 컨셉 RA, 시장조사 파이프라인)
 - `manifest.json` — module version and `update_sequence`
-- `channels/` — signed feed published on release
-- `tools/publish-module-update.mjs` — builds the module zip from a private source tree
+- `channels/` — signed feed published on release (`npm run publish:update` writes `channels/{channel}.json`)
+- `schema/` — `module.json` and organization skills-manifest contracts
+- `tools/publish-module-update.mjs` — packs `agent-module/` into `modules/organization`
 
-## Source vs public git
+Excel/RAG 코퍼스(`.chroma`, NAS extracts)는 이 git에 넣지 않습니다. 너무 크고 자주 바뀝니다.
 
-Plaintext organization content is **not** stored in this public git history. The publish tool packs the private source checkout into `deploy/output/` as a signed zip.
+## End-user install
 
-Set `MY_AGENT_ORGANIZATION_MODULE_SOURCE` to the private organization source checkout. The publish tool packs that tree into `modules/organization` inside the signed zip.
+MY Agent 설정 → 스킬 → 조직 모듈에서 이 저장소가 만든 서명 ZIP을 고르면 추가됩니다. 피드 JSON은 필요 없습니다.
 
 ## Commands
 
 ```bash
 npm run admin:update-keygen
 npm run admin:update-key-status
+npm run verify:module-pack
 npm run publish:update
 ```
 
-The module private signing key stays in `tools/keys/` and must not be committed. Ownership of this GitHub repository can be transferred later without renaming the update contract.
+The module private signing key stays in `tools/keys/` and must not be committed.

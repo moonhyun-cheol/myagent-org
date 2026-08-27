@@ -1,0 +1,6 @@
+﻿# pipeline local artifacts
+_live_*.md
+__pycache__/
+*.pyc
+.venv/
+output/
