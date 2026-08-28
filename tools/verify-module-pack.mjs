@@ -35,6 +35,7 @@ try {
   assert.ok(staged.capabilities.includes('brand-context'));
   assert.ok(staged.capabilities.includes('research-pipeline'));
   assert.ok(staged.capabilities.includes('brand-knowledge'));
+  assert.ok(staged.capabilities.includes('automaton-routing'));
   assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'CQR_INTERNAL_STRATEGY_v3.1.md')), true);
   assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'model_row_index.txt')), true);
   assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'options.db')), false);
