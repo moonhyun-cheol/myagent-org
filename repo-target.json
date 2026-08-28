@@ -4,7 +4,7 @@
   "role": "organization-module",
   "accepts_legacy_edits": false,
   "version": "1.0.0-beta.1",
-  "update_sequence": 6,
+  "update_sequence": 7,
   "channel": "beta",
   "github": "moonhyun-cheol/myagent-org",
   "local_folder": "MY_CUSTOM_CODEX-COMPANY",

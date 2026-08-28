@@ -1,8 +1,10 @@
 # Source: 00_PR_LINK.xlsx
-# Path: \\Nas\공용_시장조사팀\01_상품기획파트\02_기획-상품관리\08_PR상품관리\00_PR_LINK.xlsx
-# mtime: 2026-08-24T15:55:23
+# Local/cache path: C:\MY_FULL_AI\MY_CUSTOM_CODEX-COMPANY\_local\cache\deep\xlsx\00_PR_LINK.xlsx
+# mtime: 2026-08-27T17:01:11
+# size_bytes: 48455
 # Sheets: list
-# Mode: low-load read_only extract
+# Mode: deep-initial (values+colors)
+# Extracted: 2026-08-27T17:01:11+09:00
 
 ## list
 LINK_MODEL | PR | LINK_PR | Season

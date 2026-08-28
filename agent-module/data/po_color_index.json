@@ -1,0 +1,3390 @@
+{
+  "generated_at": "2026-08-28T09:59:12+09:00",
+  "sku_count": 423,
+  "skus": [
+    {
+      "model": "3",
+      "sku": "CQ-BL403",
+      "suffix": null,
+      "color_name": "6404.19.9000",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__177c4bb0f2ff.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BL403-BLK",
+      "suffix": "BLK",
+      "color_name": "NEW",
+      "inferred_code": "BLK",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BL403-CYT",
+      "suffix": "CYT",
+      "color_name": "NEW",
+      "inferred_code": "CYT",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": "2",
+      "sku": "CQ-BT402",
+      "suffix": null,
+      "color_name": "6404.19.9000",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__177c4bb0f2ff.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BT402-BLK",
+      "suffix": "BLK",
+      "color_name": "NEW",
+      "inferred_code": "BLK",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BT402-CYT",
+      "suffix": "CYT",
+      "color_name": "NEW",
+      "inferred_code": "CYT",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": "1",
+      "sku": "CQ-BZ401",
+      "suffix": null,
+      "color_name": "6403.19.4090",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__e9a1294dc0c7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BZ401-BLK",
+      "suffix": "BLK",
+      "color_name": "NEW",
+      "inferred_code": "BLK",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BZ401-CYT",
+      "suffix": "CYT",
+      "color_name": "NEW",
+      "inferred_code": "CYT",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BZ401-DSS",
+      "suffix": "DSS",
+      "color_name": "NEW",
+      "inferred_code": "DSS",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": "2",
+      "sku": "CQ-BZ402",
+      "suffix": null,
+      "color_name": "6403.19.4090",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__e9a1294dc0c7.txt"
+    },
+    {
+      "model": "3",
+      "sku": "CQ-BZ403",
+      "suffix": null,
+      "color_name": "6403.19.4090",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__e9a1294dc0c7.txt"
+    },
+    {
+      "model": "4",
+      "sku": "CQ-BZ405",
+      "suffix": null,
+      "color_name": "6403.19.4090",
+      "inferred_code": null,
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠__이전발주__MY-251219-01_BJ컴퍼니_서K_택티컬__e9a1294dc0c7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-BZ405-BLK",
+      "suffix": "BLK",
+      "color_name": "NEW",
+      "inferred_code": "BLK",
+      "source": "MY-260930-99_BJ컴퍼니_서K_택티컬부츠_이전발주_MY-251219-01_BJ컴퍼니_서K_택티컬부츠_MY-251219-01_택티컬부츠_직출수량조정_260424.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZB302-ASH",
+      "suffix": "ASH",
+      "color_name": "Ash Taupe",
+      "inferred_code": "ASH",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": "HZB302",
+      "sku": "CQ-HZB302-BLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZB302-SGN",
+      "suffix": "SGN",
+      "color_name": "Sage Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZB302-ZZASH",
+      "suffix": "ASH",
+      "color_name": "Ash Taupe",
+      "inferred_code": "ASH",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZB302-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZB302-ZZSGN",
+      "suffix": "SGN",
+      "color_name": "Sage Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZC301-ASH",
+      "suffix": "ASH",
+      "color_name": "Ash Taupe",
+      "inferred_code": "ASH",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": "HZC301",
+      "sku": "CQ-HZC301-BLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZC301-SGN",
+      "suffix": "SGN",
+      "color_name": "Sage Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZC301-ZZASH",
+      "suffix": "ASH",
+      "color_name": "Ash Taupe",
+      "inferred_code": "ASH",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZC301-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-HZC301-ZZSGN",
+      "suffix": "SGN",
+      "color_name": "Sage Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_3.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP571",
+      "suffix": null,
+      "color_name": "15.7",
+      "inferred_code": null,
+      "source": "MY-260821-00_J_H_이C_립스탑팬츠43차_ETD26년3월초__견적__제출-_2025.05.08_민__33b03ae24af2.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP600",
+      "suffix": null,
+      "color_name": "9.7",
+      "inferred_code": null,
+      "source": "MY-260605-01_J_H_이C_라이트플렉스팬츠13차_ETD9월__견적__제출-_2024.11.08_민영__a0e64a66c7bc.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP600-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP600-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TFP600",
+      "sku": "CQ-TFP600-COG",
+      "suffix": "COG",
+      "color_name": "25",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP600-KHK",
+      "suffix": "KHK",
+      "color_name": "",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP600-ONV",
+      "suffix": "ONV",
+      "color_name": "",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TFP600",
+      "sku": "CQ-TFP600-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "50",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP600",
+      "sku": "CQ-TFP600-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "50",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP600",
+      "sku": "CQ-TFP600-ZZKHK",
+      "suffix": "KHK",
+      "color_name": "25",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP600",
+      "sku": "CQ-TFP600-ZZONV",
+      "suffix": "ONV",
+      "color_name": "25",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP620",
+      "suffix": null,
+      "color_name": "10.55",
+      "inferred_code": null,
+      "source": "MY-260605-01_J_H_이C_라이트플렉스팬츠13차_ETD9월__견적__제출-_2024.11.08_민영__a0e64a66c7bc.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP621-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP621-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP621-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP621-GKP",
+      "suffix": "GKP",
+      "color_name": "",
+      "inferred_code": "GKP",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TFP621",
+      "sku": "CQ-TFP621-KHK",
+      "suffix": "KHK",
+      "color_name": "25",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP621-ONV",
+      "suffix": "ONV",
+      "color_name": "",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TFP621",
+      "sku": "CQ-TFP621-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "50",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP621",
+      "sku": "CQ-TFP621-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "50",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP621",
+      "sku": "CQ-TFP621-ZZCOG",
+      "suffix": "COG",
+      "color_name": "25",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP640",
+      "suffix": null,
+      "color_name": "10.55",
+      "inferred_code": null,
+      "source": "MY-260605-01_J_H_이C_라이트플렉스팬츠13차_ETD9월__견적__제출-_2024.11.08_민영__a0e64a66c7bc.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP640-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP640-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP640-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP640-KHK",
+      "suffix": "KHK",
+      "color_name": "",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TFP640",
+      "sku": "CQ-TFP640-ONV",
+      "suffix": "ONV",
+      "color_name": "25",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP640",
+      "sku": "CQ-TFP640-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "50",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP640",
+      "sku": "CQ-TFP640-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "50",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP640",
+      "sku": "CQ-TFP640-ZZCOG",
+      "suffix": "COG",
+      "color_name": "25",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP640",
+      "sku": "CQ-TFP640-ZZKHK",
+      "suffix": "KHK",
+      "color_name": "25",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP641-TGC",
+      "suffix": "TGC",
+      "color_name": "",
+      "inferred_code": "TGC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP641-UKK",
+      "suffix": "UKK",
+      "color_name": "",
+      "inferred_code": "UKK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP641-UTC",
+      "suffix": "UTC",
+      "color_name": null,
+      "inferred_code": "UTC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP681-KHK",
+      "suffix": "KHK",
+      "color_name": null,
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP681",
+      "sku": "CQ-TFP681-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "40",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP681",
+      "sku": "CQ-TFP681-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "20",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP681-ZZCOG",
+      "suffix": "COG",
+      "color_name": null,
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP682",
+      "sku": "CQ-TFP682-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "50",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP682",
+      "sku": "CQ-TFP682-ZZCOG",
+      "suffix": "COG",
+      "color_name": "25",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP682-ZZKHK",
+      "suffix": "KHK",
+      "color_name": null,
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP682",
+      "sku": "CQ-TFP682-ZZONV",
+      "suffix": "ONV",
+      "color_name": "25",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TFP682",
+      "sku": "CQ-TFP682-ZZSGN",
+      "suffix": "SGN",
+      "color_name": "50",
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP683-UKK",
+      "suffix": "UKK",
+      "color_name": null,
+      "inferred_code": "UKK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TFP683-UTC",
+      "suffix": "UTC",
+      "color_name": null,
+      "inferred_code": "UTC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117",
+      "suffix": null,
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": "20550",
+      "sku": "CQ-TLP117-CBR",
+      "suffix": "CBR",
+      "color_name": "1570",
+      "inferred_code": "CBR",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117-CHC",
+      "suffix": "CHC",
+      "color_name": "Charcoal",
+      "inferred_code": "CHC",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117-COG",
+      "suffix": "COG",
+      "color_name": "Cougar",
+      "inferred_code": "COG",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117-GKP",
+      "suffix": "GKP",
+      "color_name": "Green Kelp",
+      "inferred_code": "GKP",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117-KHK",
+      "suffix": "KHK",
+      "color_name": "Alamo Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP117-PNV",
+      "suffix": "PNV",
+      "color_name": "Police Navy",
+      "inferred_code": "PNV",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125",
+      "suffix": null,
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": "58470",
+      "sku": "CQ-TLP125-CBR",
+      "suffix": "CBR",
+      "color_name": "2630",
+      "inferred_code": "CBR",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-CHC",
+      "suffix": "CHC",
+      "color_name": "Charcoal",
+      "inferred_code": "CHC",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-DBN",
+      "suffix": "DBN",
+      "color_name": "Dark Brown",
+      "inferred_code": "DBN",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-KHK",
+      "suffix": "KHK",
+      "color_name": "Alamo Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-PNV",
+      "suffix": "PNV",
+      "color_name": "Police Navy",
+      "inferred_code": "PNV",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-SGN",
+      "suffix": "SGN",
+      "color_name": "Soil Green",
+      "inferred_code": "SGN",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP125-STN",
+      "suffix": "STN",
+      "color_name": "Stone",
+      "inferred_code": "STN",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP127",
+      "suffix": null,
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": "4735",
+      "sku": "CQ-TLP127-CHC",
+      "suffix": "CHC",
+      "color_name": "1510",
+      "inferred_code": "CHC",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP127-COG",
+      "suffix": "COG",
+      "color_name": "Cougar",
+      "inferred_code": "COG",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP127-KHK",
+      "suffix": "KHK",
+      "color_name": "Alamo Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP135",
+      "suffix": null,
+      "color_name": "Utility Camo Black",
+      "inferred_code": "BLK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": "6720",
+      "sku": "CQ-TLP135-UTC",
+      "suffix": "UTC",
+      "color_name": "3350",
+      "inferred_code": "UTC",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP731",
+      "suffix": null,
+      "color_name": "11.2",
+      "inferred_code": null,
+      "source": "MY-260821-00_J_H_이C_립스탑팬츠43차_ETD26년3월초__견적__제출-_2025.05.08_민__33b03ae24af2.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP761",
+      "suffix": null,
+      "color_name": "11.3",
+      "inferred_code": null,
+      "source": "MY-260821-00_J_H_이C_립스탑팬츠43차_ETD26년3월초__견적__제출-_2025.05.08_민__33b03ae24af2.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TLP763-UKK,UTC,WOV",
+      "suffix": null,
+      "color_name": "12.7",
+      "inferred_code": null,
+      "source": "MY-260720-01_J_H_안K_CQR플렉스팬츠21차_ETD26년10월중__견적__제출-_2025.08.__25d176aebc65.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOK171",
+      "suffix": null,
+      "color_name": "4.63",
+      "inferred_code": null,
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_쿨링소로나_1차_ETD_미정___이전자료__MY-25120__8674df11d228.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL234-BLK",
+      "suffix": "BLK",
+      "color_name": "L",
+      "inferred_code": "BLK",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_판매data_260825.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL234-PVN",
+      "suffix": "PVN",
+      "color_name": "CQ-TOL234-PVN",
+      "inferred_code": "PVN",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_MY-260903-00_금담_안K_N트리코트메쉬2차.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL234-SGN",
+      "suffix": "SGN",
+      "color_name": "L",
+      "inferred_code": "SGN",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_판매data_260825.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL751-BLK",
+      "suffix": "BLK",
+      "color_name": "70",
+      "inferred_code": "BLK",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL751-CGY",
+      "suffix": "CGY",
+      "color_name": "70",
+      "inferred_code": "CGY",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL751-SGN",
+      "suffix": "SGN",
+      "color_name": "70",
+      "inferred_code": "SGN",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL755-BLK",
+      "suffix": "BLK",
+      "color_name": "70",
+      "inferred_code": "BLK",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL755-CGY",
+      "suffix": "CGY",
+      "color_name": "70",
+      "inferred_code": "CGY",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOL755-SGN",
+      "suffix": "SGN",
+      "color_name": "70",
+      "inferred_code": "SGN",
+      "source": "MY-260988-99_최종BT확인후__금담_안K_텍스쳐폴리선셔츠_3차_ETD_11월_이전자료_MY-260403-00_금담_안K_텍스쳐폴리선셔츠_2차_ETD_7월_초_발주_검토_최종발주.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOS230-BLK",
+      "suffix": "BLK",
+      "color_name": "XL",
+      "inferred_code": "BLK",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_판매data_260825.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOS230-PNV",
+      "suffix": "PNV",
+      "color_name": "CQ-TOS230-PNV",
+      "inferred_code": "PNV",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_MY-260903-00_금담_안K_N트리코트메쉬2차.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TOS230-SGN",
+      "suffix": "SGN",
+      "color_name": "XL",
+      "inferred_code": "SGN",
+      "source": "MY-260903-00_금담_안K_N트리코트메쉬2차_판매data_260825.xlsx.txt"
+    },
+    {
+      "model": "1",
+      "sku": "CQ-TOS601",
+      "suffix": null,
+      "color_name": "3180",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__f90a10cbbce1.txt"
+    },
+    {
+      "model": "2",
+      "sku": "CQ-TOS602",
+      "suffix": null,
+      "color_name": "2970",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__f90a10cbbce1.txt"
+    },
+    {
+      "model": "3",
+      "sku": "CQ-TOS611",
+      "suffix": null,
+      "color_name": "1890",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__f90a10cbbce1.txt"
+    },
+    {
+      "model": "4",
+      "sku": "CQ-TOS612",
+      "suffix": null,
+      "color_name": "2760",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__f90a10cbbce1.txt"
+    },
+    {
+      "model": "1",
+      "sku": "CQ-TOS801",
+      "suffix": null,
+      "color_name": "2520",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__f90a10cbbce1.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-CBR",
+      "suffix": "CBR",
+      "color_name": null,
+      "inferred_code": "CBR",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": "TSP600",
+      "sku": "CQ-TSP600-KHK",
+      "suffix": "KHK",
+      "color_name": "35",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-ONV",
+      "suffix": "ONV",
+      "color_name": null,
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-SGN",
+      "suffix": "SGN",
+      "color_name": null,
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-STN",
+      "suffix": "STN",
+      "color_name": null,
+      "inferred_code": "STN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP600",
+      "sku": "CQ-TSP600-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "35",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP600",
+      "sku": "CQ-TSP600-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "35",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-ZZCOG",
+      "suffix": "COG",
+      "color_name": null,
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP600-ZZGKP",
+      "suffix": "GKP",
+      "color_name": null,
+      "inferred_code": "GKP",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP620-CHC",
+      "suffix": "CHC",
+      "color_name": null,
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP620-GKP",
+      "suffix": "GKP",
+      "color_name": null,
+      "inferred_code": "GKP",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP620-KHK",
+      "suffix": "KHK",
+      "color_name": null,
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP620-ONV",
+      "suffix": "ONV",
+      "color_name": null,
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP620",
+      "sku": "CQ-TSP620-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "35",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP620",
+      "sku": "CQ-TSP620-ZZCOG",
+      "suffix": "COG",
+      "color_name": "35",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP620",
+      "sku": "CQ-TSP620-ZZSGN",
+      "suffix": "SGN",
+      "color_name": "35",
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP620",
+      "sku": "CQ-TSP620-ZZSTN",
+      "suffix": "STN",
+      "color_name": "35",
+      "inferred_code": "STN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-GKP",
+      "suffix": "GKP",
+      "color_name": null,
+      "inferred_code": "GKP",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP640",
+      "sku": "CQ-TSP640-KHK",
+      "suffix": "KHK",
+      "color_name": "35",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-ONV",
+      "suffix": "ONV",
+      "color_name": null,
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-SGN",
+      "suffix": "SGN",
+      "color_name": null,
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-STN",
+      "suffix": "STN",
+      "color_name": null,
+      "inferred_code": "STN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP640",
+      "sku": "CQ-TSP640-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "35",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": "TSP640",
+      "sku": "CQ-TSP640-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "35",
+      "inferred_code": "CHC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP640-ZZCOG",
+      "suffix": "COG",
+      "color_name": null,
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP641-FRT",
+      "suffix": "FRT",
+      "color_name": null,
+      "inferred_code": "FRT",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP641-TGC",
+      "suffix": "TGC",
+      "color_name": "",
+      "inferred_code": "TGC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1426b443face.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP641-UKK",
+      "suffix": "UKK",
+      "color_name": null,
+      "inferred_code": "UKK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP641-UTC",
+      "suffix": "UTC",
+      "color_name": null,
+      "inferred_code": "UTC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TSP641-WOV",
+      "suffix": "WOV",
+      "color_name": null,
+      "inferred_code": "WOV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWO602",
+      "suffix": null,
+      "color_name": "CQ-TWO602-BLK",
+      "inferred_code": null,
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO602-BLK",
+      "suffix": "BLK",
+      "color_name": "#REF!",
+      "inferred_code": "BLK",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": "CHARCOAL",
+      "sku": "CQ-TWO602-CHC",
+      "suffix": "CHC",
+      "color_name": "100",
+      "inferred_code": "CHC",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO602-ONV",
+      "suffix": "ONV",
+      "color_name": "#N/A",
+      "inferred_code": "ONV",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWO602-SGN",
+      "suffix": "SGN",
+      "color_name": "Soil Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWO604",
+      "suffix": null,
+      "color_name": "CQ-TWO604-BLK",
+      "inferred_code": null,
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO604-BLK",
+      "suffix": "BLK",
+      "color_name": "#N/A",
+      "inferred_code": "BLK",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO604-CBR",
+      "suffix": "CBR",
+      "color_name": "#N/A",
+      "inferred_code": "CBR",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWO604-KHK",
+      "suffix": "KHK",
+      "color_name": "Alamo Khaki",
+      "inferred_code": "KHK",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO604-ONV",
+      "suffix": "ONV",
+      "color_name": "#N/A",
+      "inferred_code": "ONV",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": "MY-250814-02",
+      "sku": "CQ-TWO604-ROR",
+      "suffix": "ROR",
+      "color_name": "#N/A",
+      "inferred_code": "ROR",
+      "source": "MY-260903-00_HMK_이C_레이온울ACC1차_ETD11월_MY-260903-00_HMK_이C_레이온울ACC.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWO604-SGN",
+      "suffix": "SGN",
+      "color_name": "Soil Green",
+      "inferred_code": "SGN",
+      "source": "po_sample_4.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320",
+      "suffix": null,
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": "20535",
+      "sku": "CQ-TWP320-CBR",
+      "suffix": "CBR",
+      "color_name": "2690",
+      "inferred_code": "CBR",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-CHC",
+      "suffix": "CHC",
+      "color_name": "Charcoal",
+      "inferred_code": "CHC",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-COG",
+      "suffix": "COG",
+      "color_name": "Cougar",
+      "inferred_code": "COG",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-FWT",
+      "suffix": "FWT",
+      "color_name": "Frosted White",
+      "inferred_code": "FWT",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-KHK",
+      "suffix": "KHK",
+      "color_name": "Alamo Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-PNV",
+      "suffix": "PNV",
+      "color_name": "Police Navy",
+      "inferred_code": "PNV",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-SGN",
+      "suffix": "SGN",
+      "color_name": "Soil Green",
+      "inferred_code": "SGN",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP320-TDR",
+      "suffix": "TDR",
+      "color_name": "Tundra",
+      "inferred_code": "TDR",
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP330",
+      "suffix": null,
+      "color_name": "Utility Camo",
+      "inferred_code": null,
+      "source": "MY-260720-00_J_H_이C_립스탑팬츠42차_ETD26년10월중__260821_42차원단.xlsx__ffb1687e1849.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TWP707",
+      "suffix": null,
+      "color_name": "11.95",
+      "inferred_code": null,
+      "source": "MY-260720-01_J_H_안K_CQR플렉스팬츠21차_ETD26년10월중__견적__제출-_2025.08.__25d176aebc65.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP200-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP200-FGR",
+      "suffix": "FGR",
+      "color_name": "",
+      "inferred_code": "FGR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP200-HAZ",
+      "suffix": "HAZ",
+      "color_name": "",
+      "inferred_code": "HAZ",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP200-JGY",
+      "suffix": "JGY",
+      "color_name": "",
+      "inferred_code": "JGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-AMB",
+      "suffix": "AMB",
+      "color_name": "",
+      "inferred_code": "AMB",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-BOR",
+      "suffix": "BOR",
+      "color_name": "",
+      "inferred_code": "BOR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-FGR",
+      "suffix": "FGR",
+      "color_name": "",
+      "inferred_code": "FGR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-GLC",
+      "suffix": "GLC",
+      "color_name": "",
+      "inferred_code": "GLC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-HAZ",
+      "suffix": "HAZ",
+      "color_name": "",
+      "inferred_code": "HAZ",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-JGY",
+      "suffix": "JGY",
+      "color_name": "",
+      "inferred_code": "JGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-LCH",
+      "suffix": "LCH",
+      "color_name": "",
+      "inferred_code": "LCH",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-PNV",
+      "suffix": "PNV",
+      "color_name": "",
+      "inferred_code": "PNV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP201-TAN",
+      "suffix": "TAN",
+      "color_name": "",
+      "inferred_code": "TAN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP301-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP301-CGY",
+      "suffix": "CGY",
+      "color_name": "",
+      "inferred_code": "CGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP301-CYT",
+      "suffix": "CYT",
+      "color_name": "",
+      "inferred_code": "CYT",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP301-SGE",
+      "suffix": "SGE",
+      "color_name": "",
+      "inferred_code": "SGE",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP301-SKH",
+      "suffix": "SKH",
+      "color_name": "",
+      "inferred_code": "SKH",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-CGY",
+      "suffix": "CGY",
+      "color_name": "",
+      "inferred_code": "CGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-CYT",
+      "suffix": "CYT",
+      "color_name": "",
+      "inferred_code": "CYT",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-PNV",
+      "suffix": "PNV",
+      "color_name": "",
+      "inferred_code": "PNV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-SGE",
+      "suffix": "SGE",
+      "color_name": "",
+      "inferred_code": "SGE",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP302-SKH",
+      "suffix": "SKH",
+      "color_name": "",
+      "inferred_code": "SKH",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP405-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP405-KHK",
+      "suffix": "KHK",
+      "color_name": "",
+      "inferred_code": "KHK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP405-NVY",
+      "suffix": "NVY",
+      "color_name": "",
+      "inferred_code": "NVY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP405-OLV",
+      "suffix": "OLV",
+      "color_name": "",
+      "inferred_code": "OLV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP405-STN",
+      "suffix": "STN",
+      "color_name": "",
+      "inferred_code": "STN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-BLK",
+      "suffix": "BLK",
+      "color_name": "46",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-CHC",
+      "suffix": "CHC",
+      "color_name": "40",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-COG",
+      "suffix": "COG",
+      "color_name": "46",
+      "inferred_code": "COG",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-CYT",
+      "suffix": "CYT",
+      "color_name": "0.05208333333333334",
+      "inferred_code": "CYT",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-DNE",
+      "suffix": "DNE",
+      "color_name": "69",
+      "inferred_code": "DNE",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-GKP",
+      "suffix": "GKP",
+      "color_name": "46",
+      "inferred_code": "GKP",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-GRN",
+      "suffix": "GRN",
+      "color_name": "0.05208333333333334",
+      "inferred_code": "GRN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-KHK",
+      "suffix": "KHK",
+      "color_name": "0.078125",
+      "inferred_code": "KHK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP406-SST",
+      "suffix": "SST",
+      "color_name": "73",
+      "inferred_code": "SST",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__이전발주__MY-260123_00_신티에__74730b5d019d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410",
+      "suffix": null,
+      "color_name": "11.85",
+      "inferred_code": null,
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__견적__제출-_2024.09.11_민영__228f36988d99.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-DNE",
+      "suffix": "DNE",
+      "color_name": "",
+      "inferred_code": "DNE",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-GKP",
+      "suffix": "GKP",
+      "color_name": "",
+      "inferred_code": "GKP",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-NVY",
+      "suffix": "NVY",
+      "color_name": "",
+      "inferred_code": "NVY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-SST",
+      "suffix": "SST",
+      "color_name": "",
+      "inferred_code": "SST",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP410-STN",
+      "suffix": "STN",
+      "color_name": "",
+      "inferred_code": "STN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-BLK",
+      "suffix": "BLK",
+      "color_name": "27",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-CHC",
+      "suffix": "CHC",
+      "color_name": "38",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-CYT",
+      "suffix": "CYT",
+      "color_name": "24",
+      "inferred_code": "CYT",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-KHK",
+      "suffix": "KHK",
+      "color_name": "2",
+      "inferred_code": "KHK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-NVY",
+      "suffix": "NVY",
+      "color_name": "32",
+      "inferred_code": "NVY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-OLV",
+      "suffix": "OLV",
+      "color_name": "22",
+      "inferred_code": "OLV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP440-TAN",
+      "suffix": "TAN",
+      "color_name": "35",
+      "inferred_code": "TAN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441",
+      "suffix": null,
+      "color_name": "10.75",
+      "inferred_code": null,
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__견적__제출-_2024.09.11_민영__228f36988d99.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-DNE",
+      "suffix": "DNE",
+      "color_name": "",
+      "inferred_code": "DNE",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-GKP",
+      "suffix": "GKP",
+      "color_name": "",
+      "inferred_code": "GKP",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-NVY",
+      "suffix": "NVY",
+      "color_name": "",
+      "inferred_code": "NVY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP441-SST",
+      "suffix": "SST",
+      "color_name": "",
+      "inferred_code": "SST",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP700",
+      "suffix": null,
+      "color_name": "CQ-TXP700-BLK",
+      "inferred_code": null,
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP700-CHC",
+      "suffix": "CHC",
+      "color_name": "CQ-TXP700-CHC",
+      "inferred_code": "CHC",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP700-KHK",
+      "suffix": "KHK",
+      "color_name": "CQ-TXP700-KHK",
+      "inferred_code": "KHK",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP700-SAH",
+      "suffix": "SAH",
+      "color_name": "CQ-TXP700-SAH",
+      "inferred_code": "SAH",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP710",
+      "suffix": null,
+      "color_name": "CQ-TXP710-BLK",
+      "inferred_code": null,
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP710-CHC",
+      "suffix": "CHC",
+      "color_name": "CQ-TXP710-CHC",
+      "inferred_code": "CHC",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP710-KHK",
+      "suffix": "KHK",
+      "color_name": "CQ-TXP710-KHK",
+      "inferred_code": "KHK",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP710-SAH",
+      "suffix": "SAH",
+      "color_name": "CQ-TXP710-SAH",
+      "inferred_code": "SAH",
+      "source": "MY-260820-00_J_H_이C_나일론도비_ETD1월말__MY-260820-00_J_H_이C_나일론도비_ETD1월말.xlsx__56110e107002.txt"
+    },
+    {
+      "model": "2",
+      "sku": "CQ-TXP802",
+      "suffix": null,
+      "color_name": "11.05",
+      "inferred_code": null,
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__견적__제출-_2024.09.11_민영__228f36988d99.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP802-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP802-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP802-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP802-ONV",
+      "suffix": "ONV",
+      "color_name": "",
+      "inferred_code": "ONV",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": "1",
+      "sku": "CQ-TXP805",
+      "suffix": null,
+      "color_name": "12.8",
+      "inferred_code": null,
+      "source": "MY-260828-02_J_H_이C_라이트플렉스컴뱃셔츠_6차_ETD미정_컨펌필요____이전자료__MY-260__5bb96822a99c.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP805-BLK",
+      "suffix": "BLK",
+      "color_name": "35",
+      "inferred_code": "BLK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP805-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP805-DSD",
+      "suffix": "DSD",
+      "color_name": "",
+      "inferred_code": "DSD",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP805-GOK",
+      "suffix": "GOK",
+      "color_name": "",
+      "inferred_code": "GOK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP805-ONV",
+      "suffix": "ONV",
+      "color_name": "",
+      "inferred_code": "ONV",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-MBL",
+      "suffix": "MBL",
+      "color_name": "",
+      "inferred_code": "MBL",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-SGN",
+      "suffix": "SGN",
+      "color_name": "",
+      "inferred_code": "SGN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-SPR",
+      "suffix": "SPR",
+      "color_name": "",
+      "inferred_code": "SPR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-SST",
+      "suffix": "SST",
+      "color_name": "",
+      "inferred_code": "SST",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP900-WNT",
+      "suffix": "WNT",
+      "color_name": "",
+      "inferred_code": "WNT",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__상품기획__26SS_CQR_라인기획_익스페디션바지류.xlsx__c728491497d0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-BLK",
+      "suffix": "BLK",
+      "color_name": "43",
+      "inferred_code": "BLK",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-CHC",
+      "suffix": "CHC",
+      "color_name": "6.215011994530684",
+      "inferred_code": "CHC",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-MBL",
+      "suffix": "MBL",
+      "color_name": "0",
+      "inferred_code": "MBL",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-SGN",
+      "suffix": "SGN",
+      "color_name": "0",
+      "inferred_code": "SGN",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-SPR",
+      "suffix": "SPR",
+      "color_name": "0",
+      "inferred_code": "SPR",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-SST",
+      "suffix": "SST",
+      "color_name": "0",
+      "inferred_code": "SST",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXP901-WNT",
+      "suffix": "WNT",
+      "color_name": "2",
+      "inferred_code": "WNT",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXP901_PO.xlsx__bf11426c6ea7.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS001-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS001-ZZGRY",
+      "suffix": "GRY",
+      "color_name": "Grey",
+      "inferred_code": "GRY",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS001-ZZNVY",
+      "suffix": "NVY",
+      "color_name": "Navy",
+      "inferred_code": "NVY",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": "TXS002",
+      "sku": "CQ-TXS002-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "국내",
+      "inferred_code": "BLK",
+      "source": "MY-260821-03_금담_박D__영업1팀JP용_스트레치SD_4차_ETD_2월_중__재팬_국내_발주검토____d8562c40e198.txt"
+    },
+    {
+      "model": "TXS002",
+      "sku": "CQ-TXS002-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "국내",
+      "inferred_code": "CHC",
+      "source": "MY-260821-03_금담_박D__영업1팀JP용_스트레치SD_4차_ETD_2월_중__재팬_국내_발주검토____d8562c40e198.txt"
+    },
+    {
+      "model": "TXS002",
+      "sku": "CQ-TXS002-ZZNVY",
+      "suffix": "NVY",
+      "color_name": "국내",
+      "inferred_code": "NVY",
+      "source": "MY-260821-03_금담_박D__영업1팀JP용_스트레치SD_4차_ETD_2월_중__재팬_국내_발주검토____d8562c40e198.txt"
+    },
+    {
+      "model": "TXS002",
+      "sku": "CQ-TXS002-ZZSST",
+      "suffix": "SST",
+      "color_name": "국내",
+      "inferred_code": "SST",
+      "source": "MY-260821-03_금담_박D__영업1팀JP용_스트레치SD_4차_ETD_2월_중__재팬_국내_발주검토____d8562c40e198.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-BLK",
+      "suffix": "BLK",
+      "color_name": "23",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-FGR",
+      "suffix": "FGR",
+      "color_name": "17",
+      "inferred_code": "FGR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-HAZ",
+      "suffix": "HAZ",
+      "color_name": "21",
+      "inferred_code": "HAZ",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-JGY",
+      "suffix": "JGY",
+      "color_name": "27",
+      "inferred_code": "JGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-PNV",
+      "suffix": "PNV",
+      "color_name": "15",
+      "inferred_code": "PNV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS201-TAN",
+      "suffix": "TAN",
+      "color_name": "27",
+      "inferred_code": "TAN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-AMB",
+      "suffix": "AMB",
+      "color_name": "0",
+      "inferred_code": "AMB",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-BLK",
+      "suffix": "BLK",
+      "color_name": "0.07947019867549668",
+      "inferred_code": "BLK",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-BOR",
+      "suffix": "BOR",
+      "color_name": "0",
+      "inferred_code": "BOR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-FGR",
+      "suffix": "FGR",
+      "color_name": "0.05960264900662251",
+      "inferred_code": "FGR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-GLC",
+      "suffix": "GLC",
+      "color_name": "0",
+      "inferred_code": "GLC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-HAZ",
+      "suffix": "HAZ",
+      "color_name": "0.07284768211920528",
+      "inferred_code": "HAZ",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-JGY",
+      "suffix": "JGY",
+      "color_name": "0.09271523178807946",
+      "inferred_code": "JGY",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-LCH",
+      "suffix": "LCH",
+      "color_name": "0.04635761589403973",
+      "inferred_code": "LCH",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-PNV",
+      "suffix": "PNV",
+      "color_name": "0.05298013245033112",
+      "inferred_code": "PNV",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS203-TAN",
+      "suffix": "TAN",
+      "color_name": "0.09271523178807946",
+      "inferred_code": "TAN",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS204-AMB",
+      "suffix": "AMB",
+      "color_name": "0",
+      "inferred_code": "AMB",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS204-BOR",
+      "suffix": "BOR",
+      "color_name": "0",
+      "inferred_code": "BOR",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS204-GLC",
+      "suffix": "GLC",
+      "color_name": "0",
+      "inferred_code": "GLC",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS204-LCH",
+      "suffix": "LCH",
+      "color_name": "14",
+      "inferred_code": "LCH",
+      "source": "MY-260723-00_신티에스_안K_NS드라이_3차_ETD12월__발주수량__20260715_TXS203_PO_drop.xlsx__96c8b0e3fa4d.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-BLK",
+      "suffix": "BLK",
+      "color_name": "0.1347150259067357",
+      "inferred_code": "BLK",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-CHC",
+      "suffix": "CHC",
+      "color_name": "0.1917098445595855",
+      "inferred_code": "CHC",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-MBL",
+      "suffix": "MBL",
+      "color_name": "0.1088082901554404",
+      "inferred_code": "MBL",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-SGN",
+      "suffix": "SGN",
+      "color_name": "0.06217616580310879",
+      "inferred_code": "SGN",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-SST",
+      "suffix": "SST",
+      "color_name": "0.1347150259067357",
+      "inferred_code": "SST",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS801-WNT",
+      "suffix": "WNT",
+      "color_name": "0.1398963730569948",
+      "inferred_code": "WNT",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": "1",
+      "sku": "CQ-TXS803",
+      "suffix": null,
+      "color_name": "10.7",
+      "inferred_code": null,
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__견적__제출-_2024.09.11_민영__228f36988d99.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-BLK",
+      "suffix": "BLK",
+      "color_name": "",
+      "inferred_code": "BLK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-CHC",
+      "suffix": "CHC",
+      "color_name": "",
+      "inferred_code": "CHC",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-COG",
+      "suffix": "COG",
+      "color_name": "",
+      "inferred_code": "COG",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-DSD",
+      "suffix": "DSD",
+      "color_name": "",
+      "inferred_code": "DSD",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-GOK",
+      "suffix": "GOK",
+      "color_name": "",
+      "inferred_code": "GOK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-ONV",
+      "suffix": "ONV",
+      "color_name": "",
+      "inferred_code": "ONV",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-SGN",
+      "suffix": "SGN",
+      "color_name": "",
+      "inferred_code": "SGN",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS803-TAN",
+      "suffix": "TAN",
+      "color_name": "",
+      "inferred_code": "TAN",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS804-UKK",
+      "suffix": "UKK",
+      "color_name": "",
+      "inferred_code": "UKK",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS804-UTC",
+      "suffix": "UTC",
+      "color_name": "",
+      "inferred_code": "UTC",
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__발주수량__260626_CN냉감팬츠_발주_국내.xlsx__8ab50ce1e049.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-BLK",
+      "suffix": "BLK",
+      "color_name": "8.85416666666667",
+      "inferred_code": "BLK",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-CHC",
+      "suffix": "CHC",
+      "color_name": "8.85416666666667",
+      "inferred_code": "CHC",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-MBL",
+      "suffix": "MBL",
+      "color_name": "8.85416666666667",
+      "inferred_code": "MBL",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-SGN",
+      "suffix": "SGN",
+      "color_name": "8.85416666666667",
+      "inferred_code": "SGN",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-SST",
+      "suffix": "SST",
+      "color_name": "8.85416666666667",
+      "inferred_code": "SST",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TXS901-WNT",
+      "suffix": "WNT",
+      "color_name": "8.85416666666667",
+      "inferred_code": "WNT",
+      "source": "MY-260629-01_신티에스_이C_나일론컴포트3차_ETD1월말__발주수량__20260623_TXS901_PO.xlsx__a1287fff41b0.txt"
+    },
+    {
+      "model": "TZH600",
+      "sku": "CQ-TZH600-BLK",
+      "suffix": "BLK",
+      "color_name": "80",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-BLK_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600BLK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-BLK_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600BLK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPBLK_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPBLK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPBLK_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPBLK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPKHK_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPKHK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPKHK_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPKHK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPSGN_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPSGN_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-JPSGN_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH600-JPSGN_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH600",
+      "sku": "CQ-TZH600-KHK",
+      "suffix": "KHK",
+      "color_name": "40",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-KHK_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600KHK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-KHK_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600KHK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH600",
+      "sku": "CQ-TZH600-SGN",
+      "suffix": "SGN",
+      "color_name": "70",
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-SGN_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600SGN_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH600-SGN_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH600SGN_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH620",
+      "sku": "CQ-TZH620-BLK",
+      "suffix": "BLK",
+      "color_name": "240",
+      "inferred_code": "BLK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-BLK_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620BLK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-BLK_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620BLK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH620",
+      "sku": "CQ-TZH620-COG",
+      "suffix": "COG",
+      "color_name": "80",
+      "inferred_code": "COG",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-COG_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620COG_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-COG_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620COG_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPBLK_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPBLK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPBLK_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPBLK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPCOG_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPCOG_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPCOG_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPCOG_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPKHK_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPKHK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPKHK_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPKHK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPONV_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPONV_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPONV_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPONV_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPSGN_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPSGN_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-JPSGN_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH620-JPSGN_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH620",
+      "sku": "CQ-TZH620-KHK",
+      "suffix": "KHK",
+      "color_name": "100",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-KHK_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620KHK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-KHK_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620KHK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH620",
+      "sku": "CQ-TZH620-ONV",
+      "suffix": "ONV",
+      "color_name": "80",
+      "inferred_code": "ONV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ONV_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620ONV_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH620",
+      "sku": "CQ-TZH620-SGN",
+      "suffix": "SGN",
+      "color_name": "240",
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-SGN_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH620SGN_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZBLK_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZBLK_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZCOG_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZCOG_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZKHK_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZKHK_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZONV_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZONV_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZSGN_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH620-ZZSGN_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-DNC_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH621DNC_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-DNC_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH621DNC_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH621",
+      "sku": "CQ-TZH621-FRT",
+      "suffix": "FRT",
+      "color_name": "X",
+      "inferred_code": "FRT",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-FRT_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621FRT_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-FRT_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621FRT_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPFRT_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPFRT_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPFRT_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPFRT_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPUKK_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPUKK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPUKK_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPUKK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPUTC_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPUTC_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPUTC_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPUTC_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPWOV_L/XL",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPWOV_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-JPWOV_S/M",
+      "suffix": null,
+      "color_name": "JPB26061_CQ-TZH621-JPWOV_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-TGC_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH621TGC_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-TGC_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH621TGC_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH621",
+      "sku": "CQ-TZH621-UKK",
+      "suffix": "UKK",
+      "color_name": "30",
+      "inferred_code": "UKK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-UKK_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621UKK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-UKK_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621UKK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH621",
+      "sku": "CQ-TZH621-UTC",
+      "suffix": "UTC",
+      "color_name": "50",
+      "inferred_code": "UTC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-UTC_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621UTC_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH621",
+      "sku": "CQ-TZH621-WOV",
+      "suffix": "WOV",
+      "color_name": "X",
+      "inferred_code": "WOV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-WOV_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621WOV_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-WOV_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH621WOV_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-ZZUKK_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-ZZUKK_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-ZZUTC_L/XL",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH621-ZZUTC_S/M",
+      "suffix": null,
+      "color_name": "",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH640-KHK",
+      "suffix": "KHK",
+      "color_name": "0",
+      "inferred_code": "KHK",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__eedcdaa4e3de.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH640-KHK_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH640KHK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH640-SGN",
+      "suffix": "SGN",
+      "color_name": "46",
+      "inferred_code": "SGN",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__eedcdaa4e3de.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH640-SGN_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH640SGN_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH640-SGN_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH640SGN_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-UKK_L/XL",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH641UKK_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-UKK_S/M",
+      "suffix": null,
+      "color_name": "KR06061_CQTZH641UKK_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH641",
+      "sku": "CQ-TZH641-UTC",
+      "suffix": "UTC",
+      "color_name": "X",
+      "inferred_code": "UTC",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-UTC_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH641UTC_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-UTC_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH641UTC_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": "TZH641",
+      "sku": "CQ-TZH641-WOV",
+      "suffix": "WOV",
+      "color_name": "X",
+      "inferred_code": "WOV",
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__e9019fef8511.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-WOV_L/XL",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH641WOV_L/XL",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-TZH641-WOV_S/M",
+      "suffix": null,
+      "color_name": "KR05091_CQTZH641WOV_S/M",
+      "inferred_code": null,
+      "source": "MY-260821-01_J_H_안K_라이트플렉스_부니햇_3차_ETD_4월_중___이전자료__MY-260605__1dfded73bbcf.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPBLK",
+      "suffix": null,
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPCHC",
+      "suffix": null,
+      "color_name": "Charcoal",
+      "inferred_code": "CHC",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPKHK",
+      "suffix": null,
+      "color_name": "Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPNVY",
+      "suffix": null,
+      "color_name": "Navy",
+      "inferred_code": "NVY",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPOLV",
+      "suffix": null,
+      "color_name": "Olive",
+      "inferred_code": "ONV",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-JPSTL",
+      "suffix": null,
+      "color_name": "Steel",
+      "inferred_code": null,
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZCHC",
+      "suffix": "CHC",
+      "color_name": "Charcoal",
+      "inferred_code": "CHC",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZKHK",
+      "suffix": "KHK",
+      "color_name": "Khaki",
+      "inferred_code": "KHK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZNVY",
+      "suffix": "NVY",
+      "color_name": "Navy",
+      "inferred_code": "NVY",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZOLV",
+      "suffix": "OLV",
+      "color_name": "Olive",
+      "inferred_code": "OLV",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZSTG",
+      "suffix": "STG",
+      "color_name": "Steel Grey",
+      "inferred_code": "STG",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WBP112-ZZSTL",
+      "suffix": "STL",
+      "color_name": "Steel",
+      "inferred_code": "STL",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WXS002-ZZBEG",
+      "suffix": "BEG",
+      "color_name": "Beige",
+      "inferred_code": "BEG",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WXS002-ZZBLK",
+      "suffix": "BLK",
+      "color_name": "Black",
+      "inferred_code": "BLK",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WXS002-ZZNVY",
+      "suffix": "NVY",
+      "color_name": "Navy",
+      "inferred_code": "NVY",
+      "source": "MY-261099-99_금담_전J__영업1팀JP용_집업래쉬가드_9차_ETD_미정_이전자료_MY-251020-04_금담_박D__영업1팀JP용_집업래쉬가드_8차_ETD_2026_3월_말_1팀_재팬_수량_재팬_국내재팬_2025-09_발주_용_취합.제출.rev01.xlsx.txt"
+    },
+    {
+      "model": null,
+      "sku": "CQ-WXS416",
+      "suffix": null,
+      "color_name": "6.6",
+      "inferred_code": null,
+      "source": "MY-260629-00_J_H_이C_CN냉감팬츠_11차_ETD11월__견적__제출-_2024.09.11_민영__228f36988d99.txt"
+    }
+  ]
+}
