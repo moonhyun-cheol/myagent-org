@@ -1,6 +1,5 @@
 {
-  "openclaw_adapter_base_url": "http://127.0.0.1:8790",
   "openclaw_actor_id": "cqr-pa",
   "openclaw_fallback_local": false,
-  "note": "Organization OpenClaw defaults. Bearer token stays in data/vault/openclaw-adapter.json or env OPENCLAW_ADAPTER_TOKEN."
+  "note": "Do not hardcode Adapter host. GitHub overlay has no server IP. Each MY Agent sets data/vault/openclaw-adapter.json { base_url, token } (or env OPENCLAW_ADAPTER_BASE_URL / OPENCLAW_ADAPTER_TOKEN). Change base_url when the Adapter PC moves."
 }
