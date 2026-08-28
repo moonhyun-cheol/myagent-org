@@ -36,31 +36,10 @@ _tmp*
 # Local updater + raw NAS inputs (never commit)
 /_local/
 
-# PO samples / scratch
-/agent-module/data/source/
-/agent-module/data/po_sample_*.txt
+# Internal company data — local build or product_data API only (never commit)
+/agent-module/data/*
+!/agent-module/data/.gitkeep
 
-# NAS/generated product data — served from product_data API (not git)
-/agent-module/data/product_spec_index.json
-/agent-module/data/product_spec_index.txt
-/agent-module/data/model_catalog.json
-/agent-module/data/color_code_index.json
-/agent-module/data/color_code_index.txt
-/agent-module/data/po_color_index.json
-/agent-module/data/model_row_index.txt
-/agent-module/data/model_link_index.txt
-/agent-module/data/new_lineup_index.txt
-/agent-module/data/pr_base_index.txt
-/agent-module/data/pr_link_index.txt
-/agent-module/data/po_clothing_index.txt
-/agent-module/data/po_clothing_deep_index.md
-/agent-module/data/brand_active_report.json
-/agent-module/data/color_map_extract.json
-/agent-module/data/cqr_development_direction.txt
-/agent-module/data/cqr_plan_folders_index.md
-/agent-module/data/cqr_plans_docs_index.md
-/agent-module/data/planning_2026_index.md
-/agent-module/data/planning_2026_docs_index.md
-/agent-module/data/planning_2027_index.md
-/agent-module/data/planning_2027_docs_index.md
-/agent-module/data/codex/brand_manual_live.md
+# NAS scan / internal notes (not module code)
+/agent-module/prompt_concept/brand_scan.txt
+/agent-module/prompt_concept/CQR 컨셉 RA 설명서.txt

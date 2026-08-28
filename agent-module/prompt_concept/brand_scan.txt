@@ -1,4 +1,0 @@
-  File "<string>", line 53
-    print(f'{c}\t{b}\t{s[\
-                        ^
-SyntaxError: '[' was never closed

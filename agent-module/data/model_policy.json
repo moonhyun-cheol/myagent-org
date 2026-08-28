@@ -1,9 +1,0 @@
-{
-  "default_image_provider": "gemini_nanobanana",
-  "default_image_model": "gemini-3-pro-image-preview",
-  "default_upscale_provider": "gemini_nanobanana",
-  "default_upscale_model": "gemini-3-pro-image-preview",
-  "default_upscale_resolution": "4K",
-  "default_review_provider": "claude",
-  "default_review_model": "claude-sonnet-4-5"
-}
