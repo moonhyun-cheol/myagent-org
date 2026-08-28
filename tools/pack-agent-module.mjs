@@ -65,6 +65,13 @@ export function deriveCapabilities(extractDir, skillsManifest) {
   if (hasBrandDir || hasOverlays) capabilities.push('brand-context');
   if (existsSync(path.join(extractDir, 'pipelines'))) capabilities.push('research-pipeline');
   if (existsSync(path.join(extractDir, 'data'))) capabilities.push('brand-knowledge');
+  if (
+    existsSync(path.join(extractDir, 'automaton-tools.manifest.json'))
+    && existsSync(path.join(extractDir, 'openclaw-workflow-map.json'))
+    && existsSync(path.join(extractDir, 'deploy-overrides.json'))
+  ) {
+    capabilities.push('automaton-routing');
+  }
   if (!capabilities.includes('skills')) {
     failPack('packed module must include skills/manifest.json');
   }
