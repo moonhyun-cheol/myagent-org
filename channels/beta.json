@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 9,
+    "update_sequence": 10,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-08-28T02:46:00.534Z",
+    "published_at": "2026-08-28T03:48:20.532Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-9",
+      "release_tag": "update-10",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 564562,
-      "sha256": "35620966d7ecde0390fe9871d743afefe7b9f066e86be8149e1fb8a50fe715b3"
+      "size": 566168,
+      "sha256": "185d9c47a8f01c9c0423178919dd6578de82001ed5e231493f9e5c4dda9482e8"
     },
-    "payload_manifest_sha256": "e6766d98809ff2677152522f7b5ebb5b663a4c5714ff4e2a60b5c143ffb0782f",
-    "release_notes": ""
+    "payload_manifest_sha256": "9f23f800e74eba65aae328e1dd41ce85c6f1f07d30056be606f234fa73e73f1b",
+    "release_notes": "update-10: /반품율분석 slash routing, OpenClaw workflow map, Bulbasaur :8790 deploy overrides."
   },
-  "signature": "PUCSodm/bv7IaeiKbYCj/2uMrczWOANSdERyk/5p4EjJsXwUTdGGdvs51fqC7bBYH6VqB9xoaEJ+tbfu+RzTr84U9h8h42Ly88Itru6Rhu7TF0WHf6Pqc2UqeF13oEoJhaFOFsU1pxTarqGbz36x2haVjYqaXK5L+x7oggOb3O3e0HRIdVFEIwl/HiXLCtgo21pabLB5+u/loHF3bQFMbS6SkHaz+P8/4RSyuqru2owMGhSrxAqN48Hrk8rriP9r9D53sXYGsdXqeWshkcJf7pbhBqsneKjgEM6x/u8NY/WXQWsRAqdrmE6JeGAqydzDhEfr2q0CG50VCw5PmI77xLCiOW/zLY0kBRMwGl3k2hvrw/ieHakOULlpDAObSW/+JkMOrI52umOmuomItd2U0S4ONDlJPYgJD2pVrWRaRVVltdh8cjYYsKEvJYSyaxyF7i9h2aAKLHdeiBtfaeGm3f9Kfxvf2VmECJaZoGxLT9kszg/TtKd4HrRUHlXpifAQ"
+  "signature": "lSeCGDvT3z693eFANrH7Ii/pwHNTOEf9Gg/k+XKRAPmIRskAg0qsx2pjzGGKoyCErrU+GLB59JePmyoUtp/IcZfTYsQQXgRhcLnFCvC36ZgeURqGjUfYtXpLy17bA8DbNXr0llr3skAWUzYPOZsN0id3bAXqkAMemrYfhfCUMQ+qI33hK31mYzEcP4VGAg/OQgNsJxwN5PkH8f9y5USGjx838GQREkgfRwWwHAaJkhkjQyRaKJ7h/A2ZH7PXJOf7b0oJIaz4e2QgeQQyY5deCQldf9iFrvu31aODD/UimSrwoHFDQb1rZdM60mpMxrziXaK+i/yMt5GxNxkMMd10QBrd5i7o00JqWq1CYuyRvpCg7lQ290AfY9ChuG6rJEaqoUyV+F0Mvvf8W20Ro8rKc/QhOgJHxVWFh7KQVx2Q+VjSeqa9KFLkBncSJzjRpFy0TsGsJ2jXj7ivjwERE7qwn4kojFBx2IOj3nFZS6AnR8apOO4sY2T+qVYtSFDcQPlN"
 }
