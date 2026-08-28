@@ -1,0 +1,86 @@
+{
+  "version": 2,
+  "tools": [
+    {
+      "id": "amazon_return_manager_direct",
+      "description_ko": "반품율 분석",
+      "slash_prefixes": [
+        "/반품율분석",
+        "/반품율검토",
+        "/반품율조회"
+      ],
+      "default_command": "/반품율분석",
+      "anchors_ko": [
+        "/반품율분석"
+      ],
+      "anchors_en": [
+        "return rate"
+      ],
+      "intent_phrases_ko": [
+        "반품율"
+      ],
+      "intent_boost_ko": [
+        "반품율"
+      ],
+      "intent_pattern_strings": [
+        "반품"
+      ],
+      "intent_examples": [
+        "반품율 분석"
+      ],
+      "long_running": true
+    },
+    {
+      "id": "return_chi_squared",
+      "description_ko": "카이제곱",
+      "slash_prefixes": [
+        "/카이제곱"
+      ],
+      "default_command": "/카이제곱",
+      "anchors_ko": [
+        "/카이제곱"
+      ],
+      "anchors_en": [
+        "chi squared"
+      ],
+      "intent_phrases_ko": [
+        "카이제곱"
+      ],
+      "intent_boost_ko": [
+        "카이제곱"
+      ],
+      "intent_pattern_strings": [
+        "카이"
+      ],
+      "intent_examples": [
+        "카이제곱"
+      ]
+    },
+    {
+      "id": "us_sample_stock_lookup",
+      "description_ko": "미국샘플재고",
+      "slash_prefixes": [
+        "/미국샘플재고"
+      ],
+      "default_command": "/미국샘플재고",
+      "anchors_ko": [
+        "/미국샘플재고"
+      ],
+      "anchors_en": [
+        "us sample stock"
+      ],
+      "intent_phrases_ko": [
+        "미국샘플재고"
+      ],
+      "intent_boost_ko": [
+        "미국샘플"
+      ],
+      "intent_pattern_strings": [
+        "미국"
+      ],
+      "intent_examples": [
+        "미국샘플재고"
+      ]
+    }
+  ]
+}
