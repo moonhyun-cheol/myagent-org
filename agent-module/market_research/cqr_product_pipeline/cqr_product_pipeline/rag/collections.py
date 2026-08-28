@@ -46,6 +46,8 @@ COLLECTIONS: tuple[CollectionSpec, ...] = (
             "COLOR_CODE.md",
             "color_code_index.txt",
             "po_color_index.json",
+            "product_spec_index.json",
+            "product_spec_index.txt",
         ),
         doc_type="product_spec",
     ),
