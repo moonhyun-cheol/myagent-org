@@ -1,0 +1,184 @@
+# Product spec index (generated)
+# Generated: 2026-08-28T11:08:30+09:00
+# Models: 169 | work_sheet: 96 | avg coverage: 5.44/10
+
+## Coverage legend
+Fields: fabric blend/GSM, pockets, knee/gusset, waist, stretch, water/wind, wear temp, colors, pricing, inseam/sizes
+
+## Models with full work-sheet specs
+- HLP200: N94% SP6% @ 168.0gsm | pockets=12 | gusset=?cm | temp=- | std_price=48.98
+- HLP201: N94% SP6% @ 168.0gsm | pockets=12 | gusset=?cm | temp=- | std_price=43.98
+- HLP831: N70,P22,S8 @ 225.0gsm | pockets=16 | gusset=9.5cm | temp=- | std_price=46.98
+- HLP832: N70,P22,S8 @ 225.0gsm | pockets=18 | gusset=9.5cm | temp=- | std_price=52.98
+- HLP833: N70,P22,S8 @ 225.0gsm | pockets=18 | gusset=9.5cm | temp=- | std_price=55.98
+- HLP900: (FACE)92%P 8%SP,  (BACK)100% @ 345.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=48.98
+- HLP905: (FACE)92%P 8%SP,  (BACK)100% @ 345.0gsm | pockets=8 | gusset=9.5cm | temp=- | std_price=55.98
+- HLP910: (FACE)92%P 8%SP,  (BACK)100% @ 345.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=49.98
+- HLP920: (FACE)92%P 8%SP,  (BACK)100% @ 345.0gsm | pockets=8 | gusset=9.5cm | temp=- | std_price=55.98
+- TFP600: P64%,C34%,SP2% @ 205.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=39.98
+- TLP001: T/C 65/35 @ 220.0gsm | pockets=10 | gusset=9.5cm | temp=- | std_price=29.98
+- TLP117: T/C 65/35 @ 220.0gsm | pockets=10 | gusset=9.5cm | temp=- | std_price=43.98
+- TLP125: T/C 65/35 @ 220.0gsm | pockets=16 | gusset=9.5cm | temp=- | std_price=43.98
+- TLP135: T/C 65/35 @ 220.0gsm | pockets=16 | gusset=9.5cm | temp=- | std_price=45.98
+- TLP470: C98 SP2 @ 335.0gsm | pockets=10 | gusset=8.5cm | temp=20~30 | std_price=None
+- TWP308: T/C 65/35 @ 220.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=43.98
+- TWP320: T/C 65/35 @ 220.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=45.98
+- TWP330: T/C 65/35 @ 220.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=45.98
+- TXP102: N 87% SP 13% @ 160.0gsm | pockets=10 | gusset=9.5cm | temp=낮: -0 ~10°C | std_price=39.98
+- TXP110: N 87% SP 13% @ 160.0gsm | pockets=10 | gusset=9.5cm | temp=10~15 | std_price=39.98
+- TXP441: P 100% @ Nonegsm | pockets=12 | gusset=17.0cm | temp=20~30 | std_price=38.98
+- TXP900: N95%, SP5% @ 210.0gsm | pockets=14 | gusset=7.0cm | temp=낮: 5 ~ 15C | std_price=49.98
+- TXS101: N 87% SP 13% @ 160.0gsm | pockets=6 | gusset=7.5cm | temp=- | std_price=39.98
+- TFP621: P64%,C34%,SP2% @ 205.0gsm | pockets=12 | gusset=9.5cm | temp=- | std_price=42.98
+- TFP640: P64%,C34%,SP2% @ 205.0gsm | pockets=18 | gusset=9.5cm | temp=- | std_price=45.98
+- TFP641: P64%,C34%,SP2% @ 205.0gsm | pockets=18 | gusset=9.5cm | temp=- | std_price=45.98
+- TFP680: P64%,C34%,SP2% @ 205.0gsm | pockets=14 | gusset=9.5cm | temp=- | std_price=45.98
+- TFP681: P64%,C34%,SP2% @ 205.0gsm | pockets=16 | gusset=9.5cm | temp=- | std_price=45.98
+- TFP682: P64%,C34%,SP2% @ 205.0gsm | pockets=14 | gusset=9.5cm | temp=- | std_price=49.98
+- TFP683: P64%,C34%,SP2% @ 205.0gsm | pockets=14 | gusset=9.5cm | temp=- | std_price=49.98
+- TLP471: C98 SP2 @ 335.0gsm | pockets=16 | gusset=8.5cm | temp=- | std_price=49.98
+- TSP600: P64%,C34%,SP2% @ 205.0gsm | pockets=8 | gusset=8.0cm | temp=여름 (25~30) | std_price=29.98
+- TSP620: P64%,C34%,SP2% @ 205.0gsm | pockets=16 | gusset=8.0cm | temp=여름 (20~30) | std_price=33.98
+- TSP640: P64%,C34%,SP2% @ 205.0gsm | pockets=10 | gusset=8.0cm | temp=여름 (20~30) | std_price=37.98
+- TSP641: P64%,C34%,SP2% @ 205.0gsm | pockets=10 | gusset=8.0cm | temp=여름 (20~30) | std_price=39.98
+- TXP802: C61%,N36%,SP3% @ 180.0gsm | pockets=10 | gusset=9.0cm | temp=- | std_price=49.98
+- TXP805: C61%,N36%,SP3% @ 180.0gsm | pockets=12 | gusset=9.0cm | temp=- | std_price=49.98
+- TXP901: N95%, SP5% @ 210.0gsm | pockets=14 | gusset=7.0cm | temp=- | std_price=50.98
+- TXS803: C61%,N36%,SP3% @ 180.0gsm | pockets=12 | gusset=8.0cm | temp=여름 (20~30) | std_price=39.98
+- TXS804: C61%,N36%,SP3% @ 180.0gsm | pockets=12 | gusset=8.0cm | temp=여름 (20~30) | std_price=39.98
+- TFP503: ? @ ?gsm | pockets=10 | gusset=9.5cm | temp=- | std_price=39.98
+- TFP571: ? @ ?gsm | pockets=10 | gusset=9.5cm | temp=- | std_price=48.98
+- TFP572: ? @ ?gsm | pockets=10 | gusset=9.5cm | temp=- | std_price=49.98
+- TLP731: ? @ ?gsm | pockets=9 | gusset=9.5cm | temp=- | std_price=46.98
+- TLP760: ? @ ?gsm | pockets=9 | gusset=9.5cm | temp=- | std_price=45.98
+- TLP761: ? @ ?gsm | pockets=9 | gusset=9.5cm | temp=- | std_price=45.98
+- TOS411: C61% ,P37%, SP2% @ Nonegsm | pockets=6 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=39.98
+- TOS420: C61% ,P37%, SP2% @ Nonegsm | pockets=4 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=35.98
+- TXP202: P 100% @ Nonegsm | pockets=12 | gusset=17.0cm | temp=15~25 | std_price=39.98
+- TXP203: P 100% @ Nonegsm | pockets=12 | gusset=17.0cm | temp=5~15 | std_price=39.98
+- TXS201: P 100% @ Nonegsm | pockets=12 | gusset=7.5cm | temp=여름 (20~30) | std_price=35.98
+- WFP611: N90% S10% @ Nonegsm | pockets=10 | gusset=?cm | temp=- | std_price=45.98
+- HKJ001: ? @ ?gsm | pockets=4 | gusset=?cm | temp=- | std_price=69.98
+- HKJ003: ? @ ?gsm | pockets=4 | gusset=?cm | temp=-5~5°C | std_price=69.98
+- HOF110: ? @ ?gsm | pockets=4 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=31.98
+- HOF113: ? @ ?gsm | pockets=4 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=32.98
+- HOK909: (FACE)92%P 8%SP,  (BACK)100% @ 345.0gsm | pockets=0 | gusset=?cm | temp=-5~5°C | std_price=55.98
+- TOS422: C61% ,P37%, SP2% @ Nonegsm | pockets=4 | gusset=?cm | temp=- | std_price=39.98
+- TOS430: C61% ,P37%, SP2% @ Nonegsm | pockets=6 | gusset=?cm | temp=- | std_price=43.98
+- WFP601: N90% S10% @ Nonegsm | pockets=8 | gusset=?cm | temp=- | std_price=43.98
+- WFP851: N90% S10% @ Nonegsm | pockets=10 | gusset=9.0cm | temp=- | std_price=55.98
+- HKZ200: 95%P, 5%SP @ 300.0gsm | pockets=0 | gusset=?cm | temp=-5~5°C | std_price=39.98
+- HKZ303: P 100% @ Nonegsm | pockets=0 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=33.98
+- HKZ305: P 100% @ Nonegsm | pockets=0 | gusset=?cm | temp=- | std_price=39.98
+- HOF120: ? @ ?gsm | pockets=4 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=35.98
+- HOF123: ? @ ?gsm | pockets=4 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=35.98
+- HOH321: ? @ ?gsm | pockets=8 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=48.98
+- HOH322: ? @ ?gsm | pockets=8 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=58.98
+- TOK002: ? @ ?gsm | pockets=0 | gusset=?cm | temp=20~27°C | std_price=21.98
+- TOK004: ? @ ?gsm | pockets=0 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=25.98
+- TOK100: ? @ ?gsm | pockets=0 | gusset=?cm | temp=22~30도 | std_price=24.98
+- TOK171: P 100% @ 150.0gsm | pockets=0 | gusset=?cm | temp=N/A | std_price=29.98
+- TOS101: ? @ ?gsm | pockets=0 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=16.98
+- TOS120: ? @ ?gsm | pockets=0 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=18.98
+- TOS130: ? @ ?gsm | pockets=0 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=19.98
+- TOS510: ? @ ?gsm | pockets=4 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=35.98
+- TOS511: ? @ ?gsm | pockets=4 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=37.98
+- TXP140: ? @ ?gsm | pockets=0 | gusset=?cm | temp=20~30 | std_price=39.98
+- TXP406: ? @ ?gsm | pockets=0 | gusset=?cm | temp=20~30 | std_price=39.98
+- TXP410: ? @ ?gsm | pockets=0 | gusset=?cm | temp=20~30 | std_price=42.98
+- WHP830: ? @ ?gsm | pockets=10 | gusset=?cm | temp=cold | std_price=47.99
+- HKZ202: 95%P, 5%SP @ 300.0gsm | pockets=0 | gusset=?cm | temp=- | std_price=59.98
+- HKZ204: 95%P, 5%SP @ 300.0gsm | pockets=0 | gusset=?cm | temp=- | std_price=59.98
+- HKZ210: 95%P, 5%SP @ 300.0gsm | pockets=0 | gusset=?cm | temp=가을 : 2°C ~ 10°C | std_price=45.98
+- HKZ211: 95%P, 5%SP @ 300.0gsm | pockets=0 | gusset=?cm | temp=- | std_price=48.98
+- TOS230: ? @ ?gsm | pockets=0 | gusset=?cm | temp=Scouting (7월~8월 초) : 10~32 | std_price=29.98
+- BL403: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=79.98
+- BT402: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=83.98
+- BZ401: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=85.98
+- BZ405: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=85.98
+- TOK012: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=23.98
+- TOS111: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=18.98
+- TOS301: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=36.98
+- TOS303: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=36.98
+- TOS234: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=None
+- BT405: ? @ ?gsm | pockets=0 | gusset=?cm | temp=- | std_price=None
+
+## Models needing work-sheet backfill (coverage < 5)
+- BL403: score=4 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base,work_sheet:BL403_최종작지_01-1.xlsx.txt
+- BT402: score=4 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base,work_sheet:BL403_최종작지_01-1.xlsx.txt
+- BZ401: score=4 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base,work_sheet:BL403_최종작지_01-1.xlsx.txt
+- BZ405: score=4 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base,work_sheet:BL403_최종작지_01-1.xlsx.txt
+- HKJ002: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HLP010: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HLP011: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOS001: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TFP500: score=4 sources=fabric_test,model_row_index,pr_base
+- TFP530: score=4 sources=fabric_test,model_row_index,pr_base
+- TFP620: score=4 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TLP002: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TLP762: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TOK001: score=4 sources=fabric_test,model_row_index,pr_base
+- TOK012: score=4 sources=fabric_test,model_catalog,pr_base,work_sheet:TOK002_MY-260703-00_신티에스_인터락메쉬145_3차_worksheet_260713.xlsx.txt
+- TOS111: score=4 sources=fabric_test,model_catalog,pr_base,work_sheet:TOK002_MY-260703-00_신티에스_인터락메쉬145_3차_worksheet_260713.xlsx.txt
+- TOS301: score=4 sources=model_catalog,pr_base,work_sheet:TOK002_MY-260703-00_신티에스_인터락메쉬145_3차_worksheet_260713.xlsx.txt
+- TOS303: score=4 sources=model_catalog,pr_base,work_sheet:TOK002_MY-260703-00_신티에스_인터락메쉬145_3차_worksheet_260713.xlsx.txt
+- TOS612: score=4 sources=clothing_po_dump,fabric_test,model_catalog,model_row_index,po_color_index,pr_base
+- TWP708: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TWP720: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TXP200: score=4 sources=fabric_test,model_catalog,po_color_index,pr_base
+- TXP201: score=4 sources=fabric_test,model_catalog,po_color_index,pr_base
+- TXS303: score=4 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HKJ501: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HKJ502: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOH350: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK700: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK710: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK720: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK730: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK740: score=3 sources=fabric_test,model_catalog,pr_base
+- HOK808: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOK809: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOK817: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOK832: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOK833: score=3 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TFP531: score=3 sources=fabric_test,model_catalog,pr_base
+- TOS234: score=3 sources=work_sheet:TOL234_MY-260108-02_N트리코트메쉬_worksheet_260406.xlsx.txt
+- TOS601: score=3 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOS602: score=3 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOS611: score=3 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOS801: score=3 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TXP205: score=3 sources=fabric_test,model_catalog,pr_base
+- TXP305: score=3 sources=fabric_test,model_catalog,pr_base
+- TXP700: score=3 sources=clothing_po_dump,model_row_index,po_color_index,pr_base
+- TXP710: score=3 sources=clothing_po_dump,model_row_index,po_color_index,pr_base
+- BT405: score=2 sources=work_sheet:BT402_최종작지_01-1.xlsx.txt
+- HKJ503: score=2 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HKZ300: score=2 sources=fabric_test,model_catalog,model_row_index,pr_base
+- HOH352: score=2 sources=fabric_test,model_catalog,pr_base
+- HOS219: score=2 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TOK271: score=2 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TOL234: score=2 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOL751: score=2 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOL755: score=2 sources=clothing_po_dump,fabric_test,model_catalog,po_color_index,pr_base
+- TOS121: score=2 sources=fabric_test,model_catalog,model_row_index,pr_base
+- TXS903: score=2 sources=model_catalog,model_row_index,pr_base
+- HKZ921: score=1 sources=fabric_test,model_catalog,pr_base
+- HLP999: score=1 sources=model_row_index
+- HOF100: score=1 sources=fabric_test,model_catalog,pr_base
+- HOF200: score=1 sources=model_row_index
+- HOK709: score=1 sources=fabric_test,model_catalog,pr_base
+- HOK719: score=1 sources=fabric_test,model_catalog,pr_base
+- HOK729: score=1 sources=fabric_test,model_catalog,pr_base
+- HOK779: score=1 sources=fabric_test,model_catalog,pr_base
+- HOK901: score=1 sources=fabric_test,model_catalog,pr_base
+- HOS212: score=1 sources=fabric_test,model_catalog,pr_base
+- HOS215: score=1 sources=fabric_test,model_catalog,pr_base
+- HOS217: score=1 sources=fabric_test,model_catalog,pr_base
+- TOL601: score=1 sources=fabric_test,model_catalog,pr_base
+- TOL602: score=1 sources=fabric_test,model_catalog,pr_base
+- TOL603: score=1 sources=fabric_test,model_catalog,pr_base
+- TOL604: score=1 sources=fabric_test,model_catalog,pr_base
+- TOL605: score=1 sources=fabric_test,model_catalog,pr_base
+- TXP111: score=1 sources=model_catalog,pr_base
+- TXP411: score=1 sources=model_catalog,pr_base
+- TXS103: score=1 sources=model_catalog,pr_base
