@@ -4,83 +4,132 @@
     {
       "id": "amazon_return_manager_direct",
       "description_ko": "반품율 분석",
-      "slash_prefixes": [
-        "/반품율분석",
-        "/반품율검토",
-        "/반품율조회"
-      ],
+      "slash_prefixes": ["/반품율분석", "/반품율검토", "/반품율조회"],
       "default_command": "/반품율분석",
-      "anchors_ko": [
-        "/반품율분석"
-      ],
-      "anchors_en": [
-        "return rate"
-      ],
-      "intent_phrases_ko": [
-        "반품율"
-      ],
-      "intent_boost_ko": [
-        "반품율"
-      ],
-      "intent_pattern_strings": [
-        "반품"
-      ],
-      "intent_examples": [
-        "반품율 분석"
-      ],
+      "anchors_ko": ["/반품율분석"],
+      "anchors_en": ["return rate"],
+      "intent_phrases_ko": ["반품율"],
+      "intent_boost_ko": ["반품율"],
+      "intent_pattern_strings": ["반품율"],
+      "intent_examples": ["반품율 분석"],
       "long_running": true
     },
     {
       "id": "return_chi_squared",
       "description_ko": "카이제곱",
-      "slash_prefixes": [
-        "/카이제곱"
-      ],
+      "slash_prefixes": ["/카이제곱"],
       "default_command": "/카이제곱",
-      "anchors_ko": [
-        "/카이제곱"
-      ],
-      "anchors_en": [
-        "chi squared"
-      ],
-      "intent_phrases_ko": [
-        "카이제곱"
-      ],
-      "intent_boost_ko": [
-        "카이제곱"
-      ],
-      "intent_pattern_strings": [
-        "카이"
-      ],
-      "intent_examples": [
-        "카이제곱"
-      ]
+      "anchors_ko": ["/카이제곱"],
+      "anchors_en": ["chi squared"],
+      "intent_phrases_ko": ["카이제곱"],
+      "intent_boost_ko": ["카이제곱"],
+      "intent_pattern_strings": ["카이제곱"],
+      "intent_examples": ["카이제곱"],
+      "long_running": true
     },
     {
       "id": "us_sample_stock_lookup",
       "description_ko": "미국샘플재고",
-      "slash_prefixes": [
-        "/미국샘플재고"
-      ],
+      "slash_prefixes": ["/미국샘플재고"],
       "default_command": "/미국샘플재고",
-      "anchors_ko": [
-        "/미국샘플재고"
-      ],
-      "anchors_en": [
-        "us sample stock"
-      ],
-      "intent_phrases_ko": [
-        "미국샘플재고"
-      ],
-      "intent_boost_ko": [
-        "미국샘플"
-      ],
-      "intent_pattern_strings": [
-        "미국"
-      ],
-      "intent_examples": [
-        "미국샘플재고"
-      ]
+      "anchors_ko": ["/미국샘플재고"],
+      "anchors_en": ["us sample stock"],
+      "intent_phrases_ko": ["미국샘플재고"],
+      "intent_boost_ko": ["미국샘플"],
+      "intent_pattern_strings": ["미국샘플재고"],
+      "intent_examples": ["미국샘플재고"],
+      "long_running": true
+    },
+    {
+      "id": "downloadtable_ctr",
+      "description_ko": "CTR 다운로드",
+      "slash_prefixes": ["/CTR"],
+      "default_command": "/CTR",
+      "anchors_ko": ["/CTR"],
+      "anchors_en": ["CTR"],
+      "intent_phrases_ko": ["CTR"],
+      "intent_boost_ko": ["CTR"],
+      "intent_pattern_strings": ["^/CTR"],
+      "intent_examples": ["/CTR TAC_BOONIE"],
+      "long_running": true
+    },
+    {
+      "id": "downloadtable_po_review",
+      "description_ko": "발주검토자료",
+      "slash_prefixes": ["/발주검토자료"],
+      "default_command": "/발주검토자료",
+      "anchors_ko": ["/발주검토자료"],
+      "anchors_en": ["po review"],
+      "intent_phrases_ko": ["발주검토자료"],
+      "intent_boost_ko": ["발주검토"],
+      "intent_pattern_strings": ["발주검토자료"],
+      "intent_examples": ["/발주검토자료 POLO_LS"],
+      "long_running": true
+    },
+    {
+      "id": "livesi_base_source",
+      "description_ko": "라이브계절지수",
+      "slash_prefixes": ["/라이브계절지수"],
+      "default_command": "/라이브계절지수",
+      "anchors_ko": ["/라이브계절지수"],
+      "anchors_en": ["live SI"],
+      "intent_phrases_ko": ["라이브계절지수"],
+      "intent_boost_ko": ["계절지수"],
+      "intent_pattern_strings": ["라이브계절"],
+      "intent_examples": ["/라이브계절지수"],
+      "long_running": true
+    },
+    {
+      "id": "po_bms_workfile",
+      "description_ko": "발주서등록",
+      "slash_prefixes": ["/발주서등록"],
+      "default_command": "/발주서등록",
+      "anchors_ko": ["/발주서등록"],
+      "anchors_en": ["PO BMS"],
+      "intent_phrases_ko": ["발주서등록"],
+      "intent_boost_ko": ["발주서"],
+      "intent_pattern_strings": ["발주서등록"],
+      "intent_examples": ["/발주서등록 MY-260508-00"],
+      "long_running": true
+    },
+    {
+      "id": "po_prep_adv",
+      "description_ko": "발주정보용판매",
+      "slash_prefixes": ["/발주정보용판매"],
+      "default_command": "/발주정보용판매",
+      "anchors_ko": ["/발주정보용판매"],
+      "anchors_en": ["PO prep"],
+      "intent_phrases_ko": ["발주정보용판매"],
+      "intent_boost_ko": ["발주정보"],
+      "intent_pattern_strings": ["발주정보용"],
+      "intent_examples": ["/발주정보용판매"],
+      "long_running": true
+    },
+    {
+      "id": "box_barcode_generate",
+      "description_ko": "박스바코드생성",
+      "slash_prefixes": ["/박스바코드생성"],
+      "default_command": "/박스바코드생성",
+      "anchors_ko": ["/박스바코드생성"],
+      "anchors_en": ["box barcode"],
+      "intent_phrases_ko": ["박스바코드생성"],
+      "intent_boost_ko": ["박스바코드"],
+      "intent_pattern_strings": ["박스바코드"],
+      "intent_examples": ["/박스바코드생성 J&H"],
+      "long_running": true
+    },
+    {
+      "id": "model_genealogy",
+      "description_ko": "모델가계도",
+      "slash_prefixes": ["/모델가계도"],
+      "default_command": "/모델가계도",
+      "anchors_ko": ["/모델가계도"],
+      "anchors_en": ["model genealogy"],
+      "intent_phrases_ko": ["모델가계도"],
+      "intent_boost_ko": ["가계도"],
+      "intent_pattern_strings": ["모델가계도"],
+      "intent_examples": ["/모델가계도 TXP441"],
+      "long_running": true
     }
   ]
 }
