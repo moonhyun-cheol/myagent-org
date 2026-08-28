@@ -3,7 +3,7 @@
   "kind": "organization-module",
   "version": "1.0.0-beta.1",
   "update_channel": "beta",
-  "update_sequence": 11,
+  "update_sequence": 12,
   "minimum_supported_sequence": 1,
   "required_core_api": "1.0.0-beta.1",
   "install_root": "modules/organization",

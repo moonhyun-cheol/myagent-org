@@ -12,8 +12,7 @@
       "feature": "chat",
       "brand_files": [
         "skills/market-research.md",
-        "market_research/CQR_MARKET_INJECT.md",
-        "data/CQR_INTERNAL_STRATEGY_v3.1.md"
+        "market_research/CQR_MARKET_INJECT.md"
       ],
       "bundle_files": [],
       "pipeline_script": "pipelines/market_research.py"
@@ -25,8 +24,7 @@
       "brand_files": [
         "skills/brand-concept.md",
         "prompt_concept/AGENTS.md",
-        "prompt_concept/MY_prompt.md",
-        "data/CQR_INTERNAL_STRATEGY_v3.1.md"
+        "prompt_concept/MY_prompt.md"
       ],
       "bundle_files": []
     }
