@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 10,
+    "update_sequence": 11,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-08-28T03:48:20.532Z",
+    "published_at": "2026-08-28T04:06:45.720Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-10",
+      "release_tag": "update-11",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 566168,
-      "sha256": "185d9c47a8f01c9c0423178919dd6578de82001ed5e231493f9e5c4dda9482e8"
+      "size": 567242,
+      "sha256": "db01bc4887e9c229d9580cce483a60f57758d37826b29fcdd710829c876bebbe"
     },
-    "payload_manifest_sha256": "9f23f800e74eba65aae328e1dd41ce85c6f1f07d30056be606f234fa73e73f1b",
-    "release_notes": "update-10: /반품율분석 slash routing, OpenClaw workflow map, Bulbasaur :8790 deploy overrides."
+    "payload_manifest_sha256": "8a65992287e72eb2918d44cd6c376e89459685a118a7c8cddcddf96daf0f25e2",
+    "release_notes": "update-11: AUTOMATON.md, automaton-routing capability, deriveCapabilities pack parity."
   },
-  "signature": "lSeCGDvT3z693eFANrH7Ii/pwHNTOEf9Gg/k+XKRAPmIRskAg0qsx2pjzGGKoyCErrU+GLB59JePmyoUtp/IcZfTYsQQXgRhcLnFCvC36ZgeURqGjUfYtXpLy17bA8DbNXr0llr3skAWUzYPOZsN0id3bAXqkAMemrYfhfCUMQ+qI33hK31mYzEcP4VGAg/OQgNsJxwN5PkH8f9y5USGjx838GQREkgfRwWwHAaJkhkjQyRaKJ7h/A2ZH7PXJOf7b0oJIaz4e2QgeQQyY5deCQldf9iFrvu31aODD/UimSrwoHFDQb1rZdM60mpMxrziXaK+i/yMt5GxNxkMMd10QBrd5i7o00JqWq1CYuyRvpCg7lQ290AfY9ChuG6rJEaqoUyV+F0Mvvf8W20Ro8rKc/QhOgJHxVWFh7KQVx2Q+VjSeqa9KFLkBncSJzjRpFy0TsGsJ2jXj7ivjwERE7qwn4kojFBx2IOj3nFZS6AnR8apOO4sY2T+qVYtSFDcQPlN"
+  "signature": "OmXnVAC7BUcFimztwe/yymaiac3kX2+QTQHu/HaKoZt+BGOG+mpn/gG+dMGsssuk/znBwRhg11X0E2DX94jH6DWvlgcqNtfmGlVHXqrZB676CRqvUNmsrN3dz7VdG63Q1vzJEXcqNEPlDWtlbTlKMv7lDyA5FAKxZXztjAK/BomXvj9Ak7SzbQ22alGa1UK9sRJLJziDIVQBwco66VDb69V9ixwrrxP8BNJU1Iz+q2u5/6OvFwhgGM0Bcx2EeiF5TeI/nftnxJNxQLfm86SzGrNIRrny2R/UklgicZwy0W1TbkQ/5TNH38uVd0h3nReNNH/HdId7vjXWcDYAKbhn/oH7MvgBtm78qzaolhNXrPPwaqVgyMdiFMtRl3LxEbWO369/pMBY4y0eHPjs7tOftTjg79OP64RyEZGg5isrEPFf1KRmHgzH5/nEdWU+/k+aIuqmp9z8553TH7bLwrqRUUzJaOEerhNMW5zYycoTiWl7jAyca2NyzDdgXP/usD+T"
 }
