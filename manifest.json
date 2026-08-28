@@ -3,11 +3,12 @@
   "kind": "organization-module",
   "version": "1.0.0-beta.1",
   "update_channel": "beta",
-  "update_sequence": 8,
+  "update_sequence": 9,
   "minimum_supported_sequence": 1,
   "required_core_api": "1.0.0-beta.1",
   "install_root": "modules/organization",
   "brand_manual_url": "http://192.168.1.248:8080/api/brand-manual/current.md",
+  "product_data_base_url": "http://192.168.1.248:8080/api/product-data",
   "update_repository": "moonhyun-cheol/myagent-org",
   "update_feed_url": "https://raw.githubusercontent.com/moonhyun-cheol/myagent-org/main/channels/beta.json"
 }
