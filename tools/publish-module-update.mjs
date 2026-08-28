@@ -88,6 +88,7 @@ writeFileSync(
     update_feed_url: updateFeedUrl,
     update_channel: channel,
     brand_manual_url: String(product.brand_manual_url ?? '').trim() || undefined,
+    product_data_base_url: String(product.product_data_base_url ?? '').trim() || undefined,
     capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',
