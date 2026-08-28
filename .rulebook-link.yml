@@ -1,9 +1,0 @@
-schema_version: 2
-version: 1
-project_id: MY_CUSTOM_CODEX-COMPANY
-project_name: MY Agent organization-module
-rulebook_workspace: ../RULEBOOK
-rulebook_dir: ../RULEBOOK/MY_CUSTOM_CODEX-COMPANY
-manifest: ../RULEBOOK/MY_CUSTOM_CODEX-COMPANY/rulebook.yml
-active_rulebook_id: main
-source_root: .

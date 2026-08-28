@@ -16,6 +16,23 @@ Thumbs.db
 ~$*
 _tmp*
 
+# Rulebook (canonical: ../RULEBOOK — never commit)
+.rulebook-link.yml
+rulebook/
+
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.chroma/
+**/.checkpoints/
+**/output/
+**/output_run*/
+*.pyc
+.DS_Store
+Thumbs.db
+~$*
+_tmp*
+
 # Local updater + raw NAS inputs (never commit)
 /_local/
 
