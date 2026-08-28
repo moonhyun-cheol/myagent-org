@@ -49,7 +49,10 @@ assert.match(publish, /brand_manual_url/);
 const companyManifest = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 assert.match(String(companyManifest.brand_manual_url ?? ''), /192\.168\.1\.248:8080\/api\/brand-manual\/current\.md/);
 assert.match(publish, /MY_AGENT_ORGANIZATION_MODULE_SOURCE \|\| root/);
-assert.equal(existsSync(path.join(root, 'agent-module', 'prompt_concept')), true);
-assert.equal(existsSync(path.join(root, 'agent-module', 'market_research', 'cqr_product_pipeline')), true);
+  assert.equal(existsSync(path.join(root, 'agent-module', 'prompt_concept')), true);
+  assert.equal(existsSync(path.join(root, 'agent-module', 'market_research', 'cqr_product_pipeline')), true);
+  assert.equal(existsSync(path.join(root, 'agent-module', 'automaton-tools.manifest.json')), true);
+  assert.equal(existsSync(path.join(root, 'agent-module', 'openclaw-workflow-map.json')), true);
+  assert.equal(existsSync(path.join(root, 'agent-module', 'deploy-overrides.json')), true);
 
 console.log('verify-module-pack: ok');
