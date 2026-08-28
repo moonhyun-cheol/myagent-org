@@ -33,6 +33,9 @@ COLLECTIONS: tuple[CollectionSpec, ...] = (
             "BRAND_INDEX.md",
             "cqr_development_direction.txt",
             "brand_active_report.json",
+            "model_catalog.json",
+            "new_lineup_index.txt",
+            "model_row_index.txt",
         ),
         doc_type="catalog",
     ),
@@ -41,6 +44,8 @@ COLLECTIONS: tuple[CollectionSpec, ...] = (
         relative_paths=(
             "PRODUCT_DEV_SPEC_ENGINE.md",
             "COLOR_CODE.md",
+            "color_code_index.txt",
+            "po_color_index.json",
         ),
         doc_type="product_spec",
     ),
