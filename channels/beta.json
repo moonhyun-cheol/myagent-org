@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 7,
+    "update_sequence": 8,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-08-28T01:05:34.144Z",
+    "published_at": "2026-08-28T02:10:29.827Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-7",
+      "release_tag": "update-8",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 805584,
-      "sha256": "b41e5797f244bba53634792cb17d66e82706974017ad19213c7ecb762fca2e79"
+      "size": 1054652,
+      "sha256": "e6f44237d454c299ad2a10b407546d76c533de2557bf3b5ffee3de4e4a16161d"
     },
-    "payload_manifest_sha256": "b664a465be4bcb69e9184329be2577b33ca5e8a606f6a5f1dd18edb0f5132669",
+    "payload_manifest_sha256": "694520d89e275c09bbf95eec1cf39aa8934f60911dcf4692fe0ee6a44dfdd423",
     "release_notes": ""
   },
-  "signature": "VctCFSoeUxHfK0va5rd0np8wzaD60fREGfvJXdSHqSrbLgFR3yKfaHoYr5hT0Ie2RD/lazYCceshXI6YbwAlRNOBjGlUaOld40zFZR36sQIoClky7wplJq0i1di+GiMxTM0k79Reu7BPBR2KzBYXUFCQVxZf9CEHrG9yuaxqtDhFQqxwXJVa25w3hc/5+an+MrkAlWM3kuZvLiMyORnKPpNWv4U4CwrnCT9ltvLUu3iEqo3Ii4rgZLzR/NrHzCfzUKeOINpv3QmRSj2zJO02ha3QvE823mxv8M1+BojtUyhzoUWqAoMnEpUKSQuGt2vs7+59hOMpgx2SqohyVH0SKKmC7xdC8dS4hKvcD67beNSXOnZn8p0UYFRV4sugctQlP4Yz9GqGK7VhWMwwElKb7tHx7WOVde3W6kWvmb9UOaae3KZv/8RPX2YFE2AmvJWtQ122/6v+2h0657tuZwBhoCZm51wzLuf3sYDm8/AsJnqR7IBSEYTPE5oIC92pI0jQ"
+  "signature": "ZzuWcG1xSWaM6/Asul/DzAJca4is+1d8d4czNDcIsQSIHkWnbsm6KMlHO9wFoGJQpLxLEL/aTAd48VNpcSbcznHxn2dEvxsIaY9YGtQt0TUs6gsT0GC4mPc6XCAt9WMDNgM73Qfyza4kZ9yD7F8F/LJteGYHFS49cl7WNVJ6QziME0shWAO+8dTV+C+JNsXT+Ie4d/xrYMoNWL6R0cMeZcC4Dtzz4H3O0/YAhGY/HM0ZHlpiss7tINvlp6qvulTc4COg9Ug3KgmV1gtUPx5+qau5CiCxCyR7bJkXbFkjTwEXt7WKJ8QThAoStbbAP67dCY4objzMVYqSomvOj8rEmBvamqtFEYadQqBU13mqb7po+GoHw9UkrSKD47Gldg19rlBIYQ3jHF4ySwzQfqMhmPKso84nO/lXA0SM8sRNlWENMBHz/cIlxVRBPLeCeyS1+eW+bEeXvMjjTGRKE2zY8aLTb5aJzSdmGRCXrKpJtiRvnavsphBx3Om6LNS2ajDO"
 }
