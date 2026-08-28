@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "workflows": {
+    "amazon_return_manager_direct": {
+      "task_profile_id": "safe_code_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "amazon_return_manager_direct"
+      }
+    },
+    "downloadtable_ctr": {
+      "task_profile_id": "safe_online_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "downloadtable_ctr"
+      }
+    },
+    "downloadtable_po_review": {
+      "task_profile_id": "safe_online_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "downloadtable_po_review"
+      }
+    },
+    "livesi_base_source": {
+      "task_profile_id": "safe_online_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "livesi_base_source"
+      }
+    },
+    "us_sample_stock_lookup": {
+      "task_profile_id": "safe_code_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "us_sample_stock_lookup"
+      }
+    },
+    "po_bms_workfile": {
+      "task_profile_id": "safe_code_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "po_bms_workfile",
+        "stage": "all"
+      }
+    },
+    "po_prep_adv": {
+      "task_profile_id": "safe_code_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "po_prep_adv"
+      }
+    },
+    "return_chi_squared": {
+      "task_profile_id": "safe_code_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "return_chi_squared"
+      }
+    }
+  }
+}
