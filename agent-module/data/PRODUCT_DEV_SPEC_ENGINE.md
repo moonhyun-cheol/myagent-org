@@ -4,6 +4,12 @@ Purpose: recommend **concrete, spec-level** decisions for CQR new product develo
 
 Purpose Above All: every spec choice must serve a task, not decoration.
 
+## Product data source (not in git)
+
+Structured indexes (`product_spec_index`, `model_catalog`, `model_row_index`, `color_code_index`, `po_color_index`, PR/PO indexes) are **generated from NAS** and served from **`product_data_base_url`** (see root `manifest.json`). They are written locally to `agent-module/data/` by `_local/info-update/update.py --only indexes` and pulled by the app at runtime — same pattern as `brand_manual_url`.
+
+If an index file is missing locally, use brand/catalog markdown in git plus mark spec fields **확인 필요** until data sync completes.
+
 ## When to activate
 
 - 신제품 / 신규모델 / 개발 / 스펙 / spec / tech pack / 도식화 / 기획안
