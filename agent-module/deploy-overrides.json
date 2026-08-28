@@ -1,0 +1,6 @@
+{
+  "openclaw_adapter_base_url": "http://127.0.0.1:8790",
+  "openclaw_actor_id": "cqr-pa",
+  "openclaw_fallback_local": false,
+  "note": "Organization OpenClaw defaults. Bearer token stays in data/vault/openclaw-adapter.json or env OPENCLAW_ADAPTER_TOKEN."
+}
