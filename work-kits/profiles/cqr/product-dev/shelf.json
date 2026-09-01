@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "product-dev",
+  "group": "cqr",
+  "label": "CQR 제품개발",
+  "description": "제품 컨셉·시장조사·샘플 사이즈 작업에 맞게 스킬을 맞춥니다.",
+  "pull": [],
+  "plugins": { "enable": {} },
+  "ui": {
+    "pinned_skill_ids": [
+      "org:brand_concept",
+      "brand_concept",
+      "org:market_research",
+      "market_research",
+      "org:size_guide",
+      "size_guide"
+    ]
+  }
+}
