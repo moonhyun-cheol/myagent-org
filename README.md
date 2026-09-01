@@ -1,22 +1,37 @@
 # myagent-org
 
-**1.0.0-beta.1** · seq **5** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
+**1.0.0-beta.1** · org seq **13** · work-kit catalog seq **1** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
 
-MY Agent 조직 모듈만 다룹니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent)입니다.
+CQR용 **조직 모듈**(스킬·slash)과 **작업 키트**(프로필)를 한 레포에서 게시합니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent).
 
-| | |
-|---|---|
-| 소스 | `agent-module/` (스킬, 컨셉 RA, 시장조사, 브랜드 데이터) |
-| 버전 | `manifest.json` · [repo-target.json](repo-target.json) |
-| 앱 본체 | [`myagent`](https://github.com/moonhyun-cheol/myagent) |
+## 두 갈래 (섞지 않음)
 
-설정 → 스킬에서 이 저장소 릴리스 zip을 한 번 고르면 설치됩니다. 이후 앱이 켜질 때 seq가 더 큰 모듈 zip만 자동 적용합니다. `.chroma` / Excel / NAS 추출은 git에 넣지 않습니다.
+| 갈래 | 소스 | 피드 | 앱 동작 |
+|------|------|------|---------|
+| **조직 모듈** | `agent-module/` | `channels/beta.json` + 서명 ZIP | 기동·적용 시 백그라운드 설치 |
+| **작업 키트** | `work-kits/profiles/` | `channels/work-kits.json` + 키트 tarball | 설정 → 작업 환경에서 받기·적용 |
 
-구 저장소 CQR_PA는 보관용입니다. 모듈 작업은 여기만 합니다.
+사용자 UX는 **작업 환경**(CQR 브랜드 정보 / 제품개발 / 명령어 모음)이 전면입니다.
+
+## 작업 키트 (CQR)
+
+- 정의: `work-kits/profiles/cqr/*/shelf.json`
+- 카탈로그: `channels/work-kits.json`
+- 검증·게시:
+
+```bash
+npm run verify:work-kits
+npm run publish:work-kits
+```
+
+## 조직 모듈
 
 ```bash
 npm run verify:module-pack
+npm run verify:org-automaton
 npm run publish:update
 ```
 
-서명 개인키는 `tools/keys/` (커밋 금지).
+사내 URL·NAS는 git에 넣지 않습니다. `operator-config.example.json` → `_local/operator.json`.
+
+서명 개인키: `tools/keys/` (커밋 금지).

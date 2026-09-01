@@ -8,7 +8,9 @@
     "admin:update-keygen": "node tools/update-admin.mjs keygen",
     "admin:update-key-status": "node tools/update-admin.mjs status",
     "publish:update": "node tools/publish-module-update.mjs",
+    "publish:work-kits": "node tools/publish-work-kit-catalog.mjs",
     "verify:module-pack": "node tools/verify-module-pack.mjs",
+    "verify:work-kits": "node tools/verify-work-kit-pack.mjs",
     "verify:org-automaton": "node tools/verify-org-automaton.mjs",
     "verify:repo-target": "node tools/verify-repo-target.mjs"
   }
