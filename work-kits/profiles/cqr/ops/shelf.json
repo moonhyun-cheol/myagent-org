@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "ops",
+  "group": "cqr",
+  "label": "CQR 명령어 모음",
+  "description": "채팅에 /반품율분석, /CTR, /발주검토자료처럼 입력하는 CQR 업무 명령 장면입니다.",
+  "pull": [],
+  "plugins": { "enable": {} },
+  "ui": {
+    "pinned_skill_ids": []
+  }
+}
