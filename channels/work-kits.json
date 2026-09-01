@@ -1,0 +1,83 @@
+{
+  "channel": "beta",
+  "sequence": 1,
+  "groups": [
+    {
+      "id": "cqr",
+      "label": "CQR",
+      "order": 10,
+      "shelves": [
+        {
+          "id": "brand-info",
+          "label": "CQR 브랜드 정보",
+          "description": "브랜드 매뉴얼·전략을 바탕으로 라인·카피·적합성을 맞춥니다.",
+          "pull": [],
+          "plugins": {
+            "enable": {}
+          },
+          "ui": {
+            "pinned_skill_ids": [
+              "org:cqr_brand_manual",
+              "cqr_brand_manual"
+            ]
+          },
+          "asset": {
+            "sequence": 1,
+            "name": "cqr-brand-info.tar.gz",
+            "repository": "moonhyun-cheol/myagent-org",
+            "release_tag": "work-kits-1",
+            "size": 384,
+            "sha256": "3f81ea7cb7f886c7783cef36edd29fa5da150caf9e467b51cf23f547d6b75fc2"
+          }
+        },
+        {
+          "id": "ops",
+          "label": "CQR 명령어 모음",
+          "description": "채팅에 /반품율분석, /CTR, /발주검토자료처럼 입력하는 CQR 업무 명령 장면입니다.",
+          "pull": [],
+          "plugins": {
+            "enable": {}
+          },
+          "ui": {
+            "pinned_skill_ids": []
+          },
+          "asset": {
+            "sequence": 1,
+            "name": "cqr-ops.tar.gz",
+            "repository": "moonhyun-cheol/myagent-org",
+            "release_tag": "work-kits-1",
+            "size": 381,
+            "sha256": "7c7a8864b2c8d37981af6bb83d6e3074711af9d211e9796a4fee4cddd51bb302"
+          }
+        },
+        {
+          "id": "product-dev",
+          "label": "CQR 제품개발",
+          "description": "제품 컨셉·시장조사·샘플 사이즈 작업에 맞게 스킬을 맞춥니다.",
+          "pull": [],
+          "plugins": {
+            "enable": {}
+          },
+          "ui": {
+            "pinned_skill_ids": [
+              "org:brand_concept",
+              "brand_concept",
+              "org:market_research",
+              "market_research",
+              "org:size_guide",
+              "size_guide"
+            ]
+          },
+          "asset": {
+            "sequence": 1,
+            "name": "cqr-product-dev.tar.gz",
+            "repository": "moonhyun-cheol/myagent-org",
+            "release_tag": "work-kits-1",
+            "size": 420,
+            "sha256": "3d808c8028f58070a1fb57febf9eab1f274b4ec2b9612ba739b139eccf53a1c0"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -46,14 +46,38 @@ try {
 const publish = readFileSync(path.join(root, 'tools', 'publish-module-update.mjs'), 'utf8');
 assert.match(publish, /stageAgentModule/);
 assert.match(publish, /channelFeedPath/);
+assert.match(publish, /loadOperatorConfig/);
 assert.match(publish, /brand_manual_url/);
 const companyManifest = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
-assert.match(String(companyManifest.brand_manual_url ?? ''), /192\.168\.1\.248:8080\/api\/brand-manual\/current\.md/);
+assert.equal(String(companyManifest.brand_manual_url ?? '').trim(), '');
+assert.equal(String(companyManifest.product_data_base_url ?? '').trim(), '');
 assert.match(publish, /MY_AGENT_ORGANIZATION_MODULE_SOURCE \|\| root/);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'prompt_concept')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'market_research', 'cqr_product_pipeline')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'automaton-tools.manifest.json')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'openclaw-workflow-map.json')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'deploy-overrides.json')), true);
+assert.equal(existsSync(path.join(root, 'operator-config.example.json')), true);
+assert.equal(existsSync(path.join(root, 'agent-module', 'prompt_concept')), true);
+assert.equal(existsSync(path.join(root, 'agent-module', 'market_research', 'cqr_product_pipeline')), true);
+assert.equal(existsSync(path.join(root, 'agent-module', 'automaton-tools.manifest.json')), true);
+assert.equal(existsSync(path.join(root, 'agent-module', 'openclaw-workflow-map.json')), true);
+assert.equal(existsSync(path.join(root, 'agent-module', 'deploy-overrides.json')), true);
+
+const privateHostRe = /127\.0\.0\.1|192\.168\.|10\.\d+\.|172\.(1[6-9]|2\d|3[0-1])\.|\\\\Nas\\/i;
+const trackedHostFiles = [
+  'manifest.json',
+  'operator-config.example.json',
+  'agent-module/deploy-overrides.json',
+  'agent-module/prompt_concept/AGENTS.md',
+  'agent-module/prompt_concept/MY_prompt.md',
+  'agent-module/prompt_concept/scripts/extract_nas_docs.py',
+  'agent-module/prompt_concept/scripts/brand_scan.py',
+  'agent-module/prompt_concept/scripts/brand_scan_active.py',
+];
+for (const rel of trackedHostFiles) {
+  const text = readFileSync(path.join(root, rel), 'utf8');
+  assert.doesNotMatch(text, privateHostRe, `git-tracked ${rel} must not hardcode a private host or NAS share`);
+}
+
+assert.equal(existsSync(path.join(root, 'channels', 'work-kits.json')), true);
+assert.equal(existsSync(path.join(root, 'work-kits', 'profiles', 'cqr', 'brand-info', 'shelf.json')), true);
+const workKitPublish = readFileSync(path.join(root, 'tools', 'publish-work-kit-catalog.mjs'), 'utf8');
+assert.match(workKitPublish, /channels\/work-kits\.json/);
 
 console.log('verify-module-pack: ok');
