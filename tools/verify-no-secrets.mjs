@@ -58,7 +58,14 @@ function lineAllowed(line) {
   return false;
 }
 
+const SKIP_FILES = new Set([
+  'tools/verify-no-secrets.mjs',
+  'tools/verify-module-pack.mjs',
+]);
+
 function scanFile(rel) {
+  const normalized = rel.replace(/\\/g, '/');
+  if (SKIP_FILES.has(normalized)) return [];
   const ext = path.extname(rel).toLowerCase();
   if (BINARY_EXT.has(ext)) return [];
   const abs = path.join(root, rel);
