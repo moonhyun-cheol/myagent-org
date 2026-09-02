@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 1,
+  "sequence": 2,
   "groups": [
     {
       "id": "cqr",
@@ -22,12 +22,12 @@
             ]
           },
           "asset": {
-            "sequence": 1,
+            "sequence": 2,
             "name": "cqr-brand-info.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-1",
-            "size": 384,
-            "sha256": "3f81ea7cb7f886c7783cef36edd29fa5da150caf9e467b51cf23f547d6b75fc2"
+            "release_tag": "work-kits-2",
+            "size": 388,
+            "sha256": "ae34141a328483afea7cb9915f87fb8e452be74e3a0917cd9a07cd7cffd15c6b"
           }
         },
         {
@@ -42,12 +42,12 @@
             "pinned_skill_ids": []
           },
           "asset": {
-            "sequence": 1,
+            "sequence": 2,
             "name": "cqr-ops.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-1",
-            "size": 381,
-            "sha256": "7c7a8864b2c8d37981af6bb83d6e3074711af9d211e9796a4fee4cddd51bb302"
+            "release_tag": "work-kits-2",
+            "size": 387,
+            "sha256": "cd176cb558a1c37db850516692a05492fe22b33dbb89b24fa460c1b747fcbb92"
           }
         },
         {
@@ -69,12 +69,12 @@
             ]
           },
           "asset": {
-            "sequence": 1,
+            "sequence": 2,
             "name": "cqr-product-dev.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-1",
-            "size": 420,
-            "sha256": "3d808c8028f58070a1fb57febf9eab1f274b4ec2b9612ba739b139eccf53a1c0"
+            "release_tag": "work-kits-2",
+            "size": 425,
+            "sha256": "e7240d5d14aaacdbac5757bb6602ea0390b5b4fdf3b803a82ef2b0f40d5db5d3"
           }
         }
       ]

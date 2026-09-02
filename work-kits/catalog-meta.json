@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 1,
+  "sequence": 2,
   "update_repository": "moonhyun-cheol/myagent-org",
   "release_tag_prefix": "work-kits"
 }
