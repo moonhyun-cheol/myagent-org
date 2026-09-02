@@ -33,13 +33,17 @@ Thumbs.db
 ~$*
 _tmp*
 
-# Local updater + raw NAS inputs (never commit)
+# Local operator config — hub URL, NAS paths, tokens (never commit)
 /_local/
 /operator.json
+operator-config.local.json
+**/openclaw-adapter.json
+**/data/vault/
 
 # Internal company data — local build or product_data API only (never commit)
 /agent-module/data/*
 !/agent-module/data/.gitkeep
+/agent-module/data/source/
 
 # NAS scan / internal notes (not module code)
 /agent-module/prompt_concept/brand_scan.txt

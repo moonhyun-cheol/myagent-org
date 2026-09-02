@@ -48,18 +48,38 @@ def _nas(root: Path | None = None) -> dict:
 
 def brand_manual_url(root: Path | None = None) -> str:
     cfg = load_operator_config(root)
+    hub = cfg.get("hub") if isinstance(cfg.get("hub"), dict) else {}
     return first_nonempty(
         os.environ.get("MY_AGENT_BRAND_MANUAL_URL"),
+        hub.get("brand_manual_url") if isinstance(hub, dict) else None,
         cfg.get("brand_manual_url"),
     )
 
 
 def product_data_base_url(root: Path | None = None) -> str:
     cfg = load_operator_config(root)
+    hub = cfg.get("hub") if isinstance(cfg.get("hub"), dict) else {}
     return first_nonempty(
         os.environ.get("MY_AGENT_PRODUCT_DATA_BASE_URL"),
+        hub.get("product_data_base_url") if isinstance(hub, dict) else None,
         cfg.get("product_data_base_url"),
     )
+
+
+def openclaw_adapter_base_url(root: Path | None = None) -> str:
+    cfg = load_operator_config(root)
+    hub = cfg.get("hub") if isinstance(cfg.get("hub"), dict) else {}
+    return first_nonempty(
+        os.environ.get("MY_AGENT_OPENCLAW_ADAPTER_BASE_URL"),
+        os.environ.get("OPENCLAW_ADAPTER_BASE_URL"),
+        hub.get("openclaw_adapter_base_url") if isinstance(hub, dict) else None,
+        cfg.get("openclaw_adapter_base_url"),
+    )
+
+
+def deployment_phase(root: Path | None = None) -> str:
+    cfg = load_operator_config(root)
+    return first_nonempty(cfg.get("deployment_phase")) or "operator_pc"
 
 
 def nas_root(root: Path | None = None) -> Path | None:

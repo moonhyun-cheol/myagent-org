@@ -1,5 +1,5 @@
 {
   "openclaw_actor_id": "cqr-pa",
   "openclaw_fallback_local": false,
-  "note": "Do not hardcode Adapter host. GitHub overlay has no server IP. Each MY Agent sets data/vault/openclaw-adapter.json { base_url, token } (or env OPENCLAW_ADAPTER_BASE_URL / OPENCLAW_ADAPTER_TOKEN). Change base_url when the Adapter PC moves."
+  "note": "Hub host URLs are injected at publish from _local/operator.json hub.* — never commit IPs here. Adapter token stays in each MY Agent data/vault/openclaw-adapter.json. See docs/OPERATOR-HUB.md."
 }

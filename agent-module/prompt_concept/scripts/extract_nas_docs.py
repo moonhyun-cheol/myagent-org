@@ -35,14 +35,9 @@ def resolve_dev_xlsx() -> Path | None:
     candidates = []
     if configured:
         candidates.append(configured)
-    candidates.extend(
-        [
-            LOCAL_SOURCE / "cqr_development_direction.xlsx",
-            LOCAL_SOURCE / "CQR개발방향.xlsx",
-        ]
-    )
+    candidates.append(LOCAL_SOURCE / "cqr_development_direction.xlsx")
     if LOCAL_SOURCE.is_dir():
-        candidates.extend(sorted(LOCAL_SOURCE.glob("*개발방향*.xlsx")))
+        candidates.extend(sorted(LOCAL_SOURCE.glob("*.xlsx")))
     return first_existing(candidates)
 
 
@@ -55,7 +50,9 @@ def resolve_po_dir() -> Path | None:
     return first_existing(candidates)
 
 
-def dump_workbook(path: Path, out_name: str, max_rows: int = 40, max_sheets: int = 8) -> None:
+def dump_workbook(
+    path: Path, out_name: str, max_rows: int = 40, max_sheets: int = 8
+) -> None:
     wb = openpyxl.load_workbook(path, data_only=True, read_only=True)
     lines = [f"# Source: {path.name}", f"Sheets: {', '.join(wb.sheetnames)}", ""]
     for sn in wb.sheetnames[:max_sheets]:
@@ -76,7 +73,11 @@ def dump_workbook(path: Path, out_name: str, max_rows: int = 40, max_sheets: int
 
 def scan_po_dir(po_dir: Path) -> None:
     lines = ["# Clothing PO scan (local extract)", f"Source folder: {po_dir.name}", ""]
-    files = sorted(po_dir.rglob("*"), key=lambda p: p.stat().st_mtime if p.is_file() else 0, reverse=True)
+    files = sorted(
+        po_dir.rglob("*"),
+        key=lambda p: p.stat().st_mtime if p.is_file() else 0,
+        reverse=True,
+    )
     listed = 0
     for p in files:
         if not p.is_file():
@@ -90,12 +91,18 @@ def scan_po_dir(po_dir: Path) -> None:
             break
     (OUT / "po_clothing_index.txt").write_text("\n".join(lines), encoding="utf-8")
 
-    samples = [p for p in files if p.is_file() and p.suffix.lower() in {".xlsx", ".xls", ".xlsm"}][:5]
+    samples = [
+        p
+        for p in files
+        if p.is_file() and p.suffix.lower() in {".xlsx", ".xls", ".xlsm"}
+    ][:5]
     for i, sample in enumerate(samples, 1):
         try:
             dump_workbook(sample, f"po_sample_{i}.txt", max_rows=30, max_sheets=3)
         except OSError as exc:
-            (OUT / f"po_sample_{i}.txt").write_text(f"ERROR reading {sample.name}: {exc}", encoding="utf-8")
+            (OUT / f"po_sample_{i}.txt").write_text(
+                f"ERROR reading {sample.name}: {exc}", encoding="utf-8"
+            )
 
 
 def main() -> None:

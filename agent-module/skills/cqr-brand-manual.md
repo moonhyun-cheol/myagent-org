@@ -21,11 +21,11 @@ ORGANIZATION_BRAND_CONTEXT
 
 ## MCP · 정보조회 endpoint (필수)
 
-사내·브랜드 사실을 말하기 전:
+사내·브랜드·카탈로그 사실을 말하기 전:
 
-1. **Endpoint 확인** — `_local/operator.json` 또는 env의 `brand_manual_url` / `MY_AGENT_BRAND_MANUAL_URL`, `product_data_base_url` / `MY_AGENT_PRODUCT_DATA_BASE_URL`. 비어 있거나 off면 live fetch 생략 + `확인 필요`. 주소를 지어내지 않는다. git에 사내 IP를 쓰지 않는다.
-2. **MCP 확인** — 사용 가능한 MCP(예: NOPSPro)를 보고, 상태·조회 도구가 있으면 먼저 연결·상태를 확인한다. 브랜드 매뉴얼 전용 MCP가 없으면 HTTP `brand_manual_url`로 조사한다.
-3. **접속 후 조사** — live를 가져오고, 충돌하면 **이 턴 live brand manual**을 우선한다. 근거 섹션을 남긴 뒤 산출한다.
+1. **허브 URL** — 설치된 org `module.json` / `deploy-overrides` (publish 시 주입). `brand_manual_url`, `product_data_base_url`, `openclaw_adapter_base_url`.
+2. **클라이언트 vault** — `data/vault/openclaw-adapter.json` 의 `token` (허브 Adapter 인증). git 금지.
+3. 구조·이전: `docs/OPERATOR-HUB.md`
 
 ## 정본
 
