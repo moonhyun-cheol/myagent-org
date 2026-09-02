@@ -26,6 +26,8 @@ GitHub 배포에는 토큰도 서버 주소도 넣지 않는다. 활성화 서�
 
 또는 env `OPENCLAW_ADAPTER_BASE_URL` + `OPENCLAW_ADAPTER_TOKEN`. Adapter PC를 옮기면 `base_url`만 바꾼다.
 
+Brand manual / product-data URL 도 같다. GitHub overlay와 `manifest.json`에는 사내 IP를 넣지 않는다. 이 저장소에서 돌리는 도구는 `_local/operator.json` (또는 `MY_AGENT_BRAND_MANUAL_URL`)만 본다.
+
 ## Runtime path
 
 ```
@@ -53,5 +55,5 @@ npm run verify:module-pack
 
 Manifest `slash_prefixes` and `openclaw-workflow-map.json` keys must match. Discord Gate 와 동일:
 
-`/반품율분석` `/반품율검토` `/카이제곱` `/미국샘플재고` `/CTR` `/발주검토자료` `/라이브계절지수` `/발주서등록` `/발주정보용판매` `/박스바코드생성` `/모델가계도`
+`/반품율분석` `/반품율검토` `/카이제곱` `/미국샘플재고` `/CTR` `/발주검토자료` `/라이브계절지수` `/발주서등록` `/발주정보용판매` `/박스바코드생성` `/모델가계도` `/childasin`
 

@@ -6,11 +6,23 @@
     }
   },
   "skills": {
+    "cqr_brand_manual": {
+      "label": "CQR 브랜드",
+      "mode": "org:cqr_brand_manual",
+      "feature": "chat",
+      "brand_files": [
+        "skills/cqr-brand-manual.md",
+        "skills/product-data-access.md"
+      ],
+      "bundle_files": []
+    },
     "market_research": {
       "label": "시장조사",
       "mode": "org:market_research",
       "feature": "chat",
       "brand_files": [
+        "skills/cqr-brand-manual.md",
+        "skills/product-data-access.md",
         "skills/market-research.md",
         "market_research/CQR_MARKET_INJECT.md"
       ],
@@ -22,11 +34,26 @@
       "mode": "org:brand_concept",
       "feature": "chat",
       "brand_files": [
+        "skills/cqr-brand-manual.md",
+        "skills/product-data-access.md",
         "skills/brand-concept.md",
         "prompt_concept/AGENTS.md",
         "prompt_concept/MY_prompt.md"
       ],
       "bundle_files": []
+    },
+    "size_guide": {
+      "label": "샘플 사이즈",
+      "mode": "org:size_guide",
+      "feature": "chat",
+      "brand_files": [
+        "skills/cqr-brand-manual.md",
+        "skills/product-data-access.md",
+        "skills/size-guide.md",
+        "skills/size-guide-inject.md"
+      ],
+      "bundle_files": [],
+      "pipeline_script": "pipelines/size_guide.py"
     }
   }
 }

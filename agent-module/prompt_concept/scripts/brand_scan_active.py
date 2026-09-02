@@ -2,9 +2,19 @@ import csv
 import collections
 import json
 import re
+import sys
 from pathlib import Path
 
-LISTING = Path(r"\\nas\company-share\06_amazon.com\06_alllisting\listing_snapshot.txt")
+REPO = Path(__file__).resolve().parents[3]
+TOOLS = str(REPO / "tools")
+if TOOLS not in sys.path:
+    sys.path.insert(0, TOOLS)
+from operator_config import resolve_listing_file  # noqa: E402
+
+LISTING = resolve_listing_file(REPO)
+if LISTING is None:
+    print("SKIP: listing file not found. Set CQR_LISTING or _local/operator.json nas.alllisting")
+    raise SystemExit(0)
 OUT = Path(__file__).resolve().parent.parent.parent / "data" / "brand_active_report.json"
 
 KEYWORDS = [

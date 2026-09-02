@@ -20,6 +20,7 @@ import {
   verifySignedEnvelope,
 } from './update/update-signing.mjs';
 import { INSTALL_ROOT, stageAgentModule } from './pack-agent-module.mjs';
+import { loadOperatorConfig } from './operator-config.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, 'deploy', 'output');
@@ -43,6 +44,7 @@ if (!existsSync(privateKeyPath)) fail(`module signing private key missing: ${pri
 if (!existsSync(publicKeyPath)) fail(`module signing public key missing: ${publicKeyPath}`);
 
 const product = JSON.parse(readFileSync(productManifestPath, 'utf8'));
+const operator = loadOperatorConfig(root);
 const updateSequence = Number(product.update_sequence);
 const minimumSupportedSequence = Number(product.minimum_supported_sequence ?? 1);
 const version = String(product.version ?? '').trim();
@@ -87,8 +89,8 @@ writeFileSync(
     required_core_api: String(product.required_core_api ?? ''),
     update_feed_url: updateFeedUrl,
     update_channel: channel,
-    brand_manual_url: String(product.brand_manual_url ?? '').trim() || undefined,
-    product_data_base_url: String(product.product_data_base_url ?? '').trim() || undefined,
+    brand_manual_url: operator.brand_manual_url || undefined,
+    product_data_base_url: operator.product_data_base_url || undefined,
     capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',

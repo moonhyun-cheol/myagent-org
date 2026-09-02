@@ -3,7 +3,7 @@
   "id": "brand-info",
   "group": "cqr",
   "label": "CQR 브랜드 정보",
-  "description": "브랜드 매뉴얼·전략을 바탕으로 라인·카피·적합성을 맞춥니다.",
+  "description": "브랜드 매뉴얼을 보고 라인과 카피를 맞추는 데 도움을 줍니다.",
   "pull": [],
   "plugins": { "enable": {} },
   "ui": {

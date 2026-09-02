@@ -14,11 +14,9 @@ def _find_manager_root() -> Path:
             parent / "market_research"
         ).is_dir():
             return parent
-        if (parent / "data" / "PRODUCT_DEV_SPEC_ENGINE.md").exists():
-            return parent
 
     raise FileNotFoundError(
-        "Cannot locate organization pack root. Set CQR_MANAGER_ROOT to agent-module or the data checkout."
+        "Cannot locate organization pack root. Set CQR_MANAGER_ROOT to agent-module."
     )
 
 
