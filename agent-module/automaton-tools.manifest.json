@@ -130,6 +130,19 @@
       "intent_pattern_strings": ["모델가계도"],
       "intent_examples": ["/모델가계도 TXP441"],
       "long_running": true
+    },
+    {
+      "id": "child_asin_lookup",
+      "description_ko": "자식 ASIN 조회",
+      "slash_prefixes": ["/childasin", "/childain"],
+      "default_command": "/childasin",
+      "anchors_ko": ["/childasin"],
+      "anchors_en": ["child asin"],
+      "intent_phrases_ko": ["자식asin", "child asin", "childasin"],
+      "intent_boost_ko": ["childasin", "자식asin"],
+      "intent_pattern_strings": ["childasin", "child.?asin"],
+      "intent_examples": ["/childasin KR#####_CQXXXXXX_PR"],
+      "long_running": true
     }
   ]
 }

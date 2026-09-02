@@ -1,39 +1,31 @@
-# Work kits (CQR profiles)
+# Work kits (profile bundles)
 
-Authoring tree for **work-kit catalog feed** (R-612). Not the organization-module ZIP.
+Authoring lives in this repo. Runtime consumption is via MY Agent Core `/profiles` API and **WorkKitLauncher.exe**.
 
 ## Layout
 
 ```
-work-kits/
-  catalog-meta.json          # channel, sequence, GitHub repo for release assets
-  profiles/
-    {group}/
-      group.json
-      {kit-id}/
-        shelf.json           # pins, pull, label — per-shelf tarball root
-        agent-plugins/…      # optional pull payload
-        skills/…             # optional pull payload
-channels/
-  work-kits.json             # generated catalog (plain JSON, unsigned)
+work-kits/profiles/{bundleId}/
+  group.json          # bundle metadata (id, label, order)
+  {modeId}/
+    shelf.json        # work mode: pins, plugins, pull slots
 ```
 
-## CQR kits
+- **Bundle** (`group.json`) — sidebar brand/category in launcher (e.g. `cqr`).
+- **Mode** (`shelf.json`) — apply unit `{ group, id }` (e.g. `cqr/product-dev`).
+- Do not rename skill ids to match shelf ids (R-613). Use `ui.pinned_skill_ids` only.
 
-| `group/id` | Label |
-|------------|-------|
-| `cqr/brand-info` | CQR 브랜드 정보 |
-| `cqr/product-dev` | CQR 제품개발 |
-| `cqr/ops` | CQR 명령어 모음 |
-
-Pins align with `agent-module/skills/manifest.json` (R-613). Organization skills ship in the **signed org ZIP**, not in kit tarballs.
-
-## Commands
+## Publish
 
 ```bash
 npm run verify:work-kits
-npm run publish:work-kits        # writes channels/work-kits.json + deploy/output/*.tar.gz
-npm run publish:work-kits -- --bump   # increment catalog sequence
+npm run publish:work-kits
 ```
 
-MY Agent resolves `work_kit_catalog_feed_url` → `channels/work-kits.json` on this repo.
+Feed: `channels/work-kits.json`. Per-shelf tarballs on GitHub release `work-kits-{sequence}`.
+
+## Adding a new bundle
+
+1. Create `work-kits/profiles/{bundleId}/group.json`
+2. Add `work-kits/profiles/{bundleId}/{modeId}/shelf.json`
+3. Run verify + publish — no launcher/core code changes required

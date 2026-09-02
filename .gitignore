@@ -35,6 +35,7 @@ _tmp*
 
 # Local updater + raw NAS inputs (never commit)
 /_local/
+/operator.json
 
 # Internal company data — local build or product_data API only (never commit)
 /agent-module/data/*

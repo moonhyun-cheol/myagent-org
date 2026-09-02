@@ -1,0 +1,21 @@
+{
+  "brand": "UF PRO",
+  "scheme": "alpha",
+  "unit": "inch",
+  "category": "over_pants",
+  "source_url": "https://ufpro.com/p/monsoon-xt-tactical-rain-pants-steel-grey",
+  "verified_at": "2026-08-31",
+  "notes": [
+    "Over-pants: measure with intended under-layers",
+    "Belly circumference at belt line",
+    "Do not use combat-pants waist/inseam (34/32) for this product line"
+  ],
+  "rows": [
+    { "size": "S", "waist_min": 30.0, "waist_max": 32.0, "inseam_min": 30.0, "inseam_max": 30.5 },
+    { "size": "M", "waist_min": 32.0, "waist_max": 34.5, "inseam_min": 31.0, "inseam_max": 32.0 },
+    { "size": "L", "waist_min": 34.5, "waist_max": 36.5, "inseam_min": 32.5, "inseam_max": 33.0 },
+    { "size": "XL", "waist_min": 37.0, "waist_max": 39.0, "inseam_min": 33.0, "inseam_max": 34.0 },
+    { "size": "2XL", "waist_min": 39.5, "waist_max": 41.5, "inseam_min": 33.5, "inseam_max": 34.5 },
+    { "size": "3XL", "waist_min": 41.5, "waist_max": 43.5, "inseam_min": 33.5, "inseam_max": 34.5 }
+  ]
+}

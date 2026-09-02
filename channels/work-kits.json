@@ -10,7 +10,7 @@
         {
           "id": "brand-info",
           "label": "CQR 브랜드 정보",
-          "description": "브랜드 매뉴얼·전략을 바탕으로 라인·카피·적합성을 맞춥니다.",
+          "description": "브랜드 매뉴얼을 보고 라인과 카피를 맞추는 데 도움을 줍니다.",
           "pull": [],
           "plugins": {
             "enable": {}
@@ -33,7 +33,7 @@
         {
           "id": "ops",
           "label": "CQR 명령어 모음",
-          "description": "채팅에 /반품율분석, /CTR, /발주검토자료처럼 입력하는 CQR 업무 명령 장면입니다.",
+          "description": "업무에 도움을 주는 명령어들입니다. 채팅에 /반품율분석, /CTR처럼 입력해 쓰세요.",
           "pull": [],
           "plugins": {
             "enable": {}
@@ -53,7 +53,7 @@
         {
           "id": "product-dev",
           "label": "CQR 제품개발",
-          "description": "제품 컨셉·시장조사·샘플 사이즈 작업에 맞게 스킬을 맞춥니다.",
+          "description": "컨셉, 시장조사, 샘플 사이즈처럼 제품 개발 업무에 도움을 줍니다.",
           "pull": [],
           "plugins": {
             "enable": {}

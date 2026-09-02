@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-import os
 import subprocess
 import sys
 from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[3]
+TOOLS = str(REPO / "tools")
+if TOOLS not in sys.path:
+    sys.path.insert(0, TOOLS)
+from operator_config import nas_dev_xlsx, nas_po_dir  # noqa: E402
 
 try:
     import openpyxl
@@ -17,9 +22,6 @@ CONCEPT_ROOT = Path(__file__).resolve().parent.parent
 OUT = CONCEPT_ROOT.parent / "data"
 LOCAL_SOURCE = OUT / "source"
 
-NAS_DEV = Path(r"\\nas\company-share\01_상품기획파트\05_상품개발\development_direction.xlsx")
-NAS_PO = Path(r"\\nas\company-share\01_상품기획파트\02_기획-상품관리\03_상품관리_발주서\2_CLOTHING")
-
 
 def first_existing(candidates: list[Path]) -> Path | None:
     for path in candidates:
@@ -29,27 +31,27 @@ def first_existing(candidates: list[Path]) -> Path | None:
 
 
 def resolve_dev_xlsx() -> Path | None:
-    env = os.environ.get("CQR_DEV_XLSX")
+    configured = nas_dev_xlsx(REPO)
     candidates = []
-    if env:
-        candidates.append(Path(env))
+    if configured:
+        candidates.append(configured)
     candidates.extend(
         [
-            LOCAL_SOURCE / "development_direction.xlsx",
             LOCAL_SOURCE / "cqr_development_direction.xlsx",
-            CONCEPT_ROOT / "development_direction.xlsx",
-            NAS_DEV,
+            LOCAL_SOURCE / "CQR개발방향.xlsx",
         ]
     )
+    if LOCAL_SOURCE.is_dir():
+        candidates.extend(sorted(LOCAL_SOURCE.glob("*개발방향*.xlsx")))
     return first_existing(candidates)
 
 
 def resolve_po_dir() -> Path | None:
-    env = os.environ.get("CQR_PO_DIR")
+    configured = nas_po_dir(REPO)
     candidates = []
-    if env:
-        candidates.append(Path(env))
-    candidates.extend([LOCAL_SOURCE / "2_CLOTHING", LOCAL_SOURCE / "po_clothing", NAS_PO])
+    if configured:
+        candidates.append(configured)
+    candidates.extend([LOCAL_SOURCE / "2_CLOTHING", LOCAL_SOURCE / "po_clothing"])
     return first_existing(candidates)
 
 
@@ -107,7 +109,7 @@ def main() -> None:
     else:
         msg = (
             "MISSING development xlsx.\n"
-            "Copy development_direction.xlsx to data/source/ or set CQR_DEV_XLSX env var."
+            "Set CQR_DEV_XLSX, copy the workbook to data/source/, or fill _local/operator.json nas.dev_xlsx."
         )
         (OUT / "cqr_development_direction.txt").write_text(msg, encoding="utf-8")
         print(msg)

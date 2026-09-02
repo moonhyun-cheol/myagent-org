@@ -1,4 +1,8 @@
-"""RAG collection → source file mapping."""
+"""RAG collection → source file mapping.
+
+Local agent-module/data/ indexes are retired. Ingest is disabled until
+product_data_base_url feeds are wired; use live API + slash lookups in chat.
+"""
 
 from __future__ import annotations
 
@@ -17,46 +21,7 @@ class CollectionSpec:
     doc_type: str
 
 
-COLLECTIONS: tuple[CollectionSpec, ...] = (
-    CollectionSpec(
-        name="brand",
-        relative_paths=(
-            "codex/CQR_BRAND_CONCEPT.md",
-            "SLOGAN_VOICE.md",
-            "CQR_BRAND_IMAGE_PLAYBOOK.md",
-        ),
-        doc_type="brand",
-    ),
-    CollectionSpec(
-        name="catalog",
-        relative_paths=(
-            "BRAND_INDEX.md",
-            "cqr_development_direction.txt",
-            "brand_active_report.json",
-            "model_catalog.json",
-            "new_lineup_index.txt",
-            "model_row_index.txt",
-        ),
-        doc_type="catalog",
-    ),
-    CollectionSpec(
-        name="product_spec",
-        relative_paths=(
-            "PRODUCT_DEV_SPEC_ENGINE.md",
-            "COLOR_CODE.md",
-            "color_code_index.txt",
-            "po_color_index.json",
-            "product_spec_index.json",
-            "product_spec_index.txt",
-        ),
-        doc_type="product_spec",
-    ),
-    CollectionSpec(
-        name="process",
-        relative_paths=("NAS_05_DEV_FOLDER_INDEX.md",),
-        doc_type="process",
-    ),
-)
+COLLECTIONS: tuple[CollectionSpec, ...] = ()
 
 
 def resolve_source_paths(data_root: Path | None = None) -> dict[CollectionName, list[Path]]:
