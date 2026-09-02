@@ -56,6 +56,8 @@ assert.match(publish, /stageAgentModule/);
 assert.match(publish, /channelFeedPath/);
 assert.match(publish, /loadOperatorConfig/);
 assert.match(publish, /brand_manual_url/);
+assert.match(publish, /openclaw_adapter_base_url/);
+assert.match(publish, /deploy-overrides.json/);
 const companyManifest = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 assert.equal(String(companyManifest.brand_manual_url ?? '').trim(), '');
 assert.equal(String(companyManifest.product_data_base_url ?? '').trim(), '');

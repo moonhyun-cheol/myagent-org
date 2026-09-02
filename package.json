@@ -12,6 +12,7 @@
     "verify:module-pack": "node tools/verify-module-pack.mjs",
     "verify:work-kits": "node tools/verify-work-kit-pack.mjs",
     "verify:org-automaton": "node tools/verify-org-automaton.mjs",
+    "verify:no-secrets": "node tools/verify-no-secrets.mjs",
     "verify:repo-target": "node tools/verify-repo-target.mjs"
   }
 }

@@ -20,7 +20,7 @@ import {
   verifySignedEnvelope,
 } from './update/update-signing.mjs';
 import { INSTALL_ROOT, stageAgentModule } from './pack-agent-module.mjs';
-import { loadOperatorConfig } from './operator-config.mjs';
+import { loadOperatorConfig, operatorHubForPublish } from './operator-config.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, 'deploy', 'output');
@@ -44,7 +44,20 @@ if (!existsSync(privateKeyPath)) fail(`module signing private key missing: ${pri
 if (!existsSync(publicKeyPath)) fail(`module signing public key missing: ${publicKeyPath}`);
 
 const product = JSON.parse(readFileSync(productManifestPath, 'utf8'));
+const skipHubInject = process.argv.includes('--skip-hub')
+  || ['1', 'true', 'yes'].includes(String(process.env.MY_AGENT_PUBLISH_SKIP_HUB ?? '').trim().toLowerCase());
 const operator = loadOperatorConfig(root);
+const hub = skipHubInject
+  ? {
+    deployment_phase: operator.deployment_phase || 'operator_pc',
+    openclaw_adapter_base_url: '',
+    brand_manual_url: '',
+    product_data_base_url: '',
+  }
+  : operatorHubForPublish(root);
+if (skipHubInject) {
+  console.log('publish-module-update: --skip-hub — hub URLs omitted from ZIP (use _local/operator.json locally only)');
+}
 const updateSequence = Number(product.update_sequence);
 const minimumSupportedSequence = Number(product.minimum_supported_sequence ?? 1);
 const version = String(product.version ?? '').trim();
@@ -78,6 +91,25 @@ try {
   fail(error instanceof Error ? error.message : String(error));
 }
 
+const deployOverridesPath = path.join(extractDir, 'deploy-overrides.json');
+if (existsSync(deployOverridesPath)) {
+  let deployOverrides = {};
+  try {
+    deployOverrides = JSON.parse(readFileSync(deployOverridesPath, 'utf8'));
+  } catch {
+    deployOverrides = {};
+  }
+  const patched = {
+    ...deployOverrides,
+    openclaw_fallback_local: false,
+    deployment_phase: hub.deployment_phase,
+  };
+  if (hub.openclaw_adapter_base_url) {
+    patched.openclaw_adapter_base_url = hub.openclaw_adapter_base_url;
+  }
+  writeFileSync(deployOverridesPath, `${JSON.stringify(patched, null, 2)}\n`, 'utf8');
+}
+
 writeFileSync(
   path.join(extractDir, 'module.json'),
   `${JSON.stringify({
@@ -89,8 +121,10 @@ writeFileSync(
     required_core_api: String(product.required_core_api ?? ''),
     update_feed_url: updateFeedUrl,
     update_channel: channel,
-    brand_manual_url: operator.brand_manual_url || undefined,
-    product_data_base_url: operator.product_data_base_url || undefined,
+    brand_manual_url: hub.brand_manual_url || undefined,
+    product_data_base_url: hub.product_data_base_url || undefined,
+    deployment_phase: hub.deployment_phase,
+    openclaw_adapter_base_url: hub.openclaw_adapter_base_url || undefined,
     capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',

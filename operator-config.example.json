@@ -1,9 +1,20 @@
 {
-  "_comment": "Copy this file to _local/operator.json (gitignored). Environment variables win when set: MY_AGENT_BRAND_MANUAL_URL, MY_AGENT_PRODUCT_DATA_BASE_URL, CQR_NAS_ROOT, CQR_NAS_ALLLISTING, CQR_DEV_XLSX, CQR_PO_DIR, CQR_LISTING. Use off/none/false to disable a URL.",
-  "brand_manual_url": "",
-  "product_data_base_url": "",
-  "_product_data_note": "Future catalog API base (no trailing slash). Core injects PRODUCT DATA into chat. Until connected, use slash: /childasin, /모델가계도. Never ship URLs in git.",
+  "_comment": "Copy to _local/operator.json (gitignored). Publish 시 hub URL이 배포 ZIP에 주입됩니다. 토큰은 git에 넣지 않습니다.",
+  "deployment_phase": "operator_pc",
+  "_deployment_phase_values": ["operator_pc", "company_server"],
+  "_migration_note": "사내 서버 이전 시 hub 아래 URL만 새 서버로 바꾸고 deployment_phase를 company_server로, npm run publish:update 후 클라이언트 모듈 업데이트.",
+  "hub": {
+    "_comment": "중앙 허브 — 모든 MY Agent·slash·데이터 API가 여기로 붙음 (지금=운영자 PC, 이후=사내 서버)",
+    "openclaw_adapter_base_url": "",
+    "brand_manual_url": "",
+    "product_data_base_url": ""
+  },
+  "client_secrets": {
+    "_comment": "배포받은 각 MY Agent PC — git/ZIP 금지. data/vault/openclaw-adapter.json 의 token 또는 env OPENCLAW_ADAPTER_TOKEN",
+    "openclaw_adapter_token": ""
+  },
   "nas": {
+    "_comment": "Bulbasaur/매크로 전용. MY Agent 채팅 스킬에는 노출하지 않음. 서버 이전 시 경로만 갱신.",
     "root": "",
     "alllisting": "",
     "dev_xlsx": "",
