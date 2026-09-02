@@ -7,16 +7,16 @@
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-09-02T05:29:32.959Z",
+    "published_at": "2026-09-02T05:30:51.702Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
       "release_tag": "update-15",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 209204,
-      "sha256": "9a370fb3c8ee918ccfe73fc34f0eb45b3344d7489ebe68a1b21d24e7a9e9c6f2"
+      "size": 209206,
+      "sha256": "def743f875a893cdbb650b83086e96bd625fbe26a893e5c905dcfbf8f23f45f7"
     },
-    "payload_manifest_sha256": "2c1094974aa590a042a58ea68a9aa5fd7f48034c2f42b9dde49ebe1a4d974605",
+    "payload_manifest_sha256": "89df212cddef8d9810cb05dc6a99905fe963add402ca26dd73ae8de66746cfaf",
     "release_notes": ""
   },
-  "signature": "f1XAIgdRmmTcSJedkXDrgehi2Wh6bp30aB5eFOIY8KuSWtNbW9KeXOVe9QZlftd53Hyq5BFptUbNLlupGv/pATR3CBvmtYx0AtAyLMbAcwkemclB6kt3DJYwBDL5bNs0ckxTeJwi8DZeSxRDOk4znrdnVH8k6JTpUjGhxV110abLsODP/65EGQ951Q4BNojClA4S1NQZP3rxuGa2OTrEncL074cfd398jHbSbStXil03NNmyCg0ZL16hY9yd5RQt+XX1Sm+3vlUk0hbCYkZIn9Czfn/HKG8D9w6Mx37MYpjgCMU6if+iWKgaQHzIsGzkjI/K3IB93GLtuCHB1xZx09GiKCFrHToi5zE9t+iZCVG43YBb3AZ93inhGgOn8tvr57QAMkUyYeLzwyj/wCu3cJoJJ0z1LVKUsngkR7aN0v681fxRwALwQIX+5gV5WvhN6zWhDlRBuI4HnII+EZvwCq6ViVjyDcPt5jUgx6pJ99GQNOELmtQVZN8AQagt8n5v"
+  "signature": "mF9esJVHGEhzVYihWgLfHn6IlfPQczipGv7Xrim4SNjdV8c3fn6iLs3s8ze7nQGN8v0895XadTSJKaTjuV4lWOWedgiB/tiKg33iOlF3jkYuItecSyBr6II/UmrAJ+0tmComaCGGbSEdM4c5uxgVVtpuzrER/heOFAX/oXADpKqfpS9Plmur2OeTvWlHU2N3i5m2wgf7CPwtd4/5E2auHJadIQkMVEiUw3zsnY+lxaxVLsY5wVb5cfdZu8/NuxFmDasL/Zgmvr/u++FO3XPu8HSUX75g/1tatZo9DD4we+6GkxC9xkmJyRcAFuOGHnreuolgE0ajClekl2AK0OKneHtzfcf/IxNNZ2Z8dGanA14tRo8Xmn3+EfA41KT5Jh9g641woODNXXwLguy6nvcrqBb1BTLYDbT1/EvDqUWCz6pP6iXpECo2SXtEcxKdUORY6prFMtm3ky5jGnGp2z7KNEv/YQcLTqjY4MVIqrBrrI5wys1rJz62MjSwtvbQYQM3"
 }
