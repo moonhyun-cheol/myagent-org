@@ -64,7 +64,9 @@ export function deriveCapabilities(extractDir, skillsManifest) {
   const hasOverlays = Object.keys(skillsManifest.overlays ?? {}).length > 0;
   if (hasBrandDir || hasOverlays) capabilities.push('brand-context');
   if (existsSync(path.join(extractDir, 'pipelines'))) capabilities.push('research-pipeline');
-  if (existsSync(path.join(extractDir, 'data'))) capabilities.push('brand-knowledge');
+  if (existsSync(path.join(extractDir, 'skills', 'product-data-access.md'))) {
+    capabilities.push('product-data-routing');
+  }
   if (
     existsSync(path.join(extractDir, 'automaton-tools.manifest.json'))
     && existsSync(path.join(extractDir, 'openclaw-workflow-map.json'))

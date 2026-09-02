@@ -46,6 +46,7 @@ const requiredPrefixes = [
   '/발주정보용판매',
   '/박스바코드생성',
   '/모델가계도',
+  '/childasin',
 ];
 for (const prefix of requiredPrefixes) {
   assert.ok(

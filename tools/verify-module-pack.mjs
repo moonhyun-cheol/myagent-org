@@ -34,11 +34,19 @@ try {
   assert.ok(staged.capabilities.includes('skills'));
   assert.ok(staged.capabilities.includes('brand-context'));
   assert.ok(staged.capabilities.includes('research-pipeline'));
-  assert.ok(staged.capabilities.includes('brand-knowledge'));
+  assert.ok(
+    existsSync(path.join(root, 'agent-module', 'skills', 'product-data-access.md')),
+    'skills/product-data-access.md required',
+  );
   assert.ok(staged.capabilities.includes('automaton-routing'));
-  assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'CQR_INTERNAL_STRATEGY_v3.1.md')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'model_row_index.txt')), true);
-  assert.equal(existsSync(path.join(root, 'agent-module', 'data', 'options.db')), false);
+  const skillsManifest = JSON.parse(
+    readFileSync(path.join(root, 'agent-module', 'skills', 'manifest.json'), 'utf8'),
+  );
+  for (const def of Object.values(skillsManifest.skills ?? {})) {
+    for (const rel of def.brand_files ?? []) {
+      assert.doesNotMatch(rel, /^data\//, `brand_files must not reference local data/: ${rel}`);
+    }
+  }
 } finally {
   rmSync(stageParent, { recursive: true, force: true });
 }

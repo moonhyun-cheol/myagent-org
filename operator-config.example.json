@@ -1,0 +1,12 @@
+{
+  "_comment": "Copy this file to _local/operator.json (gitignored). Environment variables win when set: MY_AGENT_BRAND_MANUAL_URL, MY_AGENT_PRODUCT_DATA_BASE_URL, CQR_NAS_ROOT, CQR_NAS_ALLLISTING, CQR_DEV_XLSX, CQR_PO_DIR, CQR_LISTING. Use off/none/false to disable a URL.",
+  "brand_manual_url": "",
+  "product_data_base_url": "",
+  "_product_data_note": "Future catalog API base (no trailing slash). Core injects PRODUCT DATA into chat. Until connected, use slash: /childasin, /모델가계도. Never ship URLs in git.",
+  "nas": {
+    "root": "",
+    "alllisting": "",
+    "dev_xlsx": "",
+    "po_clothing": ""
+  }
+}

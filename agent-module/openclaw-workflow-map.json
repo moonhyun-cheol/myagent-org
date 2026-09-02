@@ -81,6 +81,14 @@
         "direct_action": "command_repair_sequence",
         "command_id": "model_genealogy"
       }
+    },
+    "child_asin_lookup": {
+      "task_profile_id": "safe_online_execution",
+      "tool_id": "safe_code_execution",
+      "args": {
+        "direct_action": "command_repair_sequence",
+        "command_id": "child_asin_lookup"
+      }
     }
   }
 }
