@@ -10,6 +10,7 @@
       "label": "CQR 브랜드",
       "mode": "org:cqr_brand_manual",
       "feature": "chat",
+      "user_selectable": false,
       "brand_files": [
         "skills/cqr-brand-manual.md",
         "skills/product-data-access.md"
@@ -20,6 +21,10 @@
       "label": "시장조사",
       "mode": "org:market_research",
       "feature": "chat",
+      "user_selectable": true,
+      "selector_group": "organization",
+      "selector_order": 10,
+      "selector_description": "시장과 경쟁 상황을 조사합니다.",
       "brand_files": [
         "skills/cqr-brand-manual.md",
         "skills/product-data-access.md",
@@ -33,6 +38,10 @@
       "label": "컨셉 RA",
       "mode": "org:brand_concept",
       "feature": "chat",
+      "user_selectable": true,
+      "selector_group": "organization",
+      "selector_order": 20,
+      "selector_description": "브랜드 컨셉과 방향을 정리합니다.",
       "brand_files": [
         "skills/cqr-brand-manual.md",
         "skills/product-data-access.md",
@@ -46,6 +55,7 @@
       "label": "샘플 사이즈",
       "mode": "org:size_guide",
       "feature": "chat",
+      "user_selectable": false,
       "brand_files": [
         "skills/cqr-brand-manual.md",
         "skills/product-data-access.md",
