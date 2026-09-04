@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 15,
+    "update_sequence": 16,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-09-02T05:30:51.702Z",
+    "published_at": "2026-09-04T05:58:08.518Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-15",
+      "release_tag": "update-16",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 209206,
-      "sha256": "def743f875a893cdbb650b83086e96bd625fbe26a893e5c905dcfbf8f23f45f7"
+      "size": 141855,
+      "sha256": "80095c1e2d28639eb0e9a6235324469f29e5ab1664cd0477a20918913afaab9a"
     },
-    "payload_manifest_sha256": "89df212cddef8d9810cb05dc6a99905fe963add402ca26dd73ae8de66746cfaf",
+    "payload_manifest_sha256": "825694b3777875e4dbb6008a4cdec62035801f10a2ca3068139a89eb5912dfa5",
     "release_notes": ""
   },
-  "signature": "mF9esJVHGEhzVYihWgLfHn6IlfPQczipGv7Xrim4SNjdV8c3fn6iLs3s8ze7nQGN8v0895XadTSJKaTjuV4lWOWedgiB/tiKg33iOlF3jkYuItecSyBr6II/UmrAJ+0tmComaCGGbSEdM4c5uxgVVtpuzrER/heOFAX/oXADpKqfpS9Plmur2OeTvWlHU2N3i5m2wgf7CPwtd4/5E2auHJadIQkMVEiUw3zsnY+lxaxVLsY5wVb5cfdZu8/NuxFmDasL/Zgmvr/u++FO3XPu8HSUX75g/1tatZo9DD4we+6GkxC9xkmJyRcAFuOGHnreuolgE0ajClekl2AK0OKneHtzfcf/IxNNZ2Z8dGanA14tRo8Xmn3+EfA41KT5Jh9g641woODNXXwLguy6nvcrqBb1BTLYDbT1/EvDqUWCz6pP6iXpECo2SXtEcxKdUORY6prFMtm3ky5jGnGp2z7KNEv/YQcLTqjY4MVIqrBrrI5wys1rJz62MjSwtvbQYQM3"
+  "signature": "O6YNJqbQ4R/kv10VnHv0OWYmMoMfyap0nWzT8mrlbuJSnfvPgGqwsJg5HwGZtS5tqFz+oG6FevQTYt3/2g6gqmDgWZNSmfoMaFvQyfI1mxZaZFChnnI2r/XeqzQ9KGBzYNw81kMUDgqCmq/9QRfJoQi1fd79li1006yJmGekeCg7J4d9cviahDXEP/JLPj0HiEOkbCJ6/hCd11zv67gpInTrsZVSFaqNGJIlnZDBYnYfc1FvBUjiKtVFMggw7lZuvyJALiVQ+t1KYqEOEI4hyegoMIBBBdLfCkb8R+ZKs32Lyi5q329vigpJPh6742sjJrVjGOa5gY0jCwlW7g4omdY/IPuN3tUBs2WiDU3k4tsF7Qz/OumIbfmMiSu2q59kuewsFH2f/7hU2AuCGTmljBVWeK90uzP+Hoq5ccsQirIWfU4aZHMYxqKMBqXeMM3FbYHmXpW78mCEvbY0bS//8zZrKm7totWxoj7Hnk3ZXGjSlrzcKGW2OmQIVCMcqY53"
 }
