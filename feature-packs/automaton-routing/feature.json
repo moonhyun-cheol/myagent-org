@@ -5,10 +5,13 @@
   "update_sequence": 1,
   "label": "CQR Automaton 라우팅",
   "description": "CQR slash 명령·OpenClaw workflow·Adapter 연결. CQR 명령어 모음 Work Kit 적용 시에만 설치됩니다.",
-  "capabilities": ["automaton-routing"],
+  "capabilities": [
+    "automaton-routing"
+  ],
   "entrypoints": {
     "automaton_tools_manifest": "automaton-tools.manifest.json",
     "openclaw_workflow_map": "openclaw-workflow-map.json",
     "adapter_connection": "adapter-connection.json"
-  }
+  },
+  "min_core_sequence": 42
 }
