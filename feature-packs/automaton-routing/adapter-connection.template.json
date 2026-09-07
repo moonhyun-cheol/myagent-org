@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "transport": {
+    "request_path": "/cqr/adapter/request",
+    "status_path_template": "/cqr/adapter/jobs/{job_id}",
+    "poll_interval_ms": 2500,
+    "timeout_ms": 1800000
+  },
+  "authentication": {
+    "mode": "install_bootstrap",
+    "bootstrap_path": "/cqr/adapter/auth/bootstrap",
+    "credential_store": "client_vault",
+    "allow_legacy_vault_token": true
+  },
+  "progress": {
+    "mode": "poll",
+    "states": ["queued", "running", "completed", "failed"],
+    "accepted_text": "명령어 접수",
+    "running_text": "진행 중",
+    "completed_text": "완료",
+    "failed_text": "실패",
+    "edit_existing_message_when_supported": true,
+    "append_status_when_edit_unsupported": true
+  }
+}

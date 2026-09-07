@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "slashes": [
+    { "prefix": "/반품율분석", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/반품율검토", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/반품율조회", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/카이제곱", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/미국샘플재고", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/CTR", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/발주검토자료", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/라이브계절지수", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/발주서등록", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/발주정보용판매", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/박스바코드생성", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/모델가계도", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/childasin", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." },
+    { "prefix": "/childain", "feature_id": "org.cqr.automaton-routing", "message_ko": "이 명령은 「CQR 명령어 모음」 Work Kit을 적용해야 사용할 수 있습니다. MY Agent 관리자에서 받은 뒤 적용하세요." }
+  ]
+}

@@ -59,6 +59,21 @@ const meta = readJson(path.join(root, 'work-kits', 'catalog-meta.json'));
 assert.ok(meta.sequence >= 1);
 assert.ok(String(meta.update_repository ?? '').trim());
 
+const opsShelf = readJson(path.join(root, 'work-kits', 'profiles', 'cqr', 'ops', 'shelf.json'));
+assert.equal(
+  opsShelf.features?.enable?.['org.cqr.automaton-routing']?.required,
+  true,
+  'ops shelf must require org.cqr.automaton-routing Feature',
+);
+for (const other of ['brand-info', 'product-dev']) {
+  const shelf = readJson(path.join(root, 'work-kits', 'profiles', 'cqr', other, 'shelf.json'));
+  assert.equal(
+    shelf.features?.enable?.['org.cqr.automaton-routing'],
+    undefined,
+    `${other} must not enable Automaton Feature`,
+  );
+}
+
 const temp = mkdtempSync(path.join(os.tmpdir(), 'work-kit-pack-'));
 try {
   const archive = path.join(temp, shelfAssetName('cqr', 'brand-info'));
@@ -85,6 +100,9 @@ if (existsSync(feedPath)) {
     const feedShelf = feedCqr.shelves?.find((s) => s.id === shelfId);
     assert.ok(feedShelf, `feed shelf ${key}`);
     assert.deepEqual(feedShelf.ui?.pinned_skill_ids ?? [], pins);
+    if (shelfId === 'ops' && feedShelf.features) {
+      assert.equal(feedShelf.features.enable?.['org.cqr.automaton-routing']?.required, true);
+    }
     if (feedShelf.asset?.name) {
       const assetPath = path.join(root, 'deploy', 'output', feedShelf.asset.name);
       if (existsSync(assetPath)) {
@@ -101,5 +119,7 @@ if (existsSync(feedPath)) {
 
 const publish = readFileSync(path.join(root, 'tools', 'publish-work-kit-catalog.mjs'), 'utf8');
 assert.match(publish, /channels\/work-kits\.json/);
+assert.match(publish, /features:/);
+assert.match(publish, /packSignedOrganizationFeature/);
 
 console.log('verify-work-kit-pack: ok');

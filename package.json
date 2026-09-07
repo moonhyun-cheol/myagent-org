@@ -13,6 +13,7 @@
     "verify:work-kits": "node tools/verify-work-kit-pack.mjs",
     "verify:org-automaton": "node tools/verify-org-automaton.mjs",
     "verify:no-secrets": "node tools/verify-no-secrets.mjs",
-    "verify:repo-target": "node tools/verify-repo-target.mjs"
+    "verify:repo-target": "node tools/verify-repo-target.mjs",
+    "verify:all": "npm run verify:repo-target && npm run verify:no-secrets && npm run verify:org-automaton && npm run verify:module-pack && npm run verify:work-kits"
   }
 }

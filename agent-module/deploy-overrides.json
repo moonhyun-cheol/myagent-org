@@ -1,5 +1,0 @@
-{
-  "openclaw_actor_id": "cqr-pa",
-  "openclaw_fallback_local": false,
-  "note": "Hub host URLs are injected at publish from _local/operator.json hub.* — never commit IPs here. Adapter token stays in each MY Agent data/vault/openclaw-adapter.json. See docs/OPERATOR-HUB.md."
-}

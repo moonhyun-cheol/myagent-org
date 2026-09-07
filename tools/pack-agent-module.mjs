@@ -67,12 +67,17 @@ export function deriveCapabilities(extractDir, skillsManifest) {
   if (existsSync(path.join(extractDir, 'skills', 'product-data-access.md'))) {
     capabilities.push('product-data-routing');
   }
+  // Automaton routing is a selectable Organization Feature — not part of the base module.
+  // stageAgentModule strips runtime files; fail if anything remains.
   if (
     existsSync(path.join(extractDir, 'automaton-tools.manifest.json'))
-    && existsSync(path.join(extractDir, 'openclaw-workflow-map.json'))
-    && existsSync(path.join(extractDir, 'deploy-overrides.json'))
+    || existsSync(path.join(extractDir, 'openclaw-workflow-map.json'))
+    || existsSync(path.join(extractDir, 'adapter-connection.json'))
+    || existsSync(path.join(extractDir, 'adapter-connection.template.json'))
   ) {
-    capabilities.push('automaton-routing');
+    failPack(
+      'base agent-module must not include Automaton runtime files; use feature-packs/automaton-routing',
+    );
   }
   if (!capabilities.includes('skills')) {
     failPack('packed module must include skills/manifest.json');
@@ -124,6 +129,25 @@ export function stageAgentModule(sourceRoot, extractDir) {
     cpSync(agentModuleDir, extractDir, { recursive: true });
   }
   if (existsSync(archiveZip)) rmSync(archiveZip, { force: true });
+
+  // Automaton runtime belongs in Feature Packs — strip leftovers from older commits/archives.
+  const bannedRuntime = [
+    'automaton-tools.manifest.json',
+    'openclaw-workflow-map.json',
+    'adapter-connection.json',
+    'adapter-connection.template.json',
+    'deploy-overrides.json',
+    'AUTOMATON.md',
+  ];
+  for (const name of bannedRuntime) {
+    const abs = path.join(extractDir, name);
+    if (existsSync(abs)) rmSync(abs, { force: true, recursive: true });
+  }
+  const slashIndexSrc = path.join(agentModuleDir, 'optional-feature-slash-index.json');
+  if (existsSync(slashIndexSrc)) {
+    cpSync(slashIndexSrc, path.join(extractDir, 'optional-feature-slash-index.json'));
+  }
+
   if (!existsSync(path.join(extractDir, 'skills', 'manifest.json'))) {
     failPack('staged agent-module is missing skills/manifest.json');
   }

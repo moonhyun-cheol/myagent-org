@@ -3,9 +3,14 @@
   "id": "ops",
   "group": "cqr",
   "label": "CQR 명령어 모음",
-  "description": "업무에 도움을 주는 명령어들입니다. 채팅에 /반품율분석, /CTR처럼 입력해 쓰세요.",
+  "description": "업무에 도움을 주는 명령어들입니다. 적용 시 Automaton Feature가 설치됩니다. 채팅에 /반품율분석, /CTR처럼 입력해 쓰세요.",
   "pull": [],
   "plugins": { "enable": {} },
+  "features": {
+    "enable": {
+      "org.cqr.automaton-routing": { "required": true }
+    }
+  },
   "ui": {
     "pinned_skill_ids": []
   }

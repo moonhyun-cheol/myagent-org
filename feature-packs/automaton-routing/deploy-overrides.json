@@ -1,0 +1,5 @@
+{
+  "openclaw_actor_id": "cqr-pa",
+  "openclaw_fallback_local": false,
+  "note": "Hub URL, install bootstrap and polling settings are injected at publish from _local/operator.json into adapter-connection.json. Do not hardcode hosts or long-lived API tokens here."
+}

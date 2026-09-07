@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import uuid
 from pathlib import Path
 
@@ -74,7 +75,13 @@ def main() -> None:
     if args.json_only:
         print(report.model_dump_json(indent=2))
     else:
-        print(md)
+        try:
+            print(md)
+        except UnicodeEncodeError:
+            # Windows cp949 consoles cannot print en-dash etc. Host reads the MD file.
+            print(md.encode(sys.stdout.encoding or "utf-8", errors="replace").decode(
+                sys.stdout.encoding or "utf-8", errors="replace"
+            ))
 
     print(f"\n---\nSession: {session_id}")
     print(f"JSON: {output_dir / 'research_report.json'}")

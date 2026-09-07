@@ -38,7 +38,7 @@ def test_feasibility_review_carries_market_sizing():
         research_report=_research_with_sizing(),
         feasibility_report=FeasibilityReport(),
     )
-    assert "시장 규모 검증" in m d
+    assert "시장 규모 검증" in md
     assert "TAM: $1.0B" in md
     assert "Bottom-up 교차검증" in md
     assert "신뢰도: low" in md

@@ -1,5 +1,5 @@
 {
-  "_comment": "Copy to _local/operator.json (gitignored). Publish 시 hub URL이 배포 ZIP에 주입됩니다. 토큰은 git에 넣지 않습니다.",
+  "_comment": "Copy to _local/operator.json (gitignored). Publish 시 hub URL과 설치 bootstrap 설정이 배포 ZIP에 주입됩니다. 장기 bearer token은 넣지 않습니다.",
   "deployment_phase": "operator_pc",
   "_deployment_phase_values": ["operator_pc", "company_server"],
   "_migration_note": "사내 서버 이전 시 hub 아래 URL만 새 서버로 바꾸고 deployment_phase를 company_server로, npm run publish:update 후 클라이언트 모듈 업데이트.",
@@ -9,9 +9,17 @@
     "brand_manual_url": "",
     "product_data_base_url": ""
   },
-  "client_secrets": {
-    "_comment": "배포받은 각 MY Agent PC — git/ZIP 금지. data/vault/openclaw-adapter.json 의 token 또는 env OPENCLAW_ADAPTER_TOKEN",
-    "openclaw_adapter_token": ""
+  "adapter_auth": {
+    "_comment": "직원 설치 시 bootstrap_key로 1회 인증한 뒤 장치별 토큰을 로컬 vault에 저장. 키는 배포 때 주입되며 교체 가능.",
+    "mode": "install_bootstrap",
+    "bootstrap_path": "/cqr/adapter/auth/bootstrap",
+    "bootstrap_key": ""
+  },
+  "adapter_progress": {
+    "request_path": "/cqr/adapter/request",
+    "status_path_template": "/cqr/adapter/jobs/{job_id}",
+    "poll_interval_ms": 2500,
+    "timeout_ms": 1800000
   },
   "nas": {
     "_comment": "Bulbasaur/매크로 전용. MY Agent 채팅 스킬에는 노출하지 않음. 서버 이전 시 경로만 갱신.",

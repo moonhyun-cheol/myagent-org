@@ -41,6 +41,19 @@ export function loadOperatorConfig(root) {
     product_data_base_url: hubField(file, 'product_data_base_url', [
       'MY_AGENT_PRODUCT_DATA_BASE_URL',
     ]),
+    adapter_auth: {
+      mode: usable(file?.adapter_auth?.mode) || 'install_bootstrap',
+      bootstrap_path: usable(file?.adapter_auth?.bootstrap_path) || '/cqr/adapter/auth/bootstrap',
+      bootstrap_key: usable(process.env.MY_AGENT_ADAPTER_BOOTSTRAP_KEY)
+        || usable(file?.adapter_auth?.bootstrap_key),
+    },
+    adapter_progress: {
+      request_path: usable(file?.adapter_progress?.request_path) || '/cqr/adapter/request',
+      status_path_template: usable(file?.adapter_progress?.status_path_template)
+        || '/cqr/adapter/jobs/{job_id}',
+      poll_interval_ms: Number(file?.adapter_progress?.poll_interval_ms) || 2500,
+      timeout_ms: Number(file?.adapter_progress?.timeout_ms) || 1800000,
+    },
     nas,
   };
 }
@@ -53,5 +66,7 @@ export function operatorHubForPublish(root) {
     openclaw_adapter_base_url: op.openclaw_adapter_base_url,
     brand_manual_url: op.brand_manual_url,
     product_data_base_url: op.product_data_base_url,
+    adapter_auth: op.adapter_auth,
+    adapter_progress: op.adapter_progress,
   };
 }

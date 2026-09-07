@@ -5,6 +5,8 @@ import {
   readdirSync,
   rmSync,
   statSync,
+  cpSync,
+  writeFileSync,
 } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -74,17 +76,57 @@ export function shelfAssetName(groupId, shelfId) {
   return `${groupId}-${shelfId}.tar.gz`;
 }
 
-export function packWorkKitShelf(sourceRoot, groupId, shelfId, outPath) {
+/**
+ * Pack a shelf directory to tar.gz.
+ * @param {object} [opts]
+ * @param {Record<string, string>} [opts.featureZipById] feature_id → absolute zip path to embed under features/
+ */
+export function packWorkKitShelf(sourceRoot, groupId, shelfId, outPath, opts = {}) {
   const found = listShelvesInGroup(sourceRoot, groupId).find((s) => s.shelf.id === shelfId);
   if (!found) failPack(`shelf not found: ${groupId}/${shelfId}`);
   const shelfDir = found.shelfDir;
+  const featureEnable = found.shelf.features?.enable ?? {};
+  const featureIds = Object.keys(featureEnable);
+
+  let packRoot = shelfDir;
+  let staging = null;
+  if (featureIds.length > 0 || opts.featureZipById) {
+    staging = path.join(path.dirname(outPath), `_shelf-stage-${groupId}-${shelfId}`);
+    if (existsSync(staging)) rmSync(staging, { recursive: true, force: true });
+    mkdirSync(staging, { recursive: true });
+    cpSync(shelfDir, staging, { recursive: true });
+    // Do not ship authoring leftovers.
+    const authoringFeatures = path.join(staging, 'features');
+    if (existsSync(authoringFeatures)) {
+      for (const name of readdirSync(authoringFeatures)) {
+        if (name.endsWith('.zip')) rmSync(path.join(authoringFeatures, name), { force: true });
+      }
+    }
+    mkdirSync(path.join(staging, 'features'), { recursive: true });
+    for (const featureId of featureIds) {
+      const zipSrc = opts.featureZipById?.[featureId];
+      if (!zipSrc || !existsSync(zipSrc)) {
+        failPack(`signed Feature Pack missing for ${groupId}/${shelfId}: ${featureId}`);
+      }
+      cpSync(zipSrc, path.join(staging, 'features', `${featureId}.zip`));
+    }
+    // Persist features block in shelf.json (already present).
+    writeFileSync(
+      path.join(staging, 'shelf.json'),
+      `${JSON.stringify(found.shelf, null, 2)}\n`,
+      'utf8',
+    );
+    packRoot = staging;
+  }
+
   mkdirSync(path.dirname(outPath), { recursive: true });
   if (existsSync(outPath)) rmSync(outPath, { force: true });
   const tar = spawnSync(
     'tar',
-    ['-czf', outPath, '-C', shelfDir, '.'],
+    ['-czf', outPath, '-C', packRoot, '.'],
     { encoding: 'utf8' },
   );
+  if (staging && existsSync(staging)) rmSync(staging, { recursive: true, force: true });
   if (tar.status !== 0 || !existsSync(outPath)) {
     failPack(tar.stderr?.toString().trim() || `tar failed for ${groupId}/${shelfId}`);
   }
@@ -92,16 +134,17 @@ export function packWorkKitShelf(sourceRoot, groupId, shelfId, outPath) {
     outPath,
     size: statSync(outPath).size,
     shelf: found.shelf,
+    embedded_features: featureIds,
   };
 }
 
-export function packAllWorkKitShelves(sourceRoot, outDir) {
+export function packAllWorkKitShelves(sourceRoot, outDir, opts = {}) {
   const packed = [];
   for (const group of listWorkKitGroups(sourceRoot)) {
     for (const { shelf } of group.shelves) {
       const name = shelfAssetName(group.id, shelf.id);
       const outPath = path.join(outDir, name);
-      const result = packWorkKitShelf(sourceRoot, group.id, shelf.id, outPath);
+      const result = packWorkKitShelf(sourceRoot, group.id, shelf.id, outPath, opts);
       packed.push({
         group: group.id,
         id: shelf.id,
@@ -109,6 +152,7 @@ export function packAllWorkKitShelves(sourceRoot, outDir) {
         outPath: result.outPath,
         size: result.size,
         shelf: result.shelf,
+        embedded_features: result.embedded_features,
       });
     }
   }

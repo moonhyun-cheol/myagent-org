@@ -46,7 +46,8 @@ if (-not $venvPython) {
 }
 
 Write-Host "python: $venvPython"
-
+$env:PYTHONIOENCODING = "utf-8"
+$env:PYTHONUTF8 = "1"
 $env:CQR_MANAGER_ROOT = $managerRoot
 
 function Get-SessionMeta {

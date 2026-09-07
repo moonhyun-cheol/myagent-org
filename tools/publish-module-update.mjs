@@ -53,6 +53,8 @@ const hub = skipHubInject
     openclaw_adapter_base_url: '',
     brand_manual_url: '',
     product_data_base_url: '',
+    adapter_auth: operator.adapter_auth,
+    adapter_progress: operator.adapter_progress,
   }
   : operatorHubForPublish(root);
 if (skipHubInject) {
@@ -91,23 +93,18 @@ try {
   fail(error instanceof Error ? error.message : String(error));
 }
 
-const deployOverridesPath = path.join(extractDir, 'deploy-overrides.json');
-if (existsSync(deployOverridesPath)) {
-  let deployOverrides = {};
-  try {
-    deployOverrides = JSON.parse(readFileSync(deployOverridesPath, 'utf8'));
-  } catch {
-    deployOverrides = {};
+// Base organization module: brand/skills/market only. Automaton Adapter lives in Feature Pack.
+for (const banned of [
+  'automaton-tools.manifest.json',
+  'openclaw-workflow-map.json',
+  'adapter-connection.json',
+  'adapter-connection.template.json',
+  'deploy-overrides.json',
+  'AUTOMATON.md',
+]) {
+  if (existsSync(path.join(extractDir, banned))) {
+    fail(`base module must not contain Automaton runtime file: ${banned}`);
   }
-  const patched = {
-    ...deployOverrides,
-    openclaw_fallback_local: false,
-    deployment_phase: hub.deployment_phase,
-  };
-  if (hub.openclaw_adapter_base_url) {
-    patched.openclaw_adapter_base_url = hub.openclaw_adapter_base_url;
-  }
-  writeFileSync(deployOverridesPath, `${JSON.stringify(patched, null, 2)}\n`, 'utf8');
 }
 
 writeFileSync(
@@ -124,7 +121,6 @@ writeFileSync(
     brand_manual_url: hub.brand_manual_url || undefined,
     product_data_base_url: hub.product_data_base_url || undefined,
     deployment_phase: hub.deployment_phase,
-    openclaw_adapter_base_url: hub.openclaw_adapter_base_url || undefined,
     capabilities: staged.capabilities,
   }, null, 2)}\n`,
   'utf8',

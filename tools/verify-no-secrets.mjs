@@ -26,6 +26,10 @@ const RULES = [
     re: /\b(?:192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(?:1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3})\b/g,
   },
   {
+    name: 'static bearer token',
+    re: /\bBearer\s+[A-Za-z0-9._~-]{12,}\b/gi,
+  },
+  {
     name: 'NAS UNC share',
     re: /\\\\(?:Nas|NAS)\\[^\s"'`]+/gi,
   },
