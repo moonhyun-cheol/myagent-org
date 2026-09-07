@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 3,
+  "sequence": 4,
   "groups": [
     {
       "id": "cqr",
@@ -22,32 +22,39 @@
             ]
           },
           "asset": {
-            "sequence": 3,
+            "sequence": 4,
             "name": "cqr-brand-info.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-3",
-            "size": 395,
-            "sha256": "8dcf1ebd2e9946884f654ba02992f60630888f9079a3cbdc4b8a3a72bec31557"
+            "release_tag": "work-kits-4",
+            "size": 406,
+            "sha256": "b32196839bfd55b2d5f17d00a1effafc41c7d59f7f25101c7f229588a5e2a94e"
           }
         },
         {
           "id": "ops",
           "label": "CQR 명령어 모음",
-          "description": "업무에 도움을 주는 명령어들입니다. 채팅에 /반품율분석, /CTR처럼 입력해 쓰세요.",
+          "description": "업무에 도움을 주는 명령어들입니다. 적용 시 Automaton Feature가 설치됩니다. 채팅에 /반품율분석, /CTR처럼 입력해 쓰세요.",
           "pull": [],
           "plugins": {
             "enable": {}
+          },
+          "features": {
+            "enable": {
+              "org.cqr.automaton-routing": {
+                "required": true
+              }
+            }
           },
           "ui": {
             "pinned_skill_ids": []
           },
           "asset": {
-            "sequence": 3,
+            "sequence": 4,
             "name": "cqr-ops.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-3",
-            "size": 393,
-            "sha256": "a08acbb710210a5f39d3a31b6206f75ea9f82f0a0138f1cefd167f508ac7a024"
+            "release_tag": "work-kits-4",
+            "size": 4306,
+            "sha256": "cf5c8a8138df84c014788e1baa565ae68372daebea4d301217ce9562be220a37"
           }
         },
         {
@@ -69,12 +76,12 @@
             ]
           },
           "asset": {
-            "sequence": 3,
+            "sequence": 4,
             "name": "cqr-product-dev.tar.gz",
             "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-3",
-            "size": 431,
-            "sha256": "bf59869f0703715e02cb634c9f13cd699641b0e5745f12b6f3ea8635a0652526"
+            "release_tag": "work-kits-4",
+            "size": 442,
+            "sha256": "2484a0e0e745d9d259c09481e7ed77d55a4cec1fc5fc0191ebc94d59a00a31cd"
           }
         }
       ]
