@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-launcher-feed/v1",
     "kind": "work-kit-launcher",
-    "update_sequence": 5,
+    "update_sequence": 6,
     "minimum_supported_sequence": 1,
-    "version": "1.0.10",
+    "version": "1.0.11",
     "channel": "stable",
-    "published_at": "2026-09-14T02:13:43.336Z",
+    "published_at": "2026-09-14T04:58:07.607Z",
     "asset": {
       "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "launcher-update-5",
-      "name": "WorkKitLauncher-v1.0.10-update-5.zip",
-      "size": 66675808,
-      "sha256": "69cddfadf46af85359e08dde7699d54007218c4c2a7aff0b4d54638e71833103"
+      "release_tag": "launcher-update-6",
+      "name": "WorkKitLauncher-v1.0.11-update-6.zip",
+      "size": 66675892,
+      "sha256": "2f7af4ad7c766d3008fcb8483313e69b47ecefc012eee8e6c864d8bd167e4ffd"
     },
-    "payload_manifest_sha256": "0ac45dc17617ce26555b98ddb303b38bedc50286bdf2f310d4c4f7afd485282f",
-    "release_notes": ""
+    "payload_manifest_sha256": "b92fa03a2d86773932543e15f90709a63ad8b9e1f3205b6b7824b2ef0f3885f6",
+    "release_notes": "v1.0.11: 관리자 재설치 교체와 실패 롤백을 트랜잭션화하고 업데이트 진행 가드를 강화."
   },
-  "signature": "o48je+HBRoGRaLJibxcp++9uBhp4pf4lqz+5yWDxoz3x02b9HLC4Q/sBRti9oRZdEI6HrV3XR1Bx1eUw4OxmN4ziJnlt4B+vCqnVHutGyj5TDjpxtDDGlWwPhuEYK0vYNCuR6HCUOL9tpQd/uIfezzHeClvuP0BIm7GKgQcaBmctfdGQHXpTNoWJ3hZknTf7DnGwyRmapIUZxNDnG8t5kjhvXq8D6/LvgUleNUR+75LZFgCr4CT05NwrVBUeilGuf6ri/vcqmC5Dv4Mi6FXXdNlMP08UjclmHJStaGkIrHDAqzo1KIgJhILbiC1FU2nMk6uqCuQ1ZmvLNe6B4T4UiwiDJJndDxjEe3jSMyWrQm0WuI6wQRcchhmR2ixgMaT2eMuf2dva7s9KfWCBvm+6zbk8JA1MrK4c3NJ4LCX6e2p4gBQjesB9mtFMNq4EVROXgZcF9MkQDdTs/5XMWc8d8clkq0Y1vuwQug90aWh1X9VRfT5Ijwm1tbIahJPVD454"
+  "signature": "lOV/O5Gu5hv3bsAmwMRz1qyRAmELFWb02/Jm5kyyIAVSmB/rhZ5TiIMrHrrtp50w7T+Kqhle3IiwnFQgTyfcDKEU0ViO7CBdc4P59fZKqboVuvDFuYWIUeeB6nsXlwKoUqMs5Jzuurns6nIHL51CUmnXLu+qBqdfQslQnV8cIvTIcpjDUcM/6ahxTdxyHE1j42Oqj6WI3JeaaL26nAIrf3tPrECxaj+H2pc2djHK0LAHeklHmlV050OlXtcKsEYjzWcYLOuS1iY0NklJY0qbZ7CaP+W9bozGZ8X5oO/gOxgLB2U+PH8ChOqSDwj8dkQUy/JBj1comAAJNzYQz+XFngRn+NJCkRdHzQPTZu/xghl3amuPChwSJejPbjDeOZsgy+/L8Bszqb8Y5Z886H46iJ5pcsB8O6XYDtc0/Mpo/EEnXqLATAnrigqmBicKENoXQZHtCftg3ux99yPX0T2FRo2tBWbExkUvPxDOVxS4R4XkI4gt0YTaMzJnzagwmyae"
 }
