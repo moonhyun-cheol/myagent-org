@@ -8,6 +8,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$script:installTransaction = $null
 . (Join-Path $PSScriptRoot 'install-paths.ps1')
 . (Join-Path $PSScriptRoot 'install-launcher-discovery.ps1')
 . (Join-Path $PSScriptRoot 'install-launcher-shortcut.ps1')
@@ -31,9 +32,100 @@ function Wait-BeforeExit([int]$exitCode) {
   exit $exitCode
 }
 
+function Remove-InstallPath([string]$path) {
+  if (-not (Test-Path -LiteralPath $path)) { return }
+  Remove-Item -LiteralPath $path -Recurse -Force -ErrorAction Stop
+}
+
+function Start-LauncherInstallTransaction([string]$TargetDir) {
+  # Keep the backup on the target volume so each move is atomic.
+  $backupRoot = Join-Path $TargetDir (".my-agent-launcher-install-backup-{0}" -f [Guid]::NewGuid().ToString('N'))
+  New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+  $managedPaths = @(
+    'WorkKitLauncher.exe',
+    'launcher-manifest.json',
+    'bin\work-kit-launcher',
+    'ui\work-kit-launcher'
+  )
+  $transaction = [PSCustomObject]@{
+    TargetDir    = $TargetDir
+    BackupRoot   = $backupRoot
+    ManagedPaths = $managedPaths
+    Active       = $true
+  }
+  $script:installTransaction = $transaction
+
+  foreach ($relativePath in $managedPaths) {
+    $current = Join-Path $TargetDir $relativePath
+    if (-not (Test-Path -LiteralPath $current)) { continue }
+    $backup = Join-Path $backupRoot $relativePath
+    $backupParent = Split-Path $backup -Parent
+    New-Item -ItemType Directory -Force -Path $backupParent | Out-Null
+    Move-Item -LiteralPath $current -Destination $backup -Force
+  }
+  return $transaction
+}
+
+function Undo-LauncherInstallTransaction {
+  $transaction = $script:installTransaction
+  if ($null -eq $transaction -or -not $transaction.Active) { return }
+
+  Write-Host 'Install failed. Removing partially installed launcher files...'
+  $cleanupErrors = @()
+  foreach ($relativePath in $transaction.ManagedPaths) {
+    $current = Join-Path $transaction.TargetDir $relativePath
+    try {
+      Remove-InstallPath $current
+    } catch {
+      $cleanupErrors += "remove ${relativePath}: $($_.Exception.Message)"
+    }
+  }
+  foreach ($relativePath in $transaction.ManagedPaths) {
+    $backup = Join-Path $transaction.BackupRoot $relativePath
+    if (-not (Test-Path -LiteralPath $backup)) { continue }
+    $current = Join-Path $transaction.TargetDir $relativePath
+    try {
+      $currentParent = Split-Path $current -Parent
+      New-Item -ItemType Directory -Force -Path $currentParent | Out-Null
+      Move-Item -LiteralPath $backup -Destination $current -Force
+    } catch {
+      $cleanupErrors += "restore ${relativePath}: $($_.Exception.Message)"
+    }
+  }
+  try {
+    Remove-InstallPath $transaction.BackupRoot
+  } catch {
+    $cleanupErrors += "remove backup: $($_.Exception.Message)"
+  }
+  $transaction.Active = $false
+  if ($cleanupErrors.Count -gt 0) {
+    throw "Install cleanup was incomplete: $($cleanupErrors -join '; ')"
+  }
+  Write-Host 'Partial files were removed and the previous launcher installation was restored.'
+}
+
+function Complete-LauncherInstallTransaction {
+  $transaction = $script:installTransaction
+  if ($null -eq $transaction -or -not $transaction.Active) { return }
+  # The new install is valid at this point. A stale backup must not turn success
+  # into a rollback that could remove the newly installed launcher.
+  $transaction.Active = $false
+  try {
+    Remove-InstallPath $transaction.BackupRoot
+  } catch {
+    Write-Host "Install succeeded, but the temporary backup could not be removed: $($_.Exception.Message)"
+  }
+}
+
 trap {
+  $installError = $_
+  try {
+    Undo-LauncherInstallTransaction
+  } catch {
+    Write-Host "Install cleanup FAILED: $($_.Exception.Message)"
+  }
   Write-Host ''
-  Write-Host $_.Exception.Message
+  Write-Host $installError.Exception.Message
   if ($NoInteractive) {
     exit 1
   }
@@ -103,24 +195,6 @@ function Copy-LauncherPayload {
   return $copiedFiles
 }
 
-function Sync-LauncherWebUi {
-  param([string]$AppRoot)
-
-  $uiDist = Join-Path $AppRoot 'ui\work-kit-launcher\dist'
-  $webDir = Join-Path $AppRoot 'bin\work-kit-launcher\web'
-  if (-not (Test-Path -LiteralPath (Join-Path $uiDist 'index.html'))) {
-    return
-  }
-  if (Test-Path -LiteralPath $webDir) {
-    Remove-Item -LiteralPath $webDir -Recurse -Force
-  }
-  $parent = Split-Path $webDir -Parent
-  if (-not (Test-Path -LiteralPath $parent)) {
-    New-Item -ItemType Directory -Force -Path $parent | Out-Null
-  }
-  Copy-Item -Path $uiDist -Destination $webDir -Recurse -Force
-}
-
 if (-not (Test-Path -LiteralPath (Join-Path $SourceAppDir 'WorkKitLauncher.exe'))) {
   throw "Source app folder is missing WorkKitLauncher.exe: $SourceAppDir"
 }
@@ -166,14 +240,16 @@ if (-not (Test-InstallFolderWritable $targetRoot)) {
 Write-Host "Installing WorkKitLauncher into: $targetRoot"
 Write-Host "Copying from: $SourceAppDir"
 Stop-RunningWorkKitLauncher
+Write-Host 'Preparing a clean launcher install (existing launcher files are backed up until success)...'
+Start-LauncherInstallTransaction -TargetDir $targetRoot | Out-Null
 $copiedCount = Copy-LauncherPayload -SourceDir $SourceAppDir -TargetDir $targetRoot
 Write-Host "Copied $copiedCount file(s)."
-Sync-LauncherWebUi -AppRoot $targetRoot
 
 $launcherExe = Join-Path $targetRoot 'WorkKitLauncher.exe'
 if (-not (Test-Path -LiteralPath $launcherExe)) {
   throw "Install finished but WorkKitLauncher.exe is missing: $launcherExe (source: $SourceAppDir, copied files: $copiedCount). Re-download the install zip and run install-launcher.bat again."
 }
+Complete-LauncherInstallTransaction
 
 $shortcutPath = $null
 try {

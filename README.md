@@ -2,7 +2,7 @@
 
 **1.0.0-beta.1** · org seq **15** · work-kit catalog seq **2** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
 
-CQR **조직 모듈**(스킬·slash)과 **작업 키트**를 게시합니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent).
+CQR **조직 모듈**(스킬·slash), **작업 키트**, 운영자용 **MY Agent 관리자**를 서로 독립된 배포 트랙으로 게시합니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent).
 
 ## 허브 구조 (먼저 읽기)
 
@@ -10,12 +10,13 @@ MY Agent = 클라이언트. **slash·데이터·Bulbasaur = 중앙 허브** (지
 
 → **[docs/OPERATOR-HUB.md](docs/OPERATOR-HUB.md)** — 뭐가 뭔지, publish, 토큰, 서버 이전
 
-## 두 갈래 (섞지 않음)
+## 세 갈래 (섞지 않음)
 
 | 갈래 | 소스 | 피드 | 앱 동작 |
 |------|------|------|---------|
 | **조직 모듈** | `agent-module/` | `channels/beta.json` + 서명 ZIP | 기동·적용 시 백그라운드 설치 |
 | **작업 키트** | `work-kits/profiles/` | `channels/work-kits.json` + 키트 tarball | 설정 → 작업 환경에서 받기·적용 |
+| **관리자** | `manager/` | `manager/channels/launcher-stable.json` + install/update zip | 운영자용 별도 프로그램 설치·업데이트 |
 
 사용자 UX는 **작업 환경**(CQR 브랜드 정보 / 제품개발 / 명령어 모음)이 전면입니다.
 

@@ -74,6 +74,7 @@ const readme = `WorkKitLauncher v${version} (install only)
 
 기존 MY Agent 설치에 작업 환경 프로그램만 추가·갱신합니다.
 MY Agent 코어(MYAgent.exe)는 포함하지 않습니다.
+관리자 소유 파일은 설치 전에 정리하며, 설치가 실패하면 중간 파일을 제거하고 기존 관리자 파일을 복원합니다.
 
 1. install-launcher.bat (GUI) or install-launcher-ui.ps1
 2. MY Agent 설치 폴더를 자동으로 찾아 WorkKitLauncher.exe 를 복사합니다.

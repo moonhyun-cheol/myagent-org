@@ -312,10 +312,6 @@ try {
   `$code = 1
 }
 if (`$null -eq `$code) { `$code = 0 }
-if ((Test-Path -LiteralPath $(Quote-PsLiteral (Join-Path $targetFull 'WorkKitLauncher.exe'))) -and `$code -ne 0) {
-  Add-Content -LiteralPath `$log -Value 'WARN: treating as success because WorkKitLauncher.exe exists' -Encoding UTF8
-  `$code = 0
-}
 exit `$code
 "@
 
