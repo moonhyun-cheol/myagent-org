@@ -5,6 +5,8 @@
 /manager/bin/
 /manager/shell/**/bin/
 /manager/shell/**/obj/
+/manager/ui/**/dist/
+*.tsbuildinfo
 .env
 .env.*
 node_modules/
