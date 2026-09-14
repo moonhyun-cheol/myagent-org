@@ -1,5 +1,10 @@
 /tools/keys/
+/manager/tools/keys/
 /deploy/
+/manager/deploy/
+/manager/bin/
+/manager/shell/**/bin/
+/manager/shell/**/obj/
 .env
 .env.*
 node_modules/

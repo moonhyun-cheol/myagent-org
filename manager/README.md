@@ -34,26 +34,27 @@ update-51에서 앱 본체(`moonhyun-cheol/myagent`)의 설정 화면으로 통�
 > 운영자 서명 개인키(`tools/keys/`, 커밋 금지)로 **다시 서명·게시**해야 합니다. 손으로 JSON을 고치면 서명이 깨집니다.
 > 재게시는 위 publish 스크립트로 수행하세요.
 
-## 남은 단계 (이 저장소 루트에서 실행)
+## 게시 (이 저장소 `manager/`에서)
 
-이 이전은 파일 배치까지 완료된 상태입니다. 커밋/푸시와 빌드 배선은 이 저장소를 작업 폴더로 연 세션에서 진행하세요.
+사전: .NET 8 SDK, Node, `gh` 로그인, 서명 개인키.
+
+클라이언트는 설치된 MY Agent의 `core/config/defaults/update-public.pem`으로 피드를 검증합니다.
+따라서 서명은 **앱 본체(MY Agent) 업데이트와 같은 RSA 키**여야 합니다. 조직 모듈 키와 섞지 마세요.
 
 ```bash
-# myagent-org 저장소 루트에서
-git add manager
-git commit -m "manager: MY Agent 관리자(WorkKitLauncher) 복원 및 이전 (자동업데이트 유지)"
-git push origin main
+cd manager
+# 예: MY Agent 제품 repo의 tools/keys/update-private.pem
+$env:MY_AGENT_UPDATE_SIGNING_KEY = "C:\\path\\to\\update-private.pem"
 
-# 관리자 SPA 의존성 (lockfile 재생성 포함)
-cd manager/ui/work-kit-launcher && npm install
-
-# 자동업데이트 피드 재서명·재게시 (서명 키 준비 후)
-node manager/tools/publish-launcher-update.mjs   # 인자는 스크립트 상단 참조
+npm --prefix ui/work-kit-launcher install
+node tools/publish-github-launcher-update.mjs            # dry-run
+node tools/publish-github-launcher-update.mjs --confirm  # install-zip + update-zip + 서명 피드
 ```
 
-## 참고 (빌드 배선 확인 필요)
+피드 게시 위치는 `manager/channels/launcher-stable.json`입니다 (`launcher-manifest.json`의 `update_feed_url`과 동일).
 
-원본 런처는 앱 본체 코어(`/profiles`, `/organization-module`, `/launcher` 서빙, `WorkEnvironmentUpdatePollingService`)에
-결합돼 있었습니다. 이 저장소에서 독립 실행형으로 빌드·구동하려면 API 베이스 URL/포트, csproj 경로, publish 스크립트의
-저장소·릴리스 태그 인자를 이 저장소 기준으로 점검해야 합니다. 파일은 원본 그대로이므로 경로 프리픽스(`manager/`)만
-반영하면 됩니다.
+## 독립 구동 배선
+
+- API: 관리자가 로컬 MY Agent Core(`127.0.0.1`, 기본 포트 10200, `/profiles`·`/organization-module`)를 기동·재사용합니다. 이 저장소에 별도 API 서버는 없습니다.
+- UI: 현재 MY Agent는 `/launcher/`를 404로 제거했으므로, WebView가 같은 origin의 `/launcher/*`를 로컬 `web/` 파일로 가로채 제공합니다.
+- 업데이트 저장소/태그: `moonhyun-cheol/myagent-org`, `launcher-update-{sequence}`.

@@ -40,7 +40,7 @@ const launcherManifest = JSON.parse(readFileSync(launcherManifestPath, 'utf8'));
 const githubRepository = String(
   process.env.MY_AGENT_UPDATE_GITHUB_REPO
   ?? launcherManifest.update_repository
-  ?? 'moonhyun-cheol/myagent',
+  ?? 'moonhyun-cheol/myagent-org',
 ).trim();
 const privateKeyPath = path.resolve(
   process.env.MY_AGENT_UPDATE_SIGNING_KEY

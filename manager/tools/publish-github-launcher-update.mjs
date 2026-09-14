@@ -44,6 +44,14 @@ if (!skipBuild) {
     env: process.env,
   });
   if (build.status !== 0) process.exit(build.status ?? 1);
+
+  // Also build the first-run install zip so it can be attached to the same release.
+  const installBuild = spawnSync(process.execPath, [path.join(root, 'tools', 'publish-launcher-install.mjs'), '--skip-build'], {
+    cwd: root,
+    stdio: 'inherit',
+    env: process.env,
+  });
+  if (installBuild.status !== 0) process.exit(installBuild.status ?? 1);
 }
 
 const latestPath = path.join(outDir, 'LATEST_LAUNCHER_UPDATE.json');
@@ -63,11 +71,23 @@ if (!existsSync(zipPath) || !existsSync(feedPath)) {
   fail('launcher update payload/feed files are missing');
 }
 
+// Optional first-run install zip (WorkKitLauncher-v{ver}-install.zip) shipped on the same release.
+let installZipPath = null;
+const installLatestPath = path.join(outDir, 'LATEST_LAUNCHER_INSTALL.json');
+if (existsSync(installLatestPath)) {
+  const installLatest = JSON.parse(readFileSync(installLatestPath, 'utf8'));
+  if (installLatest.version !== manifest.version) {
+    fail('launcher install zip does not match launcher-manifest.json version');
+  }
+  installZipPath = path.resolve(installLatest.zip_path);
+  if (!existsSync(installZipPath)) fail('launcher install zip is missing; run tools/publish-launcher-install.mjs');
+}
+
 const repository = String(
   process.env.MY_AGENT_UPDATE_GITHUB_REPO
   ?? latest.github_repository
   ?? manifest.update_repository
-  ?? 'moonhyun-cheol/myagent',
+  ?? 'moonhyun-cheol/myagent-org',
 ).trim();
 const repoView = run(
   ['repo', 'view', repository, '--json', 'nameWithOwner,visibility,defaultBranchRef,url'],
@@ -93,6 +113,12 @@ const plan = buildGitHubLauncherReleasePlan({
     ?? '',
 });
 
+// Attach the install zip as an additional positional asset (before the gh flags).
+if (installZipPath) {
+  const flagIndex = plan.release_args.indexOf('--repo');
+  plan.release_args.splice(flagIndex, 0, installZipPath);
+}
+
 const existingRelease = run(
   ['release', 'view', plan.tag, '--repo', plan.repository, '--json', 'tagName,assets'],
   { capture: true, allowFailure: true },
@@ -105,9 +131,13 @@ if (existingRelease.status === 0) {
   }
   const release = JSON.parse(existingRelease.stdout);
   const assets = new Map((release.assets ?? []).map((asset) => [asset.name, asset.size]));
-  for (const localPath of [zipPath, feedPath]) {
+  const requiredAssets = [zipPath, feedPath];
+  if (installZipPath) requiredAssets.push(installZipPath);
+  for (const localPath of requiredAssets) {
     const name = path.basename(localPath);
-    if (assets.get(name) !== statSync(localPath).size) {
+    const size = assets.get(name);
+    if (size === undefined) continue; // new asset (e.g. install zip); uploaded on --confirm
+    if (size !== statSync(localPath).size) {
       fail(`existing ${plan.tag} asset does not match local file size: ${name}`);
     }
   }
@@ -125,6 +155,7 @@ console.log(JSON.stringify({
   raw_feed_url: plan.raw_feed_url,
   payload: zipPath,
   feed: feedPath,
+  install_zip: installZipPath,
 }, null, 2));
 
 if (!confirmed) {
@@ -132,7 +163,12 @@ if (!confirmed) {
   process.exit(0);
 }
 
-if (!releaseAlreadyExists) run(plan.release_args);
+if (!releaseAlreadyExists) {
+  run(plan.release_args);
+} else if (installZipPath) {
+  // Release already existed (resume): ensure the install zip is attached.
+  run(['release', 'upload', plan.tag, installZipPath, '--repo', plan.repository, '--clobber']);
+}
 
 const feedBytes = readFileSync(feedPath);
 const contentBase64 = feedBytes.toString('base64');

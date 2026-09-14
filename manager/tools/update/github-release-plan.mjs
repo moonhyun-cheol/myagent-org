@@ -162,15 +162,16 @@ export function buildGitHubLauncherReleasePlan({
   if (safeChannel !== 'stable') releaseArgs.push('--prerelease');
 
   const feedUrlBase = String(process.env.MY_AGENT_UPDATE_FEED_URL_BASE ?? '').trim();
+  const launcherFeedPath = `manager/channels/launcher-${safeChannel}.json`;
   const rawFeedUrl = feedUrlBase
     ? `${feedUrlBase
         .replaceAll('{owner}', encodeURIComponent(repo.split('/')[0]))
         .replaceAll('{repo}', encodeURIComponent(repo.split('/')[1]))
         .replaceAll('{repository}', repo)
         .replaceAll('{branch}', encodeURIComponent(branch))
-        .replace(/\/$/, '')}/channels/launcher-${safeChannel}.json`
+        .replace(/\/$/, '')}/${launcherFeedPath}`
     : `https://raw.githubusercontent.com/${repo}/${encodeURIComponent(branch)}`
-      + `/channels/launcher-${safeChannel}.json`;
+      + `/${launcherFeedPath}`;
 
   return {
     repository: repo,
@@ -180,7 +181,7 @@ export function buildGitHubLauncherReleasePlan({
     version: safeVersion,
     tag,
     release_args: releaseArgs,
-    feed_api_path: `repos/${repo}/contents/channels/launcher-${safeChannel}.json`,
+    feed_api_path: `repos/${repo}/contents/${launcherFeedPath}`,
     feed_branch: branch,
     raw_feed_url: rawFeedUrl,
   };
