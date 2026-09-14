@@ -33,10 +33,14 @@ import {
 } from './update/update-signing.mjs';
 import {
   buildGitHubLauncherReleasePlan,
+  compareSemVer,
   coreUpdateTag,
   isCoreUpdateAssetName,
   isLauncherUpdateAssetName,
   launcherUpdateTag,
+  parseSemVer,
+  validateLauncherVersionState,
+  validateUpdateProgression,
 } from './update/github-release-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -193,6 +197,66 @@ try {
   assert.equal(launcherPlan.tag, 'launcher-update-2');
   assert.equal(launcherPlan.raw_feed_url.endsWith('/channels/launcher-stable.json'), true);
   assert.equal(launcherPlan.release_args.includes('update-2'), false);
+  assert.throws(() => buildGitHubLauncherReleasePlan({
+    repository: 'moonhyun-cheol/myagent-org',
+    defaultBranch: 'main',
+    channel: 'stable',
+    updateSequence: 6,
+    version: '1.0.11',
+    zipPath: 'WorkKitLauncher-v1.0.10-update-6.zip',
+    feedPath: 'launcher-feed-stable.json',
+  }), /WorkKitLauncher-v1.0.11-update-6.zip/);
+  assert.equal(compareSemVer('1.0.11', '1.0.10'), 1);
+  assert.throws(() => parseSemVer('v1.0.11'), /invalid SemVer/);
+  assert.equal(validateLauncherVersionState({
+    manifestVersion: '1.0.10',
+    packageVersion: '1.0.10',
+    lockVersion: '1.0.10',
+    lockRootVersion: '1.0.10',
+    csprojVersion: '1.0.10',
+    assemblyVersion: '1.0.10.0',
+    fileVersion: '1.0.10.0',
+  }), '1.0.10');
+  assert.throws(() => validateLauncherVersionState({
+    manifestVersion: '1.0.10',
+    packageVersion: '1.0.6',
+    lockVersion: '1.0.10',
+    lockRootVersion: '1.0.10',
+    csprojVersion: '1.0.10',
+    assemblyVersion: '1.0.10.0',
+    fileVersion: '1.0.10.0',
+  }), /version mismatch/);
+  const currentLauncherFeed = {
+    document: {
+      update_sequence: 5,
+      version: '1.0.10',
+      channel: 'stable',
+      asset: { repository: 'moonhyun-cheol/myagent-org' },
+    },
+  };
+  assert.equal(validateUpdateProgression({
+    currentFeed: currentLauncherFeed,
+    nextSequence: 6,
+    nextVersion: '1.0.11',
+    expectedChannel: 'stable',
+    expectedRepository: 'moonhyun-cheol/myagent-org',
+  }), 'next-update');
+  assert.throws(() => validateUpdateProgression({
+    currentFeed: currentLauncherFeed,
+    nextSequence: 7,
+    nextVersion: '1.0.11',
+  }), /exactly 6/);
+  assert.throws(() => validateUpdateProgression({
+    currentFeed: currentLauncherFeed,
+    nextSequence: 6,
+    nextVersion: '1.0.9',
+  }), /rollback/);
+  assert.equal(validateUpdateProgression({
+    currentFeed: currentLauncherFeed,
+    nextSequence: 5,
+    nextVersion: '1.0.10',
+    resume: true,
+  }), 'resume-current');
 
   const feedPath = path.join(temp, 'launcher-feed-stable.json');
   writeFileSync(feedPath, `${JSON.stringify(createSignedEnvelope(feed, privatePem), null, 2)}\n`);

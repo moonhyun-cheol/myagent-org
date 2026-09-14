@@ -19,7 +19,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 import { publishWorkKitLauncher } from './launcher-publish.mjs';
-import { launcherUpdateTag } from './update/github-release-plan.mjs';
+import { launcherUpdateTag, validateLauncherVersionState } from './update/github-release-plan.mjs';
 import {
   buildLauncherPayloadManifest,
   buildLauncherReleaseFeed,
@@ -74,6 +74,18 @@ if (!version) fail('launcher-manifest.json version is required');
 if (launcherManifest.kind !== 'work-kit-launcher') {
   fail('launcher-manifest.json kind must be work-kit-launcher');
 }
+const uiPackage = JSON.parse(readFileSync(path.join(root, 'ui', 'work-kit-launcher', 'package.json'), 'utf8'));
+const uiLock = JSON.parse(readFileSync(path.join(root, 'ui', 'work-kit-launcher', 'package-lock.json'), 'utf8'));
+const csproj = readFileSync(path.join(root, 'shell', 'WorkKitLauncher', 'WorkKitLauncher.csproj'), 'utf8');
+validateLauncherVersionState({
+  manifestVersion: version,
+  packageVersion: uiPackage.version,
+  lockVersion: uiLock.version,
+  lockRootVersion: uiLock.packages?.['']?.version,
+  csprojVersion: /<Version>([^<]+)<\/Version>/.exec(csproj)?.[1],
+  assemblyVersion: /<AssemblyVersion>([^<]+)<\/AssemblyVersion>/.exec(csproj)?.[1],
+  fileVersion: /<FileVersion>([^<]+)<\/FileVersion>/.exec(csproj)?.[1],
+});
 
 const privateKeyPem = readFileSync(privateKeyPath, 'utf8');
 const publicKeyPem = readFileSync(publicKeyPath, 'utf8');

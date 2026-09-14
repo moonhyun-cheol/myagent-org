@@ -1,5 +1,114 @@
 import path from 'node:path';
 
+const SEMVER_RE = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+
+export function parseSemVer(version) {
+  const value = String(version ?? '').trim();
+  const match = SEMVER_RE.exec(value);
+  if (!match) throw new Error(`invalid SemVer: ${value || '(empty)'}`);
+  const prerelease = match[4]
+    ? match[4].split('.').map((part) => {
+        if (/^\d+$/.test(part) && !/^(0|[1-9]\d*)$/.test(part)) {
+          throw new Error(`invalid SemVer numeric prerelease: ${value}`);
+        }
+        return /^\d+$/.test(part) ? Number(part) : part;
+      })
+    : [];
+  return { value, major: Number(match[1]), minor: Number(match[2]), patch: Number(match[3]), prerelease };
+}
+
+export function compareSemVer(left, right) {
+  const a = parseSemVer(left);
+  const b = parseSemVer(right);
+  for (const key of ['major', 'minor', 'patch']) {
+    if (a[key] !== b[key]) return a[key] < b[key] ? -1 : 1;
+  }
+  if (a.prerelease.length === 0 || b.prerelease.length === 0) {
+    return a.prerelease.length === b.prerelease.length ? 0 : (a.prerelease.length === 0 ? 1 : -1);
+  }
+  const length = Math.max(a.prerelease.length, b.prerelease.length);
+  for (let index = 0; index < length; index += 1) {
+    const av = a.prerelease[index];
+    const bv = b.prerelease[index];
+    if (av === undefined || bv === undefined) return av === bv ? 0 : (av === undefined ? -1 : 1);
+    if (av === bv) continue;
+    if (typeof av === 'number' && typeof bv === 'number') return av < bv ? -1 : 1;
+    if (typeof av === 'number') return -1;
+    if (typeof bv === 'number') return 1;
+    return av < bv ? -1 : 1;
+  }
+  return 0;
+}
+
+export function validateUpdateProgression({
+  currentFeed,
+  nextSequence,
+  nextVersion,
+  expectedChannel,
+  expectedRepository,
+  resume = false,
+}) {
+  if (!Number.isSafeInteger(nextSequence) || nextSequence < 1) {
+    throw new Error('next update sequence must be a positive safe integer');
+  }
+  parseSemVer(nextVersion);
+  if (!currentFeed) {
+    if (nextSequence !== 1) throw new Error(`first published update sequence must be 1 (got ${nextSequence})`);
+    return 'first-publish';
+  }
+  const current = currentFeed.document ?? currentFeed;
+  const currentSequence = Number(current.update_sequence);
+  if (!Number.isSafeInteger(currentSequence) || currentSequence < 1) {
+    throw new Error('current channel feed has an invalid update_sequence');
+  }
+  const currentVersion = String(current.version ?? '').trim();
+  parseSemVer(currentVersion);
+  if (expectedChannel && current.channel !== expectedChannel) {
+    throw new Error(`current channel feed channel mismatch: ${current.channel}`);
+  }
+  if (expectedRepository && current.asset?.repository !== expectedRepository) {
+    throw new Error(`current channel feed repository mismatch: ${current.asset?.repository}`);
+  }
+  if (resume && nextSequence === currentSequence) {
+    if (String(nextVersion) !== currentVersion) {
+      throw new Error(`resume must use the already-published version ${currentVersion}`);
+    }
+    return 'resume-current';
+  }
+  if (nextSequence !== currentSequence + 1) {
+    throw new Error(`update sequence must be exactly ${currentSequence + 1} after published ${currentSequence} (got ${nextSequence})`);
+  }
+  if (compareSemVer(nextVersion, currentVersion) < 0) {
+    throw new Error(`version rollback is forbidden (${nextVersion} < ${currentVersion})`);
+  }
+  return 'next-update';
+}
+
+export function validateLauncherVersionState({
+  manifestVersion,
+  packageVersion,
+  lockVersion,
+  lockRootVersion,
+  csprojVersion,
+  assemblyVersion,
+  fileVersion,
+}) {
+  const expected = parseSemVer(manifestVersion).value;
+  const versions = { packageVersion, lockVersion, lockRootVersion, csprojVersion };
+  for (const [label, value] of Object.entries(versions)) {
+    if (String(value ?? '').trim() !== expected) {
+      throw new Error(`launcher version mismatch: manifest=${expected}, ${label}=${value ?? '(missing)'}`);
+    }
+  }
+  const expectedAssembly = `${expected}.0`;
+  for (const [label, value] of Object.entries({ assemblyVersion, fileVersion })) {
+    if (String(value ?? '').trim() !== expectedAssembly) {
+      throw new Error(`launcher version mismatch: expected ${expectedAssembly}, ${label}=${value ?? '(missing)'}`);
+    }
+  }
+  return expected;
+}
+
 export function validateGitHubRepository(repository) {
   const value = String(repository ?? '').trim();
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(value)) {
@@ -66,7 +175,10 @@ export function buildGitHubReleasePlan({
     throw new Error('update sequence must be a positive safe integer');
   }
   const safeVersion = String(version ?? '').trim();
-  if (!safeVersion) throw new Error('version is required');
+  const parsedVersion = parseSemVer(safeVersion);
+  if (safeChannel === 'stable' && parsedVersion.prerelease.length > 0) {
+    throw new Error('stable channel requires a release SemVer without prerelease identifiers');
+  }
   const tag = coreUpdateTag(updateSequence);
   const zipName = path.basename(zipPath);
   const feedName = path.basename(feedPath);
@@ -135,12 +247,15 @@ export function buildGitHubLauncherReleasePlan({
     throw new Error('update sequence must be a positive safe integer');
   }
   const safeVersion = String(version ?? '').trim();
-  if (!safeVersion) throw new Error('version is required');
+  const parsedVersion = parseSemVer(safeVersion);
+  if (safeChannel === 'stable' && parsedVersion.prerelease.length > 0) {
+    throw new Error('stable channel requires a release SemVer without prerelease identifiers');
+  }
   const tag = launcherUpdateTag(updateSequence);
   const zipName = path.basename(zipPath);
   const feedName = path.basename(feedPath);
-  if (!isLauncherUpdateAssetName(zipName)) {
-    throw new Error(`launcher zip must be WorkKitLauncher-v{ver}-update-${updateSequence}.zip`);
+  if (zipName !== `WorkKitLauncher-v${safeVersion}-update-${updateSequence}.zip`) {
+    throw new Error(`launcher zip must be WorkKitLauncher-v${safeVersion}-update-${updateSequence}.zip`);
   }
   if (feedName !== `launcher-feed-${safeChannel}.json`) {
     throw new Error(`feed file must be launcher-feed-${safeChannel}.json`);
