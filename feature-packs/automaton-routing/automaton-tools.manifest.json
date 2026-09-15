@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "tools": [
     {
       "id": "amazon_return_manager_direct",
@@ -13,7 +13,14 @@
       "intent_pattern_strings": ["반품율"],
       "intent_examples": ["반품율 분석"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "return-rate",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "amazon_return_manager_direct", "batch_time_hint": "약 15~30초" },
+        "batch": { "supported": true, "label_ko": "반품율", "cap": null }
+      }
     },
     {
       "id": "return_chi_squared",
@@ -27,7 +34,14 @@
       "intent_pattern_strings": ["카이제곱"],
       "intent_examples": ["카이제곱"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "chi-squared",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "return_chi_squared" },
+        "batch": { "supported": false, "label_ko": "카이제곱" }
+      }
     },
     {
       "id": "us_sample_stock_lookup",
@@ -41,7 +55,15 @@
       "intent_pattern_strings": ["미국샘플재고"],
       "intent_examples": ["미국샘플재고"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "us-sample-stock",
+        "fallback_profile": "quantity",
+        "fields": ["qty"],
+        "ack": { "enabled": true, "command_id": "us_sample_stock_lookup", "batch_time_hint": "약 1~3분" },
+        "batch": { "supported": true, "label_ko": "미국샘플재고", "cap": null }
+      }
     },
     {
       "id": "downloadtable_ctr",
@@ -55,7 +77,15 @@
       "intent_pattern_strings": ["^/CTR"],
       "intent_examples": ["/CTR TAC_BOONIE"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "ctr-report",
+        "fallback_profile": "files",
+        "allowed_extensions": [".xlsx", ".csv"],
+        "ack": { "enabled": true, "command_id": "downloadtable_ctr", "batch_time_hint": "수 분 이상 (데이터 범위에 따라 달라질 수 있음)" },
+        "batch": { "supported": true, "label_ko": "CTR", "cap": null }
+      }
     },
     {
       "id": "downloadtable_po_review",
@@ -69,7 +99,15 @@
       "intent_pattern_strings": ["발주검토자료"],
       "intent_examples": ["/발주검토자료 POLO_LS"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "po-review",
+        "fallback_profile": "files",
+        "allowed_extensions": [".xlsx"],
+        "ack": { "enabled": true, "command_id": "downloadtable_po_review", "batch_time_hint": "수 분 이상 (데이터 범위에 따라 달라질 수 있음)" },
+        "batch": { "supported": true, "label_ko": "발주검토자료", "cap": null }
+      }
     },
     {
       "id": "livesi_base_source",
@@ -83,7 +121,14 @@
       "intent_pattern_strings": ["라이브계절"],
       "intent_examples": ["/라이브계절지수"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "live-si",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "livesi_base_source" },
+        "batch": { "supported": false, "label_ko": "LiveSI" }
+      }
     },
     {
       "id": "po_bms_workfile",
@@ -97,7 +142,14 @@
       "intent_pattern_strings": ["발주서등록"],
       "intent_examples": ["/발주서등록 MY-260508-00"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "po-register",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "po_bms_workfile" },
+        "batch": { "supported": true, "label_ko": "발주서등록", "cap": null }
+      }
     },
     {
       "id": "po_prep_adv",
@@ -111,7 +163,14 @@
       "intent_pattern_strings": ["발주정보용"],
       "intent_examples": ["/발주정보용판매"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "po-sales-prep",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "po_prep_adv" },
+        "batch": { "supported": false, "label_ko": "발주정보용판매" }
+      }
     },
     {
       "id": "box_barcode_generate",
@@ -125,7 +184,14 @@
       "intent_pattern_strings": ["박스바코드"],
       "intent_examples": ["/박스바코드생성 J&H"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "box-barcode",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "box_barcode_generate" },
+        "batch": { "supported": true, "label_ko": "박스바코드생성", "cap": null }
+      }
     },
     {
       "id": "model_genealogy",
@@ -139,7 +205,14 @@
       "intent_pattern_strings": ["모델가계도"],
       "intent_examples": ["/모델가계도 TXP441"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "model-genealogy",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "model_genealogy" },
+        "batch": { "supported": false, "label_ko": "모델가계도" }
+      }
     },
     {
       "id": "child_asin_lookup",
@@ -153,7 +226,14 @@
       "intent_pattern_strings": ["childasin", "child.?asin"],
       "intent_examples": ["/childasin KR#####_CQXXXXXX_PR"],
       "long_running": true,
-      "status_contract": "adapter-job-v1"
+      "status_contract": "adapter-job-v1",
+      "response": {
+        "profile": "discord",
+        "template_id": "child-asin",
+        "fallback_profile": "text",
+        "ack": { "enabled": true, "command_id": "child_asin_lookup" },
+        "batch": { "supported": false, "label_ko": "childasin" }
+      }
     }
   ]
 }

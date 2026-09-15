@@ -17,6 +17,7 @@ for (const rel of [
   'adapter-connection.template.json',
   'adapter-connection.json',
   'AUTOMATON.md',
+  'DISCORD_RESPONSE_FORMATS.md',
 ]) {
   assert.equal(
     existsSync(path.join(agentModule, rel)),
@@ -38,6 +39,7 @@ for (const rel of [
   'deploy-overrides.json',
   'adapter-connection.template.json',
   'AUTOMATON.md',
+  'DISCORD_RESPONSE_FORMATS.md',
 ]) {
   assert.equal(existsSync(path.join(featurePack, rel)), true, `missing feature-packs/automaton-routing/${rel}`);
 }
@@ -68,6 +70,7 @@ const automatonManifest = JSON.parse(
 const connectionTemplate = JSON.parse(
   readFileSync(path.join(featurePack, 'adapter-connection.template.json'), 'utf8'),
 );
+assert.equal(automatonManifest.version, 3, 'Discord response manifest must use version 3');
 assert.equal(connectionTemplate.authentication?.mode, 'install_bootstrap');
 assert.match(connectionTemplate.transport?.status_path_template ?? '', /\{job_id\}/);
 assert.deepEqual(
@@ -150,6 +153,50 @@ assert.deepEqual([...toolIds].sort(), [...workflowIds].sort(), 'slash tools and 
 for (const tool of tools) {
   assert.ok((tool.slash_prefixes ?? []).length > 0, `${tool.id} needs slash_prefixes`);
   assert.equal(tool.status_contract, 'adapter-job-v1', `${tool.id} needs adapter-job-v1 status_contract`);
+  assert.ok(tool.response && typeof tool.response === 'object', `${tool.id} needs declarative response contract`);
+  assert.ok(
+    ['auto', 'text', 'quantity', 'files', 'status', 'discord'].includes(tool.response?.profile),
+    `${tool.id} has invalid response profile`,
+  );
+  if (tool.response?.profile === 'discord') {
+    assert.ok(tool.response.template_id?.trim(), `${tool.id} discord response needs template_id`);
+    assert.ok(
+      ['auto', 'text', 'quantity', 'files', 'status'].includes(tool.response.fallback_profile),
+      `${tool.id} discord response needs a safe fallback_profile`,
+    );
+    assert.equal(tool.response.ack?.enabled, true, `${tool.id} needs Discord ACK policy`);
+    assert.ok(tool.response.ack?.command_id?.trim(), `${tool.id} ACK needs command_id`);
+    assert.equal(typeof tool.response.batch?.supported, 'boolean', `${tool.id} needs batch policy`);
+    assert.ok(tool.response.batch?.label_ko?.trim(), `${tool.id} batch policy needs label_ko`);
+  }
+  const effectiveProfile = tool.response?.profile === 'discord'
+    ? tool.response.fallback_profile
+    : tool.response?.profile;
+  if (effectiveProfile === 'quantity') {
+    assert.ok(tool.response.fields?.length > 0, `${tool.id} quantity response needs fields`);
+  }
+  if (effectiveProfile === 'files') {
+    assert.ok(tool.response.allowed_extensions?.length > 0, `${tool.id} files response needs allowed_extensions`);
+    assert.ok(
+      tool.response.allowed_extensions.every((ext) => /^\.[a-z0-9]+$/.test(ext)),
+      `${tool.id} file extensions must be lowercase dot extensions`,
+    );
+  }
+}
+
+const templateIds = new Set(tools.map((tool) => tool.response?.template_id));
+assert.equal(templateIds.size, tools.length, 'Discord template_id values must be unique');
+
+const discordSot = readFileSync(path.join(featurePack, 'DISCORD_RESPONSE_FORMATS.md'), 'utf8');
+for (const required of [
+  '# Discord 슬래시 명령 — 최종 답변 양식 규약 (SoT)',
+  '처리 접수 완료',
+  '======작업 완료======',
+  '스탁: {C스탁|M스탁|A스탁}',
+  '반품률 데이터 리포트 작성 완료',
+  'Discord에는 **payload.message만** 노출',
+]) {
+  assert.ok(discordSot.includes(required), `Discord response SoT missing: ${required}`);
 }
 
 const slashIndex = JSON.parse(
