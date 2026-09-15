@@ -7,7 +7,7 @@
   "minimum_supported_sequence": 1,
   "required_core_api": "1.0.0-beta.1",
   "install_root": "modules/organization",
-  "update_repository": "moonhyun-cheol/myagent-org",
-  "update_feed_url": "https://raw.githubusercontent.com/moonhyun-cheol/myagent-org/main/channels/beta.json",
-  "work_kit_catalog_feed_url": "https://raw.githubusercontent.com/moonhyun-cheol/myagent-org/main/channels/work-kits.json"
+  "update_repository": "ins78516/myagent-org",
+  "update_feed_url": "https://git.minyoungcorp.com/ins78516/myagent-org/raw/branch/main/channels/beta.json",
+  "work_kit_catalog_feed_url": "https://git.minyoungcorp.com/ins78516/myagent-org/raw/branch/main/channels/work-kits.json"
 }

@@ -9,6 +9,7 @@
     "admin:update-key-status": "node tools/update-admin.mjs status",
     "publish:update": "node tools/publish-module-update.mjs",
     "publish:work-kits": "node tools/publish-work-kit-catalog.mjs",
+    "publish:releases": "node tools/publish-gitea-releases.mjs",
     "publish:gitea": "node tools/publish-gitea-releases.mjs",
     "verify:module-pack": "node tools/verify-module-pack.mjs",
     "verify:work-kits": "node tools/verify-work-kit-pack.mjs",

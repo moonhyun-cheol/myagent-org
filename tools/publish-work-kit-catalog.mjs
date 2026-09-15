@@ -21,6 +21,7 @@ import {
   packSignedOrganizationFeature,
 } from './pack-organization-feature.mjs';
 import { sha256File } from './update/update-signing.mjs';
+import { loadReleaseTargets, rawFileUrl } from './release/release-target.mjs';
 import { loadOperatorConfig, operatorHubForPublish } from './operator-config.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,12 +51,19 @@ if (!Number.isSafeInteger(sequence) || sequence < 1) {
 }
 if (values.bump) sequence += 1;
 
+const targets = loadReleaseTargets(root);
+const releaseTarget = targets.primary;
 const repository = String(
-  process.env.MY_AGENT_WORK_KIT_UPDATE_GITHUB_REPO
+  process.env.MY_AGENT_WORK_KIT_UPDATE_REPOSITORY
+  ?? process.env.MY_AGENT_WORK_KIT_UPDATE_GITHUB_REPO
   ?? meta.update_repository
+  ?? releaseTarget.repository
   ?? '',
 ).trim();
-if (!repository) fail('update_repository required in catalog-meta.json or env');
+if (!repository) fail('update_repository required in catalog-meta.json, release-targets.json, or env');
+if (repository !== releaseTarget.repository) {
+  fail('catalog repository must match the primary release target');
+}
 
 const releaseTagPrefix = String(meta.release_tag_prefix ?? 'work-kits').trim();
 const releaseTag = `${releaseTagPrefix}-${sequence}`;
@@ -182,7 +190,7 @@ if (existsSync(manifestPath)) {
     manifestPath,
     `${JSON.stringify({
       ...product,
-      work_kit_catalog_feed_url: `https://raw.githubusercontent.com/${repository}/main/channels/work-kits.json`,
+      work_kit_catalog_feed_url: rawFileUrl(releaseTarget, 'channels/work-kits.json'),
     }, null, 2)}\n`,
     'utf8',
   );

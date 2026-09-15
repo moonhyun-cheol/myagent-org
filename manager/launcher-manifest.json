@@ -6,6 +6,7 @@
   "update_sequence": 6,
   "minimum_supported_sequence": 1,
   "required_core_api": "1.0.0-beta.1",
-  "update_repository": "moonhyun-cheol/myagent-org",
-  "update_feed_url": "https://raw.githubusercontent.com/moonhyun-cheol/myagent-org/main/manager/channels/launcher-stable.json"
+  "update_repository": "ins78516/myagent-org",
+  "update_feed_url": "https://git.minyoungcorp.com/ins78516/myagent-org/raw/branch/main/manager/channels/launcher-stable.json",
+  "update_asset_url_template": "https://git.minyoungcorp.com/{repository}/releases/download/{tag}/{name}"
 }

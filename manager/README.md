@@ -1,6 +1,6 @@
 # MY Agent 관리자 (WorkKitLauncher)
 
-MY Agent **관리자 프로그램**(코드명 `WorkKitLauncher`)을 이 조직 저장소(`moonhyun-cheol/myagent-org`)로 이전한 것입니다.
+MY Agent **관리자 프로그램**(코드명 `WorkKitLauncher`)을 이 조직 저장소(`ins78516/myagent-org`)에서 관리합니다.
 update-51에서 앱 본체(`moonhyun-cheol/myagent`)의 설정 화면으로 통합되며 제품 트리에서 제거됐던 프로그램을,
 운영자용 별도 실행 프로그램으로 다시 복원했습니다. 원본은 앱 본체 커밋 `27f8fb5^`(제거 직전 상태)에서 그대로 가져왔습니다.
 
@@ -26,46 +26,40 @@ update-51에서 앱 본체(`moonhyun-cheol/myagent`)의 설정 화면으로 통�
 - 게시측: `tools/publish-launcher-update.mjs` · `tools/publish-github-launcher-update.mjs` ·
   루트 `tools/publish-gitea-releases.mjs` · `tools/update/update-signing.mjs` · `tools/verify-launcher-update.mjs`.
 
-이전에 따라 업데이트 대상 저장소를 앱 본체에서 이 조직 저장소로 재지정했습니다
-(`launcher-manifest.json` → `moonhyun-cheol/myagent-org`,
-피드 URL `…/myagent-org/main/manager/channels/launcher-stable.json`).
+업데이트 대상은 사내 Gitea primary로 설정되어 있습니다
+(`launcher-manifest.json` → `ins78516/myagent-org`,
+피드 URL `https://git.minyoungcorp.com/ins78516/myagent-org/raw/branch/main/manager/channels/launcher-stable.json`).
 
-> ⚠️ `channels/launcher-stable.json`은 **서명된 문서**입니다. 저장소 이전 후 실제 업데이트를 서비스하려면
-> 운영자 서명 개인키(`tools/keys/`, 커밋 금지)로 **다시 서명·게시**해야 합니다. 손으로 JSON을 고치면 서명이 깨집니다.
-> 재게시는 위 publish 스크립트로 수행하세요.
+> ⚠️ `channels/launcher-stable.json`은 **서명된 문서**입니다. 현재 seq 6 문서는 손으로 수정하지 않습니다.
+> 다음 sequence에서 운영자 서명 개인키(`tools/keys/`, 커밋 금지)로 새 Gitea 대상 피드를 생성·게시하세요.
 
-## 게시 (이 저장소 `manager/`에서)
+## 게시
 
-사전: .NET 8 SDK, Node, `gh` 로그인, 서명 개인키.
+사전: .NET 8 SDK, Node, 서명 개인키, Gitea Release 쓰기 PAT.
 
 클라이언트는 설치된 MY Agent의 `core/config/defaults/update-public.pem`으로 피드를 검증합니다.
 따라서 서명은 **앱 본체(MY Agent) 업데이트와 같은 RSA 키**여야 합니다. 조직 모듈 키와 섞지 마세요.
 
-```bash
+```powershell
 cd manager
-# 예: MY Agent 제품 repo의 tools/keys/update-private.pem
 $env:MY_AGENT_UPDATE_SIGNING_KEY = "C:\\path\\to\\update-private.pem"
-
-npm --prefix ui/work-kit-launcher install
-node tools/publish-github-launcher-update.mjs            # dry-run
-node tools/publish-github-launcher-update.mjs --confirm  # install-zip + update-zip + 서명 피드
+node tools/publish-launcher-update.mjs --write-channel
+node tools/publish-launcher-install.mjs
+cd ..
+npm run verify:all
+npm run publish:releases -- --track launcher       # dry-run
+# commit/push와 launcher-update-{sequence} 태그 push 후:
+npm run publish:releases -- --track launcher --confirm
 ```
 
-피드 게시 위치는 `manager/channels/launcher-stable.json`입니다 (`launcher-manifest.json`의 `update_feed_url`과 동일).
+전체 순서와 재개 방법은 루트 `docs/GITEA-MIGRATION.md`를 따릅니다. `publish-github-launcher-update.mjs`는 GitHub fallback 유지가 필요한 예외 상황에만 사용합니다.
 
-### Gitea 호환
+### Gitea 자산 URL
 
-관리자 updater는 GitHub 기본 URL을 유지하면서 다음 순서로 자산 URL을 결정합니다.
-
-1. `MY_AGENT_UPDATE_ASSET_URL_TEMPLATE`
-2. `launcher-manifest.json`의 선택 필드 `update_asset_url_template`
-3. feed가 비-GitHub HTTPS 호스트이면 같은 호스트의 `{repository}/releases/download/{tag}/{name}`
-4. 기존 GitHub Release URL
-
-따라서 브리지 버전은 GitHub Release에도 설치본·업데이트본을 올려 기존 설치본이 받을 수 있게 하고, 설치되는 새 manifest의 feed URL을 Gitea로 바꿔야 합니다. 현재 mirror 단계의 Gitea Release 복제는 저장소 루트에서 `npm run publish:gitea`로 수행합니다.
+관리자 updater는 `launcher-manifest.json`의 `update_asset_url_template`을 우선 사용하고, Gitea raw feed 호스트에서도 같은 저장소의 Release URL을 구성할 수 있습니다. 현재 manifest는 Gitea template을 명시합니다. 기존 seq 6 signed feed는 이전 당시의 불변 산출물이므로 손으로 바꾸지 않고, 다음 sequence부터 Gitea repository로 새로 서명합니다.
 
 ## 독립 구동 배선
 
 - API: 관리자가 로컬 MY Agent Core(`127.0.0.1`, 기본 포트 10200, `/profiles`·`/organization-module`)를 기동·재사용합니다. 이 저장소에 별도 API 서버는 없습니다.
 - UI: 현재 MY Agent는 `/launcher/`를 404로 제거했으므로, WebView가 같은 origin의 `/launcher/*`를 로컬 `web/` 파일로 가로채 제공합니다.
-- 업데이트 저장소/태그: `moonhyun-cheol/myagent-org`, `launcher-update-{sequence}`.
+- 업데이트 저장소/태그: `ins78516/myagent-org`, `launcher-update-{sequence}`.

@@ -32,7 +32,7 @@ Core 없이 새 Work Kit만 올리면 Feature 적용이 실패하거나 slash가
 
 | 이름 | 뭐냐 | 어디 설정 |
 |------|------|-----------|
-| **myagent-org** (이 레포) | slash 목록·스킬·작업 키트 **정의** | GitHub(현재 활성) + Gitea(mirror) |
+| **myagent-org** (이 레포) | slash 목록·스킬·작업 키트 **정의** | Gitea(primary) + GitHub(read-only fallback) |
 | **기본 조직 모듈 ZIP** | 브랜드·스킬·시장조사 (Automaton 실행 파일 없음) | `publish:update` |
 | **Organization Feature Pack** | Automaton slash/workflow/Adapter (`org.cqr.automaton-routing`) | `feature-packs/` → Work Kit asset |
 | **허브 URL** | Adapter·API 주소 | `_local/operator.json` → publish 시 주입 |
@@ -95,11 +95,11 @@ Core 없이 새 Work Kit만 올리면 Feature 적용이 실패하거나 slash가
 3. `publish:update` + `publish:work-kits` 다시 실행
 4. 클라이언트 모듈·Work Kit 갱신
 
-## Gitea 저장소 이전
+## Gitea 저장소·릴리즈 운영
 
-현재 활성 업데이트 호스트는 GitHub이고, 사내 Gitea는 mirror 단계다. Gitea `main`과 태그를 먼저 fast-forward로 동기화한 뒤 `npm run publish:gitea` 사전 검사와 확인 게시를 사용한다. Core와 관리자의 브리지 업데이트가 배포되기 전에는 feed URL이나 signed asset repository를 Gitea로 전환하지 않는다.
+사내 Gitea가 코드, 태그, Release, raw feed의 primary다. 일반 `git pull`·`git push`는 Gitea `origin/main`을 사용한다. 릴리즈는 산출물 생성 → `npm run verify:all` → commit/push → 트랙 태그 push → `npm run publish:releases -- --confirm` 순서로 진행한다.
 
-전체 절차와 복제 대상 Release는 [GITEA-MIGRATION.md](GITEA-MIGRATION.md)를 따른다.
+기존 seq 19/5/6 signed feed는 손으로 바꾸지 않는다. 다음 sequence를 게시할 때 Gitea repository로 새로 서명된다. 전체 체크리스트와 장애 복구는 [GITEA-MIGRATION.md](GITEA-MIGRATION.md)를 따른다.
 
 ## 자주 헷갈리는 것
 

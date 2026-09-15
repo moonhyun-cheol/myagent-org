@@ -6,7 +6,9 @@
   "version": "1.0.0-beta.1",
   "update_sequence": 19,
   "channel": "beta",
-  "github": "moonhyun-cheol/myagent-org",
+  "provider": "gitea",
+  "base_url": "https://git.minyoungcorp.com",
+  "repository": "ins78516/myagent-org",
   "local_folder": "MY_CUSTOM_CODEX-COMPANY",
   "sibling": {
     "role": "core",

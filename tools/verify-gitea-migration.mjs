@@ -15,7 +15,7 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const targets = loadReleaseTargets(root);
 
-assert.equal(targets.migration_phase, 'mirror');
+assert.equal(targets.migration_phase, 'primary');
 assert.equal(targets.primary.provider, 'gitea');
 assert.equal(targets.primary.repository, 'ins78516/myagent-org');
 assert.equal(targets.primary.default_branch, 'main');
@@ -48,15 +48,24 @@ assert.throws(
   /file name/,
 );
 
-// Mirror phase must not silently redirect installed clients before a bridge release exists.
+// Primary phase authoring must point newly built clients and feeds at Gitea.
 const manifest = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 const launcherManifest = JSON.parse(readFileSync(path.join(root, 'manager', 'launcher-manifest.json'), 'utf8'));
-assert.equal(manifest.update_repository, targets.legacy.repository);
-assert.equal(launcherManifest.update_repository, targets.legacy.repository);
-assert.match(manifest.update_feed_url, /^https:\/\/raw\.githubusercontent\.com\//);
-assert.match(launcherManifest.update_feed_url, /^https:\/\/raw\.githubusercontent\.com\//);
+assert.equal(manifest.update_repository, targets.primary.repository);
+assert.equal(launcherManifest.update_repository, targets.primary.repository);
+assert.equal(manifest.update_feed_url, rawFileUrl(targets.primary, 'channels/beta.json'));
+assert.equal(
+  manifest.work_kit_catalog_feed_url,
+  rawFileUrl(targets.primary, 'channels/work-kits.json'),
+);
+assert.equal(
+  launcherManifest.update_feed_url,
+  rawFileUrl(targets.primary, 'manager/channels/launcher-stable.json'),
+);
+assert.match(launcherManifest.update_asset_url_template, /^https:\/\/git\.minyoungcorp\.com\//);
 
-// If local release artifacts are available, validate the complete three-track mirror inventory.
+// Existing signed seq 19/5/6 feeds are immutable migration artifacts. They may retain
+// the legacy repository as long as their assets were mirrored to the primary host.
 if (existsSync(path.join(root, 'deploy', 'output', 'LATEST_SECURE_UPDATE.json'))
     && existsSync(path.join(root, 'manager', 'deploy', 'output', 'LATEST_LAUNCHER_UPDATE.json'))) {
   const plans = collectMirrorPlans(root);

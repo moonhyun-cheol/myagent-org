@@ -65,8 +65,11 @@ const minimumSupportedSequence = Number(product.minimum_supported_sequence ?? 1)
 const version = String(product.version ?? '').trim();
 const channel = String(product.update_channel ?? 'beta').trim().toLowerCase();
 const installRoot = String(product.install_root ?? INSTALL_ROOT).replaceAll('\\', '/');
-const githubRepository = String(
-  process.env.MY_AGENT_MODULE_UPDATE_GITHUB_REPO ?? product.update_repository ?? '',
+const releaseRepository = String(
+  process.env.MY_AGENT_MODULE_UPDATE_REPOSITORY
+  ?? process.env.MY_AGENT_MODULE_UPDATE_GITHUB_REPO
+  ?? product.update_repository
+  ?? '',
 ).trim();
 const updateFeedUrl = String(product.update_feed_url ?? '').trim();
 if (!Number.isSafeInteger(updateSequence) || updateSequence < 1) {
@@ -171,7 +174,7 @@ const feedDocument = buildReleaseFeed({
   version,
   channel,
   publishedAt: String(payloadEnvelope.document.created_at),
-  repository: githubRepository,
+  repository: releaseRepository,
   releaseTag: `update-${updateSequence}`,
   assetName: zipName,
   assetSize: statSync(zipPath).size,
@@ -201,9 +204,9 @@ writeFileSync(
     zip_path: zipPath,
     feed_path: feedPath,
     channel_feed_path: channelFeedPath,
-    github_repository: githubRepository,
-    github_release_tag: feedDocument.asset.release_tag,
-    github_asset_name: feedDocument.asset.name,
+    release_repository: releaseRepository,
+    release_tag: feedDocument.asset.release_tag,
+    asset_name: feedDocument.asset.name,
     source_root: sourceRoot,
     pack_source: staged.sourceKind,
     capabilities: staged.capabilities,

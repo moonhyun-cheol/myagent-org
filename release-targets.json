@@ -1,6 +1,6 @@
 {
   "schema": "my-agent-release-targets/v1",
-  "migration_phase": "mirror",
+  "migration_phase": "primary",
   "primary": {
     "provider": "gitea",
     "base_url": "https://git.minyoungcorp.com",

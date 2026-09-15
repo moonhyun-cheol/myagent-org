@@ -37,10 +37,11 @@ const writeChannel = args.has('--write-channel');
 
 const launcherManifestPath = path.join(root, 'launcher-manifest.json');
 const launcherManifest = JSON.parse(readFileSync(launcherManifestPath, 'utf8'));
-const githubRepository = String(
-  process.env.MY_AGENT_UPDATE_GITHUB_REPO
+const releaseRepository = String(
+  process.env.MY_AGENT_UPDATE_REPOSITORY
+  ?? process.env.MY_AGENT_UPDATE_GITHUB_REPO
   ?? launcherManifest.update_repository
-  ?? 'moonhyun-cheol/myagent-org',
+  ?? '',
 ).trim();
 const privateKeyPath = path.resolve(
   process.env.MY_AGENT_UPDATE_SIGNING_KEY
@@ -158,7 +159,7 @@ const feedDocument = buildLauncherReleaseFeed({
   version,
   channel,
   publishedAt: createdAt,
-  repository: githubRepository,
+  repository: releaseRepository,
   releaseTag: launcherUpdateTag(updateSequence),
   assetName: zipName,
   assetSize: statSync(zipPath).size,
@@ -190,9 +191,9 @@ writeFileSync(
     version,
     zip_path: zipPath,
     feed_path: feedPath,
-    github_repository: githubRepository,
-    github_release_tag: feedDocument.asset.release_tag,
-    github_asset_name: feedDocument.asset.name,
+    release_repository: releaseRepository,
+    release_tag: feedDocument.asset.release_tag,
+    asset_name: feedDocument.asset.name,
     channel_written: writeChannel,
   }, null, 2)}\n`,
   'utf8',

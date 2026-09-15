@@ -1,6 +1,6 @@
 # myagent-org
 
-**1.0.0-beta.1** · org seq **19** · work-kit catalog seq **5** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
+**1.0.0-beta.1** · org seq **19** · work-kit catalog seq **5** · [`ins78516/myagent-org`](https://git.minyoungcorp.com/ins78516/myagent-org)
 
 CQR **조직 모듈**(스킬·slash), **작업 키트**, 운영자용 **MY Agent 관리자**를 서로 독립된 배포 트랙으로 게시합니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent).
 
@@ -43,14 +43,14 @@ npm run publish:update
 
 서명 개인키: `tools/keys/` (커밋 금지).
 
-## Gitea 이전
+## Gitea 릴리즈 운영
 
-사내 Gitea 대상과 이전 단계는 `release-targets.json`에서 관리합니다. 현재는 기존 GitHub 업데이트를 유지하면서 Gitea에 이력·Release를 복제하는 **mirror 단계**입니다.
+사내 Gitea가 Git과 Release의 **primary**입니다. 평소 `git pull`·`git push`는 Gitea `origin/main`을 사용하고, GitHub는 `github` remote의 읽기 전용 fallback으로만 유지합니다.
 
 ```bash
-npm run verify:gitea
-npm run publish:gitea                 # dry-run
-npm run publish:gitea -- --confirm    # MY_AGENT_GITEA_TOKEN 필요
+npm run verify:all
+npm run publish:releases                 # dry-run
+npm run publish:releases -- --confirm   # MY_AGENT_GITEA_TOKEN 필요
 ```
 
-태그 동기화, 자산 목록, 브리지·최종 전환 순서는 [docs/GITEA-MIGRATION.md](docs/GITEA-MIGRATION.md)를 따릅니다. Core·관리자·조직 모듈 소비자가 Gitea URL을 지원하기 전에는 활성 feed URL을 바꾸지 않습니다.
+버전/sequence 결정, 산출물 생성, commit·push, 태그, Release 게시, 원격 hash 검증의 전체 순서는 [docs/GITEA-MIGRATION.md](docs/GITEA-MIGRATION.md)를 따릅니다. 이미 서명·게시된 sequence는 다시 서명하거나 태그를 이동하지 않습니다.
