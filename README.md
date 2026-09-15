@@ -1,6 +1,6 @@
 # myagent-org
 
-**1.0.0-beta.1** · org seq **15** · work-kit catalog seq **2** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
+**1.0.0-beta.1** · org seq **19** · work-kit catalog seq **5** · [`moonhyun-cheol/myagent-org`](https://github.com/moonhyun-cheol/myagent-org)
 
 CQR **조직 모듈**(스킬·slash), **작업 키트**, 운영자용 **MY Agent 관리자**를 서로 독립된 배포 트랙으로 게시합니다. 앱 본체는 [`myagent`](https://github.com/moonhyun-cheol/myagent).
 

@@ -2,7 +2,7 @@
   "schema": "my-agent-organization-feature/v1",
   "id": "org.cqr.automaton-routing",
   "version": "1.0.0-beta.1",
-  "update_sequence": 1,
+  "update_sequence": 2,
   "label": "CQR Automaton 라우팅",
   "description": "CQR slash 명령·OpenClaw workflow·Adapter 연결. CQR 명령어 모음 Work Kit 적용 시에만 설치됩니다.",
   "capabilities": [
