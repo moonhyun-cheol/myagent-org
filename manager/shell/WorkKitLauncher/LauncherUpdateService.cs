@@ -26,6 +26,7 @@ internal sealed class LauncherUpdateService
     private readonly Uri _feedUri;
     private readonly string _repository;
     private readonly string _channel;
+    private readonly string? _assetUrlTemplate;
     private readonly int _currentSequence;
     private readonly string _publicKeyPath;
     private readonly HttpClient _http;
@@ -35,12 +36,14 @@ internal sealed class LauncherUpdateService
         Uri feedUri,
         string repository,
         string channel,
+        string? assetUrlTemplate,
         int currentSequence)
     {
         _root = root;
         _feedUri = feedUri;
         _repository = repository;
         _channel = channel;
+        _assetUrlTemplate = assetUrlTemplate;
         _currentSequence = currentSequence;
         _publicKeyPath = Path.Combine(root, "core", "config", "defaults", "update-public.pem");
         _http = new HttpClient(new HttpClientHandler
@@ -79,6 +82,7 @@ internal sealed class LauncherUpdateService
             var repository = RequireString(manifest, "update_repository");
             var channel = RequireString(manifest, "update_channel");
             var feedUrl = RequireString(manifest, "update_feed_url");
+            var assetUrlTemplate = OptionalString(manifest, "update_asset_url_template");
             var currentSequence = manifest.GetProperty("update_sequence").GetInt32();
             if (currentSequence < 1) return null;
             var feedUri = new Uri(feedUrl, UriKind.Absolute);
@@ -87,7 +91,13 @@ internal sealed class LauncherUpdateService
             {
                 return null;
             }
-            var service = new LauncherUpdateService(root, feedUri, repository, channel, currentSequence);
+            var service = new LauncherUpdateService(
+                root,
+                feedUri,
+                repository,
+                channel,
+                assetUrlTemplate,
+                currentSequence);
             if (!File.Exists(service._publicKeyPath)) return null;
             return service;
         }
@@ -264,6 +274,14 @@ internal sealed class LauncherUpdateService
         if (repositoryParts.Length != 2)
             throw new InvalidDataException("Signed launcher update repository is invalid.");
         var template = Environment.GetEnvironmentVariable("MY_AGENT_UPDATE_ASSET_URL_TEMPLATE");
+        if (string.IsNullOrWhiteSpace(template)) template = _assetUrlTemplate;
+        if (string.IsNullOrWhiteSpace(template)
+            && !HostEquals(_feedUri.Host, "raw.githubusercontent.com")
+            && !HostEquals(_feedUri.Host, "github.com"))
+        {
+            template = $"{_feedUri.GetLeftPart(UriPartial.Authority)}/"
+                + "{repository}/releases/download/{tag}/{name}";
+        }
         if (!string.IsNullOrWhiteSpace(template))
         {
             var filled = template
@@ -275,7 +293,15 @@ internal sealed class LauncherUpdateService
                     StringComparison.Ordinal)
                 .Replace("{tag}", Uri.EscapeDataString(asset.ReleaseTag), StringComparison.Ordinal)
                 .Replace("{name}", Uri.EscapeDataString(asset.Name), StringComparison.Ordinal);
-            return new Uri(filled, UriKind.Absolute);
+            if (filled.Contains('{', StringComparison.Ordinal) || filled.Contains('}', StringComparison.Ordinal))
+                throw new InvalidDataException("Launcher update asset URL template has unknown placeholders.");
+            var configured = new Uri(filled, UriKind.Absolute);
+            if (!string.Equals(configured.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)
+                || !string.IsNullOrEmpty(configured.UserInfo))
+            {
+                throw new InvalidDataException("Launcher update asset URL must be credential-free HTTPS.");
+            }
+            return configured;
         }
         return new Uri(
             $"https://github.com/{Uri.EscapeDataString(repositoryParts[0])}/"
@@ -388,6 +414,15 @@ internal sealed class LauncherUpdateService
             throw new InvalidDataException($"{name} is missing from launcher-manifest.json.");
         }
         return value.GetString()!;
+    }
+
+    private static string? OptionalString(JsonElement element, string name)
+    {
+        if (!element.TryGetProperty(name, out var value) || value.ValueKind == JsonValueKind.Null)
+            return null;
+        if (value.ValueKind != JsonValueKind.String || string.IsNullOrWhiteSpace(value.GetString()))
+            throw new InvalidDataException($"{name} must be a non-empty string when present.");
+        return value.GetString();
     }
 
     private static void TryDeleteDirectory(string directory)

@@ -1,0 +1,17 @@
+{
+  "schema": "my-agent-release-targets/v1",
+  "migration_phase": "mirror",
+  "primary": {
+    "provider": "gitea",
+    "base_url": "https://git.minyoungcorp.com",
+    "repository": "ins78516/myagent-org",
+    "default_branch": "main"
+  },
+  "legacy": {
+    "provider": "github",
+    "base_url": "https://github.com",
+    "raw_base_url": "https://raw.githubusercontent.com",
+    "repository": "moonhyun-cheol/myagent-org",
+    "default_branch": "main"
+  }
+}

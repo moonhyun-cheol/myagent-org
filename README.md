@@ -42,3 +42,15 @@ npm run publish:update
 사내 URL·NAS·토큰은 git에 넣지 않습니다. `operator-config.example.json` → `_local/operator.json` (로컬만). 허브 연결 후 `publish:update`, 미연결이면 `publish:update -- --skip-hub`.
 
 서명 개인키: `tools/keys/` (커밋 금지).
+
+## Gitea 이전
+
+사내 Gitea 대상과 이전 단계는 `release-targets.json`에서 관리합니다. 현재는 기존 GitHub 업데이트를 유지하면서 Gitea에 이력·Release를 복제하는 **mirror 단계**입니다.
+
+```bash
+npm run verify:gitea
+npm run publish:gitea                 # dry-run
+npm run publish:gitea -- --confirm    # MY_AGENT_GITEA_TOKEN 필요
+```
+
+태그 동기화, 자산 목록, 브리지·최종 전환 순서는 [docs/GITEA-MIGRATION.md](docs/GITEA-MIGRATION.md)를 따릅니다. Core·관리자·조직 모듈 소비자가 Gitea URL을 지원하기 전에는 활성 feed URL을 바꾸지 않습니다.

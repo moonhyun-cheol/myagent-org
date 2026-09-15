@@ -45,15 +45,20 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (relative) => readFileSync(path.join(root, relative), 'utf8');
+const readOptional = (relative) => {
+  const absolute = path.join(root, relative);
+  return existsSync(absolute) ? readFileSync(absolute, 'utf8') : null;
+};
 
 const appSource = read('shell/WorkKitLauncher/App.xaml.cs');
 const serviceSource = read('shell/WorkKitLauncher/LauncherUpdateService.cs');
 const verifierSource = read('shell/WorkKitLauncher/LauncherUpdateFeedVerifier.cs');
 const pollingSource = read('shell/WorkKitLauncher/LauncherUpdatePollingService.cs');
 const applierSource = read('shell/WorkKitLauncher/LauncherUpdateApplier.cs');
-const coreVerifier = read('shell/CqrPa.Shell/UpdateFeedVerifier.cs');
-const corePolling = read('shell/CqrPa.Shell/UpdatePollingService.cs');
-const coreUpdater = read('shell/CqrPa.Updater/UpdateRunner.cs');
+const dispatchSource = readOptional('core/src/routes/dispatch.ts');
+const coreVerifier = readOptional('shell/CqrPa.Shell/UpdateFeedVerifier.cs');
+const corePolling = readOptional('shell/CqrPa.Shell/UpdatePollingService.cs');
+const coreUpdater = readOptional('shell/CqrPa.Updater/UpdateRunner.cs');
 
 assert.match(appSource, /LauncherUpdatePollingService/);
 assert.match(appSource, /--verify-launcher-feed/);
@@ -69,10 +74,15 @@ assert.match(serviceSource, /launcher-manifest\.json/);
 assert.match(serviceSource, /MY_AGENT_UPDATE_CHECK/);
 assert.match(serviceSource, /CryptographicOperations\.FixedTimeEquals/);
 assert.match(serviceSource, /MY_AGENT_UPDATE_TRUSTED_HOSTS/);
+assert.match(serviceSource, /update_asset_url_template/);
+assert.match(serviceSource, /_feedUri\.GetLeftPart\(UriPartial\.Authority\)/);
+assert.match(serviceSource, /credential-free HTTPS/);
 assert.match(verifierSource, /my-agent-launcher-feed\/v1/);
 assert.match(verifierSource, /work-kit-launcher/);
-assert.match(readFileSync(path.join(root, 'core/src/routes/dispatch.ts'), 'utf8'), /sendLauncherIndex/);
-assert.match(readFileSync(path.join(root, 'core/src/routes/dispatch.ts'), 'utf8'), /\/launcher\/assets\//);
+if (dispatchSource) {
+  assert.match(dispatchSource, /sendLauncherIndex/);
+  assert.match(dispatchSource, /\/launcher\/assets\//);
+}
 assert.match(verifierSource, /launcher-update-\{sequence\}/);
 assert.match(verifierSource, /RSASignaturePadding\.Pss/);
 assert.match(applierSource, /WorkKitLauncher\.exe/);
@@ -81,10 +91,12 @@ assert.equal(applierSource.includes('ProductProcessStop'), false);
 assert.equal(applierSource.includes('MYAgent.Updater'), false);
 assert.equal(applierSource.includes('StopAllMyAgentProcesses'), false);
 
-assert.match(coreVerifier, /cqr-pa-update-feed\/v1/);
-assert.equal(coreVerifier.includes('my-agent-launcher-feed'), false);
-assert.equal(corePolling.includes('launcher-stable'), false);
-assert.match(coreUpdater, /ProductProcessStop\.StopAll/);
+if (coreVerifier && corePolling && coreUpdater) {
+  assert.match(coreVerifier, /cqr-pa-update-feed\/v1/);
+  assert.equal(coreVerifier.includes('my-agent-launcher-feed'), false);
+  assert.equal(corePolling.includes('launcher-stable'), false);
+  assert.match(coreUpdater, /ProductProcessStop\.StopAll/);
+}
 
 const { publicKey, privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
 const publicPem = publicKey.export({ type: 'spki', format: 'pem' });

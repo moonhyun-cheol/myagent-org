@@ -24,7 +24,7 @@ update-51에서 앱 본체(`moonhyun-cheol/myagent`)의 설정 화면으로 통�
 - 클라이언트측: `shell/WorkKitLauncher/LauncherUpdateService.cs` · `LauncherUpdatePollingService.cs` ·
   `LauncherUpdateApplier.cs` · `LauncherUpdateFeedVerifier.cs` (RSA-PSS 서명 검증 → 다운로드 → 적용).
 - 게시측: `tools/publish-launcher-update.mjs` · `tools/publish-github-launcher-update.mjs` ·
-  `tools/update/update-signing.mjs` · `tools/verify-launcher-update.mjs`.
+  루트 `tools/publish-gitea-releases.mjs` · `tools/update/update-signing.mjs` · `tools/verify-launcher-update.mjs`.
 
 이전에 따라 업데이트 대상 저장소를 앱 본체에서 이 조직 저장소로 재지정했습니다
 (`launcher-manifest.json` → `moonhyun-cheol/myagent-org`,
@@ -52,6 +52,17 @@ node tools/publish-github-launcher-update.mjs --confirm  # install-zip + update-
 ```
 
 피드 게시 위치는 `manager/channels/launcher-stable.json`입니다 (`launcher-manifest.json`의 `update_feed_url`과 동일).
+
+### Gitea 호환
+
+관리자 updater는 GitHub 기본 URL을 유지하면서 다음 순서로 자산 URL을 결정합니다.
+
+1. `MY_AGENT_UPDATE_ASSET_URL_TEMPLATE`
+2. `launcher-manifest.json`의 선택 필드 `update_asset_url_template`
+3. feed가 비-GitHub HTTPS 호스트이면 같은 호스트의 `{repository}/releases/download/{tag}/{name}`
+4. 기존 GitHub Release URL
+
+따라서 브리지 버전은 GitHub Release에도 설치본·업데이트본을 올려 기존 설치본이 받을 수 있게 하고, 설치되는 새 manifest의 feed URL을 Gitea로 바꿔야 합니다. 현재 mirror 단계의 Gitea Release 복제는 저장소 루트에서 `npm run publish:gitea`로 수행합니다.
 
 ## 독립 구동 배선
 
