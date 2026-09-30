@@ -41,6 +41,9 @@ export function loadOperatorConfig(root) {
     product_data_base_url: hubField(file, 'product_data_base_url', [
       'MY_AGENT_PRODUCT_DATA_BASE_URL',
     ]),
+    product_lineup_url: hubField(file, 'product_lineup_url', [
+      'MY_AGENT_PRODUCT_LINEUP_URL',
+    ]),
     adapter_auth: {
       mode: usable(file?.adapter_auth?.mode) || 'install_bootstrap',
       bootstrap_path: usable(file?.adapter_auth?.bootstrap_path) || '/cqr/adapter/auth/bootstrap',
@@ -66,6 +69,7 @@ export function operatorHubForPublish(root) {
     openclaw_adapter_base_url: op.openclaw_adapter_base_url,
     brand_manual_url: op.brand_manual_url,
     product_data_base_url: op.product_data_base_url,
+    product_lineup_url: op.product_lineup_url,
     adapter_auth: op.adapter_auth,
     adapter_progress: op.adapter_progress,
   };

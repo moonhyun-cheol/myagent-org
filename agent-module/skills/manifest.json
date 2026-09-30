@@ -17,6 +17,18 @@
       ],
       "bundle_files": []
     },
+    "cqr_product_lineup": {
+      "label": "CQR 상품 라인업",
+      "mode": "org:cqr_product_lineup",
+      "feature": "chat",
+      "user_selectable": false,
+      "brand_files": [
+        "skills/cqr-product-lineup.md",
+        "skills/cqr-product-lineup-data-contract.md",
+        "skills/cqr-product-lineup-templates.md"
+      ],
+      "bundle_files": []
+    },
     "market_research": {
       "label": "시장조사",
       "mode": "org:market_research",

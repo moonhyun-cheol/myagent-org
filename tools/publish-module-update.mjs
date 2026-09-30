@@ -53,6 +53,7 @@ const hub = skipHubInject
     openclaw_adapter_base_url: '',
     brand_manual_url: '',
     product_data_base_url: '',
+    product_lineup_url: '',
     adapter_auth: operator.adapter_auth,
     adapter_progress: operator.adapter_progress,
   }
@@ -123,6 +124,7 @@ writeFileSync(
     update_channel: channel,
     brand_manual_url: hub.brand_manual_url || undefined,
     product_data_base_url: hub.product_data_base_url || undefined,
+    product_lineup_url: hub.product_lineup_url || undefined,
     deployment_phase: hub.deployment_phase,
     capabilities: staged.capabilities,
   }, null, 2)}\n`,

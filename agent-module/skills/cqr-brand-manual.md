@@ -27,10 +27,12 @@ ORGANIZATION_BRAND_CONTEXT
 2. **클라이언트 vault** — `data/vault/openclaw-adapter.json` 의 `token` (허브 Adapter 인증). git 금지.
 3. 구조·이전: `docs/OPERATOR-HUB.md`
 
-## 정본
+## 정본과 라이브 최신성
 
-- Live brand manual (주입 시) — 철학·라인·카피
-- Product data API (주입 시) — SKU·ASIN·스펙·라인업
+- Live brand manual (설정 키 `brand_manual_url` 원본) — 철학·라인·카피. Product data API (설정 키 `product_data_base_url`) — SKU·ASIN·스펙·라인업. 본문에 URL을 직접 쓰지 않고 설정 키로만 참조한다.
+- **매 사용 시 버전 확인**: 브랜드 사실을 말하기 전 정본의 버전(또는 revision)을 확인한다. 이전 대화·기억·과거 파일을 최신 정본으로 대체하지 않는다.
+- **갱신 실패 시**: 마지막으로 확인한 정본(런타임 캐시)를 쓰되, 그 사실과 마지막 확인 시점을 응답에 밝힌다. "마지막 정본"은 ZIP 안 정적 스냅샷이 아니라 런타임 캐시를 뜻한다. 런타임 캐시도 없으면 `조회 실패`로 처리한다.
+- **최신성 불확실 시**: 최신이라고 단정하지 않고 판단을 보류한다고 명시한다.
 - 문서에 없는 정책·스펙·인증·재고·가격은 만들지 않는다.
 
 ## 핵심 원칙

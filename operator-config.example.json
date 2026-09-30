@@ -7,7 +7,8 @@
     "_comment": "중앙 허브 — 모든 MY Agent·slash·데이터 API가 여기로 붙음 (지금=운영자 PC, 이후=사내 서버)",
     "openclaw_adapter_base_url": "",
     "brand_manual_url": "",
-    "product_data_base_url": ""
+    "product_data_base_url": "",
+    "product_lineup_url": ""
   },
   "adapter_auth": {
     "_comment": "직원 설치 시 bootstrap_key로 1회 인증한 뒤 장치별 토큰을 로컬 vault에 저장. 키는 배포 때 주입되며 교체 가능.",
