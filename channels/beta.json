@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 19,
+    "update_sequence": 20,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-09-15T04:04:12.891Z",
+    "published_at": "2026-09-30T06:58:54.869Z",
     "asset": {
-      "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "update-19",
+      "repository": "ins78516/myagent-org",
+      "release_tag": "update-20",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 141094,
-      "sha256": "b8c62293d4ae2e41ce3f7067ec097b9bc3c98a2a4f79668e23f0a4b31d3f3537"
+      "size": 147655,
+      "sha256": "f57dcb968b70664e9c01e193c8fb3132f77149cff625c209aa5090464bc34cc4"
     },
-    "payload_manifest_sha256": "516f370c39a89f30699b7665317dd442356702130bcf5bbb67679d481656ea24",
+    "payload_manifest_sha256": "afbfaec91f1f8c62168efbe1432e9f614d7e65371058f7368aeef421c0f1bfac",
     "release_notes": ""
   },
-  "signature": "V+9qYJX17vyWP26MhgQLCG3JAghwSRfaDkMkSaC0XB6Uy0yhcDH+3jHjU5SjuLDBjCY0v0LOdTn5sdXIs/BItEAiDe2zGmOcsXOlfdCys/Q11lpQjgKyKfuADr2T/q0bQLC4mlyq4jbyhBAXXzWRCRN/wi5zIzuMG3rjCs61jOWQuqzH9gqZZ+jdHcbdicTJGU+6faVMi8DU9f6pRarhdxsGe0GH9R1RKzWV9zmzbz0yA6uYS/HfTjZpsADHfPJnKSX4CWKbcH1KraRX65gE7XuV0YkVZTyE6s6/e+xatioX/d1ukgcNtuYSsdmeOdVPNtSw7vtEpfvCFbuTj6W/vu2oWpXRmSTF5644Q8V2PwZwxF9PMNC8JS7Gj71NfDWtfEmthi76zm2QwcHuUH2G4jBUGmOjMhzPugh3c4piuB5CMAo7Gg92nYKZrUdjAIu6ZrZoxoSMLtRZ6agB70mKxjoWDUzjDts5NNKttq7nWmS1sM5K4pXvSsFErVE/gguf"
+  "signature": "Y3JJ3y43q9+6kYR4WQ69pw9MGlJJWVMLEOicF5Yj35eTMYsAoa7oOje+B2GCI3ZCwI3Uo7v0Zy4UxFh3xP2wwl4RughxVXAp2pfJYx50UeiEL7mQrZ7LRW7F3ZvTzc0tWTDOXVnLGeApxC1/IgE8voggXkYifu0ZDJJF+2GOd7H/kA9q48oxiTMbH7gm7VLaKirowt0fOkuci7tlz8U3KPrblbc3URzwCIixQekJdmNQ/hvJjbUBaZDMREgAHVY/tGRSC5CVmit+ZOEM4z1JXtnMFHzXiv8Ar26W1+o8uYzksx5VNT22KL4I5KNQBb5C0KHRkwKUe7y8OzW/KgReBWgQZNUst1RBUgRLaSf0RLsP2fchWsAVUwTekioeo3NH0EDkxuBoTYzzxXWjx1J1+C/StWiKeKn/Um9QitDWf2dBjY6Wu7zbWqCheR2ZdhOT7O4IFp6De2YV5zneRbyutwf+/G3+byLUs0JgcvbWylXJXaWJMhp/JFIS3f5texKY"
 }
