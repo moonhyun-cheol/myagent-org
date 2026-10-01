@@ -78,6 +78,24 @@ function Test-RootPathUsable([string]$path) {
   }
 }
 
+function Get-InstallRootFromPointerFile {
+  # Primary source of truth: a fixed pointer file written OUTSIDE the install root
+  # by the core at install/startup (mirrors the known cqr_root). No guessing required.
+  $base = $env:LOCALAPPDATA
+  if (-not $base) { return $null }
+  $path = Join-Path $base 'MYAgent\install-root.json'
+  if (-not (Test-Path -LiteralPath $path)) { return $null }
+  try {
+    $doc = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
+    $root = [string]$doc.install_root
+    if (-not $root) { $root = [string]$doc.cqr_root }
+    if (Test-MyAgentInstallRoot $root) { return (Get-FullPath $root) }
+  } catch {
+    return $null
+  }
+  return $null
+}
+
 function Get-ManifestSearchRoots {
   $roots = New-Object 'System.Collections.Generic.List[string]'
   if ($env:MY_AGENT_ROOT) { [void]$roots.Add($env:MY_AGENT_ROOT) }
@@ -152,7 +170,9 @@ function Find-InstallRootFromRunningApi {
       }
     }
   }
-  for ($port = 10200; $port -le 10250; $port++) {
+  # Narrowed blind-scan window. Discovered hints (persisted api-port.json /
+  # manifest api_port_default) are tried first above; this is only a small fallback.
+  for ($port = 10200; $port -le 10209; $port++) {
     [void]$ports.Add($port)
   }
 
@@ -161,47 +181,6 @@ function Find-InstallRootFromRunningApi {
     if ($found) { return $found }
   }
   return $null
-}
-
-function Resolve-ShortcutInstallRoot([string]$shortcutPath) {
-  if (-not (Test-Path -LiteralPath $shortcutPath)) { return $null }
-  try {
-    $shell = New-Object -ComObject WScript.Shell
-    $shortcut = $shell.CreateShortcut($shortcutPath)
-    $fromExe = Resolve-InstallRootFromExe $shortcut.TargetPath
-    if ($fromExe) { return $fromExe }
-
-    $candidates = @()
-    if ($shortcut.WorkingDirectory) { $candidates += $shortcut.WorkingDirectory }
-    if ($shortcut.TargetPath) {
-      $parent = Split-Path -Path $shortcut.TargetPath -Parent -ErrorAction SilentlyContinue
-      if ($parent) { $candidates += $parent }
-    }
-    foreach ($candidate in $candidates) {
-      if (Test-MyAgentInstallRoot $candidate) {
-        return (Get-FullPath $candidate)
-      }
-    }
-  } catch {
-    return $null
-  }
-  return $null
-}
-
-function Get-ShortcutSearchFolders {
-  $paths = @()
-  foreach ($special in @('Desktop', 'CommonDesktopDirectory', 'Programs', 'CommonPrograms', 'StartMenu', 'CommonStartMenu')) {
-    $p = [Environment]::GetFolderPath($special)
-    if ($p) { $paths += $p }
-  }
-  if ($env:OneDrive) {
-    $paths += (Join-Path $env:OneDrive 'Desktop')
-    $paths += (Join-Path $env:OneDrive '시작 메뉴\Programs')
-  }
-  if ($env:APPDATA) {
-    $paths += (Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs')
-  }
-  return $paths | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -Unique
 }
 
 function Find-InstallRootFromProcesses {
@@ -252,41 +231,13 @@ function Find-InstallRootFromDiskScan {
   return $null
 }
 
-function Find-InstallRootFromShortcuts {
-  foreach ($folder in Get-ShortcutSearchFolders) {
-    foreach ($shortcutName in @('MY Agent.lnk', 'MY Agent 관리자.lnk', 'MY Agent Work Kit.lnk', 'MY Agent 작업 환경.lnk', 'WorkKitLauncher.lnk')) {
-      $shortcutPath = Join-Path $folder $shortcutName
-      if (-not (Test-Path -LiteralPath $shortcutPath)) { continue }
-      try {
-        $found = Resolve-ShortcutInstallRoot $shortcutPath
-        if ($found) { return $found }
-      } catch {
-        continue
-      }
-    }
-    try {
-      foreach ($shortcut in @(Get-ChildItem -LiteralPath $folder -Filter '*.lnk' -ErrorAction SilentlyContinue)) {
-        try {
-          $found = Resolve-ShortcutInstallRoot $shortcut.FullName
-          if ($found) { return $found }
-        } catch {
-          continue
-        }
-      }
-    } catch {
-      continue
-    }
-  }
-  return $null
-}
-
 function Find-MyAgentInstallRoot {
   $steps = @(
-    @{ Name = 'running MY Agent API'; Action = { Find-InstallRootFromRunningApi } },
+    @{ Name = 'install-root pointer file'; Action = { Get-InstallRootFromPointerFile } },
     @{ Name = 'MY_AGENT_ROOT'; Action = { Get-FullPath $env:MY_AGENT_ROOT } },
+    @{ Name = 'running MY Agent API'; Action = { Find-InstallRootFromRunningApi } },
     @{ Name = 'standard install folders'; Action = { Find-InstallRootFromDiskScan } },
-    @{ Name = 'running processes'; Action = { Find-InstallRootFromProcesses } },
-    @{ Name = 'shortcuts'; Action = { Find-InstallRootFromShortcuts } }
+    @{ Name = 'running processes'; Action = { Find-InstallRootFromProcesses } }
   )
 
   foreach ($step in $steps) {
