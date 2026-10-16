@@ -70,7 +70,11 @@ if (existsSync(path.join(root, 'deploy', 'output', 'LATEST_SECURE_UPDATE.json'))
     && existsSync(path.join(root, 'manager', 'deploy', 'output', 'LATEST_LAUNCHER_UPDATE.json'))) {
   const plans = collectMirrorPlans(root);
   assert.deepEqual(plans.map((plan) => plan.track), ['organization', 'work-kits', 'launcher']);
-  assert.deepEqual(plans.map((plan) => plan.tag), ['update-19', 'work-kits-5', 'launcher-update-6']);
+  // Organization track advances independently; its tag must follow manifest.update_sequence.
+  assert.deepEqual(
+    plans.map((plan) => plan.tag),
+    [`update-${manifest.update_sequence}`, 'work-kits-5', 'launcher-update-6'],
+  );
   assert.ok(plans.find((plan) => plan.track === 'work-kits')?.assets
     .some((asset) => asset.name === 'org.cqr.automaton-routing.zip'));
   assert.ok(plans.find((plan) => plan.track === 'launcher')?.assets

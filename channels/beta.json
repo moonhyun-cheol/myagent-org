@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 20,
+    "update_sequence": 21,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-09-30T06:58:54.869Z",
+    "published_at": "2026-10-16T00:44:27.065Z",
     "asset": {
       "repository": "ins78516/myagent-org",
-      "release_tag": "update-20",
+      "release_tag": "update-21",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 147655,
-      "sha256": "f57dcb968b70664e9c01e193c8fb3132f77149cff625c209aa5090464bc34cc4"
+      "size": 147648,
+      "sha256": "b2aa1920db8c146376138115baf14729daf83e188ae47303ab51f97d207e3f6a"
     },
-    "payload_manifest_sha256": "afbfaec91f1f8c62168efbe1432e9f614d7e65371058f7368aeef421c0f1bfac",
-    "release_notes": ""
+    "payload_manifest_sha256": "37027fd76bf8f335fa121ee1ce34b235f2510638be55b4244306d949026988d1",
+    "release_notes": "Organization module update 21: brand manual URL fixed (hub .218), product lineup URL moved to hub .218, product data API URL removed (not served)"
   },
-  "signature": "Y3JJ3y43q9+6kYR4WQ69pw9MGlJJWVMLEOicF5Yj35eTMYsAoa7oOje+B2GCI3ZCwI3Uo7v0Zy4UxFh3xP2wwl4RughxVXAp2pfJYx50UeiEL7mQrZ7LRW7F3ZvTzc0tWTDOXVnLGeApxC1/IgE8voggXkYifu0ZDJJF+2GOd7H/kA9q48oxiTMbH7gm7VLaKirowt0fOkuci7tlz8U3KPrblbc3URzwCIixQekJdmNQ/hvJjbUBaZDMREgAHVY/tGRSC5CVmit+ZOEM4z1JXtnMFHzXiv8Ar26W1+o8uYzksx5VNT22KL4I5KNQBb5C0KHRkwKUe7y8OzW/KgReBWgQZNUst1RBUgRLaSf0RLsP2fchWsAVUwTekioeo3NH0EDkxuBoTYzzxXWjx1J1+C/StWiKeKn/Um9QitDWf2dBjY6Wu7zbWqCheR2ZdhOT7O4IFp6De2YV5zneRbyutwf+/G3+byLUs0JgcvbWylXJXaWJMhp/JFIS3f5texKY"
+  "signature": "GwDmCR7CI+ZYJ5xlvTx+92B9iKzF2GaKP59nfjW+6qwPp3NUWtHoaK3A32RFg5xH3WzaRs6yyevJiKQJrLbOMq+ceKz/zgk+IOrCzF+ozwIRS6QzgMFbCBiqZ6WEqh9BD8SyfJPrFkb94SNtP/YGR7fxiOOzlpA3fTmMB7TFvlSoqQQFECCRHXcT+5oFjYzUJ+6CyrEOhFiSAKTEgMMqg6felv03esSDDoryMoOwxZ+mnhQJIUPwXghsTaRggvs4lv2jqX2s3R3xYS4B1a3S9y42og/m9dMA78YYHd2VXel74o+iTuRJxM++zOf8ApmJ7gq4pfkEcfHdes6g/i1Q1/qlbmx6/whFq1RfLVseWbmgklkbKRQ6uYPnjp8NgLuFoSoTTPy2GTL6CIc2ogimEjyvGmNN9pfwYUbmFU+9zw3+HdNz8QJ0tT60TMLjLJ0X1xiPPuOBDT0lrrzGJseRfxyVhJL65Xd289GefpkfCP+JB7ptMnDnNqYdlkzF9Cvx"
 }
