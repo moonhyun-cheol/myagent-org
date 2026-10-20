@@ -24,7 +24,17 @@ import {
 export const FEATURE_JSON_SCHEMA = 'my-agent-organization-feature/v1';
 export const FEATURE_PAYLOAD_SCHEMA = 'my-agent-organization-feature-payload/v1';
 export const AUTOMATON_FEATURE_ID = 'org.cqr.automaton-routing';
+export const MARKET_RUNTIME_FEATURE_ID = 'org.cqr.market-research-runtime';
 export const FEATURE_PACKS_ROOT = 'feature-packs';
+
+/** Feature id → authoring dir under feature-packs/. Unknown ids fail publish. */
+export const FEATURE_PACK_DIRS = {
+  [AUTOMATON_FEATURE_ID]: 'automaton-routing',
+  [MARKET_RUNTIME_FEATURE_ID]: 'market-research-runtime',
+};
+
+/** Authoring-only docs never shipped in the signed pack. */
+const AUTHORING_ONLY_FILES = new Set(['AUTOMATON.md', 'README.md', 'adapter-connection.template.json']);
 
 export function failFeaturePack(message) {
   throw new Error(message);
@@ -109,17 +119,18 @@ export function packSignedOrganizationFeature(opts) {
   try {
     // Copy authoring files except template/docs that are not runtime entrypoints.
     for (const name of readdirSync(authoring)) {
-      if (name === 'AUTOMATON.md') continue;
+      if (AUTHORING_ONLY_FILES.has(name)) continue;
       const abs = path.join(authoring, name);
       if (statSync(abs).isDirectory()) continue;
-      if (name === 'adapter-connection.template.json') continue;
       cpSync(abs, path.join(stageParent, name));
     }
 
     const templatePath = path.join(authoring, 'adapter-connection.template.json');
-    if (!existsSync(templatePath)) {
+    const needsAdapter = Boolean(featureJson.entrypoints?.adapter_connection);
+    if (needsAdapter && !existsSync(templatePath)) {
       failFeaturePack('adapter-connection.template.json is required');
     }
+    if (needsAdapter) {
     const adapterConnection = JSON.parse(readFileSync(templatePath, 'utf8'));
     if (hub) {
       adapterConnection.base_url = hub.openclaw_adapter_base_url || '';
@@ -141,6 +152,7 @@ export function packSignedOrganizationFeature(opts) {
       `${JSON.stringify(adapterConnection, null, 2)}\n`,
       'utf8',
     );
+    }
 
     const deployOverridesPath = path.join(stageParent, 'deploy-overrides.json');
     if (existsSync(deployOverridesPath) && hub) {

@@ -15,7 +15,11 @@ export default function App() {
   return (
     <>
       <div className="min-h-screen bg-ink px-4 py-6 sm:px-8">
-        <ProfileLibrary onLaunchMyAgent={launchMyAgent} />
+        <ProfileLibrary
+          onLaunchMyAgent={launchMyAgent}
+          onFeatureRuntime={(featureId, action) =>
+            postToHost({ type: 'launcher.featureRuntime', featureId, action })}
+        />
       </div>
       <ConfirmModal />
     </>

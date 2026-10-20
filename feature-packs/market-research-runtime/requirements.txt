@@ -1,0 +1,14 @@
+# Mirrors agent-module/market_research/cqr_product_pipeline/pyproject.toml dependencies.
+# Installed from PyPI into <MY Agent root>/runtime/pipeline-venv by setup-venv.ps1.
+langgraph>=0.2
+langgraph-checkpoint-sqlite>=2.0
+langchain>=0.3
+langchain-community>=0.3
+langchain-ollama>=0.2
+langchain-openai>=0.2
+langchain-chroma>=0.2
+langchain-text-splitters>=0.3
+chromadb>=0.5
+pydantic>=2.0
+pydantic-settings>=2.0
+ddgs>=9.0

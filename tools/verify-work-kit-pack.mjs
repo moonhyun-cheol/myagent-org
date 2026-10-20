@@ -13,6 +13,12 @@ import {
   shelfAssetName,
 } from './pack-work-kit-shelf.mjs';
 import { sha256File } from './update/update-signing.mjs';
+import {
+  FEATURE_PACK_DIRS,
+  MARKET_RUNTIME_FEATURE_ID,
+  packSignedOrganizationFeature,
+} from './pack-organization-feature.mjs';
+import { generateKeyPairSync } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -74,8 +80,50 @@ for (const other of ['brand-info', 'product-dev']) {
   );
 }
 
+// Market-research runtime: optional Feature Pack, enabled only by product-dev.
+const productDev = readJson(path.join(root, 'work-kits', 'profiles', 'cqr', 'product-dev', 'shelf.json'));
+assert.equal(
+  productDev.features?.enable?.[MARKET_RUNTIME_FEATURE_ID]?.required,
+  true,
+  'product-dev shelf must require org.cqr.market-research-runtime Feature',
+);
+for (const other of ['brand-info', 'ops']) {
+  const shelf = readJson(path.join(root, 'work-kits', 'profiles', 'cqr', other, 'shelf.json'));
+  assert.equal(shelf.features?.enable?.[MARKET_RUNTIME_FEATURE_ID], undefined, `${other} must not enable market runtime`);
+}
+for (const { shelf } of cqr.shelves) {
+  for (const id of Object.keys(shelf.features?.enable ?? {})) {
+    assert.ok(FEATURE_PACK_DIRS[id], `no packer mapping for feature ${id}`);
+  }
+}
+const marketDir = path.join(root, 'feature-packs', FEATURE_PACK_DIRS[MARKET_RUNTIME_FEATURE_ID]);
+const marketJson = readJson(path.join(marketDir, 'feature.json'));
+assert.equal(marketJson.id, MARKET_RUNTIME_FEATURE_ID);
+assert.equal(marketJson.runtime_setup?.venv, 'runtime/pipeline-venv', 'venv must match Core market-pipeline-capability');
+const setupPs1 = readFileSync(path.join(marketDir, 'setup-venv.ps1'));
+assert.deepEqual([...setupPs1.subarray(0, 3)], [0xef, 0xbb, 0xbf], 'setup-venv.ps1 needs UTF-8 BOM (Windows PowerShell 5.1)');
+const parse = spawnSync('powershell', [
+  '-NoProfile', '-Command',
+  `$e=$null; [void][Management.Automation.Language.Parser]::ParseFile('${path.join(marketDir, 'setup-venv.ps1').replace(/'/g, "''")}', [ref]$null, [ref]$e); if ($e.Count) { $e | % { $_.Message }; exit 1 }`,
+], { encoding: 'utf8' });
+assert.equal(parse.status, 0, `setup-venv.ps1 parse errors: ${parse.stdout}${parse.stderr}`);
+
 const temp = mkdtempSync(path.join(os.tmpdir(), 'work-kit-pack-'));
 try {
+  const { privateKey, publicKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
+  const packedMarket = packSignedOrganizationFeature({
+    sourceRoot: root,
+    featurePackDir: path.join('feature-packs', FEATURE_PACK_DIRS[MARKET_RUNTIME_FEATURE_ID]),
+    outZipPath: path.join(temp, 'features', `${MARKET_RUNTIME_FEATURE_ID}.zip`),
+    privateKeyPem: privateKey.export({ type: 'pkcs8', format: 'pem' }),
+    publicKeyPem: publicKey.export({ type: 'spki', format: 'pem' }),
+  });
+  assert.deepEqual(
+    [...packedMarket.inventory].sort(),
+    ['feature.json', 'requirements.txt', 'setup-venv.ps1'],
+    'market runtime pack inventory',
+  );
+
   const archive = path.join(temp, shelfAssetName('cqr', 'brand-info'));
   packWorkKitShelf(root, 'cqr', 'brand-info', archive);
   assert.ok(existsSync(archive));

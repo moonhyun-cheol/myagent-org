@@ -183,6 +183,12 @@ public partial class MainWindow : Window
             var type = doc.RootElement.TryGetProperty("type", out var t) ? t.GetString() : null;
             if (type == "launcher.launchMyAgent")
                 LaunchMyAgent();
+            else if (type == "launcher.featureRuntime")
+            {
+                var featureId = doc.RootElement.TryGetProperty("featureId", out var f) ? f.GetString() : null;
+                var action = doc.RootElement.TryGetProperty("action", out var a) ? a.GetString() : null;
+                RunFeatureRuntimeSetup(featureId, action == "remove");
+            }
         }
         catch
         {
@@ -217,6 +223,52 @@ public partial class MainWindow : Window
         psi.Environment["MY_AGENT_ROOT"] = _cqrRoot;
         psi.Environment["CQR_API_PORT"] = _port.ToString();
         Process.Start(psi);
+    }
+
+    /// <summary>Feature ids whose signed pack ships a runtime setup script (allowlist).</summary>
+    private static readonly string[] RuntimeSetupFeatures = { "org.cqr.market-research-runtime" };
+
+    /// <summary>
+    /// Run setup-venv.ps1 from the Core-installed (signature-verified) feature folder in a visible
+    /// console so the user sees Python/pip progress. Only allowlisted ids, only under data/organization-features.
+    /// </summary>
+    private void RunFeatureRuntimeSetup(string? featureId, bool remove)
+    {
+        if (featureId is null || !RuntimeSetupFeatures.Contains(featureId, StringComparer.Ordinal))
+            return;
+        var featuresRoot = Path.GetFullPath(Path.Combine(_cqrRoot, "data", "organization-features"));
+        var script = Path.GetFullPath(Path.Combine(featuresRoot, featureId, "setup-venv.ps1"));
+        if (!script.StartsWith(featuresRoot + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+            || !File.Exists(script))
+            return;
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = "powershell.exe",
+            WorkingDirectory = Path.GetDirectoryName(script) ?? _cqrRoot,
+            UseShellExecute = false,
+        };
+        psi.ArgumentList.Add("-NoProfile");
+        psi.ArgumentList.Add("-ExecutionPolicy");
+        psi.ArgumentList.Add("Bypass");
+        psi.ArgumentList.Add("-File");
+        psi.ArgumentList.Add(script);
+        psi.ArgumentList.Add("-Root");
+        psi.ArgumentList.Add(_cqrRoot);
+        if (remove)
+            psi.ArgumentList.Add("-Remove");
+        try
+        {
+            Process.Start(psi);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"시장조사 실행 환경 설치를 시작하지 못했습니다.\n{ex.Message}",
+                "MY Agent 관리자",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
     }
 
     private async void OnRetryClick(object sender, RoutedEventArgs e)

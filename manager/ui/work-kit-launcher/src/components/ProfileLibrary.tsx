@@ -24,6 +24,15 @@ import { confirmDialog } from '../lib/confirmDialog';
 
 interface ProfileLibraryProps {
   onLaunchMyAgent?: () => void;
+  /** Ask the WPF host to run a feature's signed setup script (Python venv etc.). */
+  onFeatureRuntime?: (featureId: string, action: 'setup' | 'remove') => void;
+}
+
+/** Features that need a host-side setup step after Core installs the pack. */
+const RUNTIME_SETUP_FEATURES = ['org.cqr.market-research-runtime'];
+
+function runtimeFeaturesOf(shelf: WorkKitShelf): string[] {
+  return Object.keys(shelf.features?.enable ?? {}).filter((id) => RUNTIME_SETUP_FEATURES.includes(id));
 }
 
 type ProfilesSnapshot = {
@@ -43,7 +52,7 @@ function appliedKitsNeedOrganizationModule(snapshot: ProfilesSnapshot): boolean 
   });
 }
 
-export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
+export function ProfileLibrary({ onLaunchMyAgent, onFeatureRuntime }: ProfileLibraryProps) {
   const [groups, setGroups] = useState<WorkKitCatalogGroup[]>([]);
   const [feedSequence, setFeedSequence] = useState<number | null>(null);
   const [appliedKits, setAppliedKits] = useState<AgentProfileApplied[]>([]);
@@ -237,7 +246,12 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
         ? ` · 추가 기능 활성 ${result.enabled_features.length}`
         : '';
       const warn = result.warnings?.length ? ` (${result.warnings[0]})` : '';
-      setMessage(`「${shelf.label}」 적용했습니다.${featureNote}${warn}${skillNote}`);
+      const runtimeIds = runtimeFeaturesOf(shelf);
+      for (const id of runtimeIds) onFeatureRuntime?.(id, 'setup');
+      const runtimeNote = runtimeIds.length && onFeatureRuntime
+        ? ' · 실행 환경 설치 창이 열립니다(처음엔 수 분 걸림)'
+        : '';
+      setMessage(`「${shelf.label}」 적용했습니다.${featureNote}${warn}${skillNote}${runtimeNote}`);
       await load();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '적용 실패');
@@ -260,6 +274,7 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
     setBusy(true);
     try {
       const result = await unapplyWorkKitProfile(shelf.group, shelf.id);
+      for (const id of runtimeFeaturesOf(shelf)) onFeatureRuntime?.(id, 'remove');
       const warn = result.warnings?.length ? ` (${result.warnings[0]})` : '';
       setMessage(`「${shelf.label}」 적용을 해제했습니다.${warn}`);
       await load();

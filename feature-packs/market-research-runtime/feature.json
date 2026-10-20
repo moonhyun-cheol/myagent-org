@@ -1,0 +1,18 @@
+{
+  "schema": "my-agent-organization-feature/v1",
+  "id": "org.cqr.market-research-runtime",
+  "version": "1.0.0-beta.1",
+  "update_sequence": 1,
+  "label": "CQR 시장조사 실행 환경",
+  "description": "/심층리서치·/타당성·/기획서 파이프라인용 Python venv. CQR 상품개발 Work Kit 적용 시 설치됩니다.",
+  "capabilities": [
+    "market-research-runtime"
+  ],
+  "runtime_setup": {
+    "script": "setup-venv.ps1",
+    "requirements": "requirements.txt",
+    "venv": "runtime/pipeline-venv",
+    "python": "3.12"
+  },
+  "min_core_sequence": 42
+}

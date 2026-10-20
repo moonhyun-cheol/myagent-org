@@ -12,7 +12,7 @@
 
 | 트리거 | 출력 |
 |--------|------|
-| `TLP125 촬영 컨셉` / 무드 / look (`.ff`·`.art` 없음) | **CONCEPT_CORE** 12섹션 (~600–1600자) |
+| `TLP125 촬영 컨셉` / 무드 / look (`.ff`·`.art` 없음) | **CONCEPT_CORE** 12섹션 (~900–1600자, 데이터 낭독 금지 — `skills/brand-concept.md`) |
 | `.ff` / `풀브리프` / `캐스팅` / `컷시트` / `촬영 브리프` | **FULL** 11섹션 + **CONCEPT-CONCRETIZATION-PACK** |
 | `.art` / `프롬프트만` (명시 요청) | COMPACT + **메인 1장(PT02)** |
 | `PT01` / `A+` / `.art 전체` 등 | 요청한 슬롯만 |

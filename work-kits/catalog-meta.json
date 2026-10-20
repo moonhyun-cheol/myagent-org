@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 6,
+  "sequence": 7,
   "update_repository": "ins78516/myagent-org",
   "release_tag_prefix": "work-kits"
 }

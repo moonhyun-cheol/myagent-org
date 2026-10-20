@@ -17,7 +17,7 @@ import {
   shelfAssetName,
 } from './pack-work-kit-shelf.mjs';
 import {
-  AUTOMATON_FEATURE_ID,
+  FEATURE_PACK_DIRS,
   packSignedOrganizationFeature,
 } from './pack-organization-feature.mjs';
 import { sha256File } from './update/update-signing.mjs';
@@ -107,13 +107,14 @@ for (const group of listWorkKitGroups(root)) {
   }
 }
 for (const featureId of requiredFeatureIds) {
-  if (featureId !== AUTOMATON_FEATURE_ID) {
+  const packDir = FEATURE_PACK_DIRS[featureId];
+  if (!packDir) {
     fail(`unknown Feature Pack id (add packer mapping): ${featureId}`);
   }
   const outZipPath = path.join(outDir, 'features', `${featureId}.zip`);
   const packed = packSignedOrganizationFeature({
     sourceRoot: root,
-    featurePackDir: path.join('feature-packs', 'automaton-routing'),
+    featurePackDir: path.join('feature-packs', packDir),
     outZipPath,
     privateKeyPem,
     publicKeyPem,

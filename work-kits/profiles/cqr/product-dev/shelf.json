@@ -6,6 +6,11 @@
   "description": "컨셉, 시장조사, 샘플 사이즈처럼 제품 개발 업무에 도움을 줍니다.",
   "pull": [],
   "plugins": { "enable": {} },
+  "features": {
+    "enable": {
+      "org.cqr.market-research-runtime": { "required": true }
+    }
+  },
   "hints": { "needs_organization_module": true },
   "ui": {
     "pinned_skill_ids": [
