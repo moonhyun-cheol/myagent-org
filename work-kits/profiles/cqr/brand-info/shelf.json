@@ -6,6 +6,7 @@
   "description": "브랜드 매뉴얼을 보고 라인과 카피를 맞추는 데 도움을 줍니다.",
   "pull": [],
   "plugins": { "enable": {} },
+  "hints": { "needs_organization_module": true },
   "ui": {
     "pinned_skill_ids": ["org:cqr_brand_manual", "cqr_brand_manual"]
   }

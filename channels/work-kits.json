@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 5,
+  "sequence": 6,
   "groups": [
     {
       "id": "cqr",
@@ -21,13 +21,16 @@
               "cqr_brand_manual"
             ]
           },
+          "hints": {
+            "needs_organization_module": true
+          },
           "asset": {
-            "sequence": 5,
+            "sequence": 6,
             "name": "cqr-brand-info.tar.gz",
-            "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-5",
-            "size": 405,
-            "sha256": "34d0bd646d828d200afad477f4052d76354972430316c978bbbf06db622f74ac"
+            "repository": "ins78516/myagent-org",
+            "release_tag": "work-kits-6",
+            "size": 433,
+            "sha256": "e3fb07561b3c4a36b9959db18a87e022fe53ce214aab8134959b69240b71851f"
           }
         },
         {
@@ -49,12 +52,12 @@
             "pinned_skill_ids": []
           },
           "asset": {
-            "sequence": 5,
+            "sequence": 6,
             "name": "cqr-ops.tar.gz",
-            "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-5",
-            "size": 8829,
-            "sha256": "61fcb90b12423e4347b57c8cc66d11fb65ad2263039ab2e5041df40634891eb2"
+            "repository": "ins78516/myagent-org",
+            "release_tag": "work-kits-6",
+            "size": 8826,
+            "sha256": "ec005c79d86099f1438ca39e4c95ee5f3f032e2ac6dee7e28035f001a0a365d2"
           }
         },
         {
@@ -75,13 +78,16 @@
               "size_guide"
             ]
           },
+          "hints": {
+            "needs_organization_module": true
+          },
           "asset": {
-            "sequence": 5,
+            "sequence": 6,
             "name": "cqr-product-dev.tar.gz",
-            "repository": "moonhyun-cheol/myagent-org",
-            "release_tag": "work-kits-5",
-            "size": 442,
-            "sha256": "03ff74a9d058e810fe2becd19ed554a880c1fd19f9fae8424929b4e933bbf782"
+            "repository": "ins78516/myagent-org",
+            "release_tag": "work-kits-6",
+            "size": 475,
+            "sha256": "b1fbf12fe3769fe3db250b422ac3d6f78fce7402f1248340633c9442239a5050"
           }
         }
       ]

@@ -1,4 +1,4 @@
-import { ArrowCounterClockwise, CloudArrowDown, Play } from '@phosphor-icons/react';
+import { ArrowCounterClockwise, ArrowsClockwise, CloudArrowDown, Play } from '@phosphor-icons/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   applyWorkKitProfile,
@@ -15,11 +15,32 @@ import {
   type WorkKitCatalogGroup,
   type WorkKitShelf,
 } from '../api/profilesClient';
-import { syncOrganizationModuleIfNeeded } from '../api/organizationModule';
+import {
+  describeOrganizationSync,
+  syncOrganizationModule,
+  type OrganizationModuleSyncResult,
+} from '../api/organizationModule';
 import { confirmDialog } from '../lib/confirmDialog';
 
 interface ProfileLibraryProps {
   onLaunchMyAgent?: () => void;
+}
+
+type ProfilesSnapshot = {
+  groups: WorkKitCatalogGroup[];
+  appliedKits: AgentProfileApplied[];
+};
+
+function shelfNeedsOrganizationModule(shelf: WorkKitShelf | undefined): boolean {
+  return shelf?.hints?.needs_organization_module === true;
+}
+
+/** True when any already-applied kit depends on organization-module skills. */
+function appliedKitsNeedOrganizationModule(snapshot: ProfilesSnapshot): boolean {
+  return snapshot.appliedKits.some((kit) => {
+    const group = snapshot.groups.find((g) => g.id === kit.group);
+    return shelfNeedsOrganizationModule(group?.shelves.find((s) => s.id === kit.kit_id));
+  });
 }
 
 export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
@@ -30,16 +51,21 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
   const [canRestore, setCanRestore] = useState(false);
   const [busy, setBusy] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [skillSyncing, setSkillSyncing] = useState(false);
+  const [skillSequence, setSkillSequence] = useState<number | null>(null);
   const [message, setMessage] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const catalogSyncedRef = useRef(false);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (): Promise<ProfilesSnapshot | null> => {
     try {
       const data = await fetchProfiles();
+      const appliedList = Array.isArray(data.applied_kits)
+        ? data.applied_kits
+        : (data.applied ? [data.applied] : []);
       setGroups(data.groups);
       setFeedSequence(data.feed_sequence);
-      setAppliedKits(Array.isArray(data.applied_kits) ? data.applied_kits : (data.applied ? [data.applied] : []));
+      setAppliedKits(appliedList);
       setOrganizationFeatures(data.organization_features ?? []);
       setCanRestore(data.can_restore);
       setSelectedGroup((prev) => {
@@ -49,12 +75,33 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
         }
         return data.groups[0]?.id ?? '';
       });
+      return { groups: data.groups, appliedKits: appliedList };
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '작업 키트 목록을 불러오지 못했습니다.');
+      return null;
     }
   }, []);
 
-  const syncCatalog = useCallback(async (silent = false) => {
+  /**
+   * Pull the newest organization-module skills through Core.
+   * silent: only surface a message when something changed or failed.
+   */
+  const syncSkills = useCallback(async (silent: boolean): Promise<OrganizationModuleSyncResult> => {
+    setSkillSyncing(true);
+    try {
+      const result = await syncOrganizationModule();
+      if (result.status === 'updated') setSkillSequence(result.to);
+      if (result.status === 'current') setSkillSequence(result.sequence);
+      if (!silent || result.status === 'updated' || result.status === 'error') {
+        setMessage(describeOrganizationSync(result));
+      }
+      return result;
+    } finally {
+      setSkillSyncing(false);
+    }
+  }, []);
+
+  const syncCatalog = useCallback(async (silent = false): Promise<ProfilesSnapshot | null> => {
     setSyncing(true);
     try {
       const check = await checkWorkKitCatalog();
@@ -62,8 +109,7 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
         setMessage(
           '작업 키트 목록 피드가 연결되지 않았습니다. MY_AGENT_WORK_KIT_CATALOG_FEED_URL을 설정한 뒤 「목록 새로고침」을 누르세요.',
         );
-        await load();
-        return;
+        return await load();
       }
       if (check.update_available || !check.cached_sequence) {
         await refreshWorkKitCatalog();
@@ -71,17 +117,25 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
       } else if (!silent) {
         setMessage('카탈로그가 이미 최신입니다.');
       }
-      await load();
+      return await load();
     } catch (error) {
       const detail = error instanceof Error ? error.message : '카탈로그를 가져오지 못했습니다.';
       setMessage(silent
         ? `목록을 서버에서 가져오지 못했습니다. 「목록 새로고침」을 다시 눌러 주세요. (${detail})`
         : detail);
-      await load();
+      return await load();
     } finally {
       setSyncing(false);
     }
   }, [load]);
+
+  /** Catalog refresh + skill update for already-applied kits (start-up and 「목록 새로고침」). */
+  const refreshAll = useCallback(async (silent: boolean) => {
+    const snapshot = await syncCatalog(silent);
+    if (snapshot && appliedKitsNeedOrganizationModule(snapshot)) {
+      await syncSkills(true);
+    }
+  }, [syncCatalog, syncSkills]);
 
   useEffect(() => {
     void load();
@@ -90,8 +144,8 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
   useEffect(() => {
     if (catalogSyncedRef.current) return;
     catalogSyncedRef.current = true;
-    void syncCatalog(true);
-  }, [syncCatalog]);
+    void refreshAll(true);
+  }, [refreshAll]);
 
   const activeGroupId = groups.some((g) => g.id === selectedGroup)
     ? selectedGroup
@@ -144,7 +198,12 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
     setBusy(true);
     try {
       await installWorkKitShelf(shelf.group, shelf.id);
-      setMessage(`「${shelf.label}」 받기를 완료했습니다.`);
+      let note = '';
+      if (shelfNeedsOrganizationModule(shelf)) {
+        const result = await syncSkills(true);
+        note = ` ${describeOrganizationSync(result)}`;
+      }
+      setMessage(`「${shelf.label}」 받기를 완료했습니다.${note}`);
       await load();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '받기 실패');
@@ -166,15 +225,19 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
     if (isKitApplied(shelf)) return;
     setBusy(true);
     try {
-      if (shelf.hints?.needs_organization_module) {
-        await syncOrganizationModuleIfNeeded();
+      let skillNote = '';
+      if (shelfNeedsOrganizationModule(shelf)) {
+        const sync = await syncSkills(true);
+        if (sync.status === 'updated' || sync.status === 'error') {
+          skillNote = ` ${describeOrganizationSync(sync)}`;
+        }
       }
       const result = await applyWorkKitProfile(shelf.group, shelf.id);
       const featureNote = result.enabled_features?.length
         ? ` · 추가 기능 활성 ${result.enabled_features.length}`
         : '';
       const warn = result.warnings?.length ? ` (${result.warnings[0]})` : '';
-      setMessage(`「${shelf.label}」 적용했습니다.${featureNote}${warn}`);
+      setMessage(`「${shelf.label}」 적용했습니다.${featureNote}${warn}${skillNote}`);
       await load();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '적용 실패');
@@ -233,7 +296,7 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
     }
   };
 
-  const disabled = busy || syncing;
+  const disabled = busy || syncing || skillSyncing;
 
   return (
     <section
@@ -247,7 +310,10 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
             작업 키트 받기 → 적용 / 적용 해제. 조직 모듈 스킬은 모듈 단위입니다.
           </p>
           {feedSequence != null ? (
-            <p className="mt-1 text-[11px] text-muted">카탈로그 seq {feedSequence}</p>
+            <p className="mt-1 text-[11px] text-muted">
+              카탈로그 seq {feedSequence}
+              {skillSequence != null ? ` · 스킬 seq ${skillSequence}` : ''}
+            </p>
           ) : null}
           {appliedLabel ? (
             <p className="mt-2 text-sm text-text">
@@ -274,11 +340,22 @@ export function ProfileLibrary({ onLaunchMyAgent }: ProfileLibraryProps) {
             type="button"
             data-testid="work-kit-catalog-sync"
             disabled={disabled}
-            onClick={() => void syncCatalog(false)}
+            onClick={() => void refreshAll(false)}
             className="inline-flex items-center gap-1.5 rounded-xl border border-line px-3 py-2 text-xs font-semibold text-text hover:border-accent disabled:cursor-not-allowed disabled:opacity-45"
           >
             <CloudArrowDown size={15} />
             {syncing ? '가져오는 중…' : '목록 새로고침'}
+          </button>
+          <button
+            type="button"
+            data-testid="organization-skill-sync"
+            title="조직 모듈(스킬) 최신 버전을 확인하고 받습니다"
+            disabled={disabled}
+            onClick={() => void syncSkills(false)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-line px-3 py-2 text-xs font-semibold text-text hover:border-accent disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            <ArrowsClockwise size={15} />
+            {skillSyncing ? '스킬 확인 중…' : '스킬 업데이트'}
           </button>
           {canRestore ? (
             <button

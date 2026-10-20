@@ -69,16 +69,21 @@ assert.match(launcherManifest.update_asset_url_template, /^https:\/\/git\.minyou
 if (existsSync(path.join(root, 'deploy', 'output', 'LATEST_SECURE_UPDATE.json'))
     && existsSync(path.join(root, 'manager', 'deploy', 'output', 'LATEST_LAUNCHER_UPDATE.json'))) {
   const plans = collectMirrorPlans(root);
+  const catalogMeta = JSON.parse(readFileSync(path.join(root, 'work-kits', 'catalog-meta.json'), 'utf8'));
   assert.deepEqual(plans.map((plan) => plan.track), ['organization', 'work-kits', 'launcher']);
-  // Organization track advances independently; its tag must follow manifest.update_sequence.
+  // Each track advances independently; tags follow their own authoring manifests.
   assert.deepEqual(
     plans.map((plan) => plan.tag),
-    [`update-${manifest.update_sequence}`, 'work-kits-5', 'launcher-update-6'],
+    [
+      `update-${manifest.update_sequence}`,
+      `${catalogMeta.release_tag_prefix ?? 'work-kits'}-${catalogMeta.sequence}`,
+      `launcher-update-${launcherManifest.update_sequence}`,
+    ],
   );
   assert.ok(plans.find((plan) => plan.track === 'work-kits')?.assets
     .some((asset) => asset.name === 'org.cqr.automaton-routing.zip'));
   assert.ok(plans.find((plan) => plan.track === 'launcher')?.assets
-    .some((asset) => asset.name === 'WorkKitLauncher-v1.0.11-install.zip'));
+    .some((asset) => asset.name === `WorkKitLauncher-v${launcherManifest.version}-install.zip`));
 }
 
 const launcherService = readFileSync(

@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-launcher-feed/v1",
     "kind": "work-kit-launcher",
-    "update_sequence": 6,
+    "update_sequence": 7,
     "minimum_supported_sequence": 1,
-    "version": "1.0.11",
+    "version": "1.0.12",
     "channel": "stable",
-    "published_at": "2026-09-14T04:58:07.607Z",
+    "published_at": "2026-10-20T03:15:37.889Z",
     "asset": {
-      "repository": "moonhyun-cheol/myagent-org",
-      "release_tag": "launcher-update-6",
-      "name": "WorkKitLauncher-v1.0.11-update-6.zip",
-      "size": 66675892,
-      "sha256": "2f7af4ad7c766d3008fcb8483313e69b47ecefc012eee8e6c864d8bd167e4ffd"
+      "repository": "ins78516/myagent-org",
+      "release_tag": "launcher-update-7",
+      "name": "WorkKitLauncher-v1.0.12-update-7.zip",
+      "size": 66677697,
+      "sha256": "16720798a5923e421da427a281b69f2b7fe3c035391992c14d42a4ee3a9e1ef8"
     },
-    "payload_manifest_sha256": "b92fa03a2d86773932543e15f90709a63ad8b9e1f3205b6b7824b2ef0f3885f6",
-    "release_notes": "v1.0.11: 관리자 재설치 교체와 실패 롤백을 트랜잭션화하고 업데이트 진행 가드를 강화."
+    "payload_manifest_sha256": "636bef78e353ab07a8a6624c82afd1ee1f96a716b95bb33e8f5ca9e812eb207c",
+    "release_notes": "v1.0.12: 관리자 시작·목록 새로고침·키트 받기/적용 시 조직 모듈(스킬) 최신 버전을 자동 확인·적용. 「스킬 업데이트」 버튼 추가."
   },
-  "signature": "lOV/O5Gu5hv3bsAmwMRz1qyRAmELFWb02/Jm5kyyIAVSmB/rhZ5TiIMrHrrtp50w7T+Kqhle3IiwnFQgTyfcDKEU0ViO7CBdc4P59fZKqboVuvDFuYWIUeeB6nsXlwKoUqMs5Jzuurns6nIHL51CUmnXLu+qBqdfQslQnV8cIvTIcpjDUcM/6ahxTdxyHE1j42Oqj6WI3JeaaL26nAIrf3tPrECxaj+H2pc2djHK0LAHeklHmlV050OlXtcKsEYjzWcYLOuS1iY0NklJY0qbZ7CaP+W9bozGZ8X5oO/gOxgLB2U+PH8ChOqSDwj8dkQUy/JBj1comAAJNzYQz+XFngRn+NJCkRdHzQPTZu/xghl3amuPChwSJejPbjDeOZsgy+/L8Bszqb8Y5Z886H46iJ5pcsB8O6XYDtc0/Mpo/EEnXqLATAnrigqmBicKENoXQZHtCftg3ux99yPX0T2FRo2tBWbExkUvPxDOVxS4R4XkI4gt0YTaMzJnzagwmyae"
+  "signature": "ABBh0dQHjeAbVV5tkXIkiJpQSH880hwzRfamyyqnBKOpDX5dppaOlBH0nqhHR6zjk4cUgoIcbcO3Qpi2JyMDFR+qV/Pl6y+K2RCGtVzPD67F4H03M3KG2OcKmVGutAHIrxVDE7VqtytLjGK8Lwt4fJ0U9+LL9q+POc3aYV99x0YJ2fSsscuvnjzYYX/wSAhhyZ/guU/LfC/j0SZdbi33AgpLlR2ow2OuHciD8R9yNVUHSu6mkdcTcTonUGUE6+U9hIl2ebc6j7LKSxt3ulpCLZOhjcY2NAfVis9utbaULOa3eLbkFmMrfNMWf2HUVsKL+VUv8SnsYu0mlMThY8dD50YuVuq4iiurSjh26q+0xvu/yth2BC7G+Tc6wFkpxHrwv6h7SK+up1ZVbXQzA+zZNqOd/XeZ0VWvv/qj9mZafbo/xDCOaHRKQnu+5yrIwokn8aZ/z1HuR8exR2Ao+cxYDXn4WzgfylERYrZiijgcOnTS7e0leCPtTsdwhzQ5MB1R"
 }
