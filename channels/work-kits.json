@@ -1,6 +1,6 @@
 {
   "channel": "beta",
-  "sequence": 6,
+  "sequence": 7,
   "groups": [
     {
       "id": "cqr",
@@ -25,12 +25,12 @@
             "needs_organization_module": true
           },
           "asset": {
-            "sequence": 6,
+            "sequence": 7,
             "name": "cqr-brand-info.tar.gz",
             "repository": "ins78516/myagent-org",
-            "release_tag": "work-kits-6",
+            "release_tag": "work-kits-7",
             "size": 433,
-            "sha256": "e3fb07561b3c4a36b9959db18a87e022fe53ce214aab8134959b69240b71851f"
+            "sha256": "9a9cda68ff5d2bb21a1f2ae2df8a077b60388ba84c7d3b98038e25ef4d342c79"
           }
         },
         {
@@ -52,12 +52,12 @@
             "pinned_skill_ids": []
           },
           "asset": {
-            "sequence": 6,
+            "sequence": 7,
             "name": "cqr-ops.tar.gz",
             "repository": "ins78516/myagent-org",
-            "release_tag": "work-kits-6",
-            "size": 8826,
-            "sha256": "ec005c79d86099f1438ca39e4c95ee5f3f032e2ac6dee7e28035f001a0a365d2"
+            "release_tag": "work-kits-7",
+            "size": 8821,
+            "sha256": "82bcfbdbdedd97407b0077f4b193330cdee6560c060a7ae42fdc70e8b57dac28"
           }
         },
         {
@@ -67,6 +67,13 @@
           "pull": [],
           "plugins": {
             "enable": {}
+          },
+          "features": {
+            "enable": {
+              "org.cqr.market-research-runtime": {
+                "required": true
+              }
+            }
           },
           "ui": {
             "pinned_skill_ids": [
@@ -82,12 +89,12 @@
             "needs_organization_module": true
           },
           "asset": {
-            "sequence": 6,
+            "sequence": 7,
             "name": "cqr-product-dev.tar.gz",
             "repository": "ins78516/myagent-org",
-            "release_tag": "work-kits-6",
-            "size": 475,
-            "sha256": "b1fbf12fe3769fe3db250b422ac3d6f78fce7402f1248340633c9442239a5050"
+            "release_tag": "work-kits-7",
+            "size": 5393,
+            "sha256": "a2e608734b7a277d8dfa7f04534221984979f1e591d5693b5d0f40d952f08cc1"
           }
         }
       ]

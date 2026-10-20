@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-launcher-feed/v1",
     "kind": "work-kit-launcher",
-    "update_sequence": 7,
+    "update_sequence": 8,
     "minimum_supported_sequence": 1,
-    "version": "1.0.12",
+    "version": "1.0.13",
     "channel": "stable",
-    "published_at": "2026-10-20T03:15:37.889Z",
+    "published_at": "2026-10-20T05:26:33.924Z",
     "asset": {
       "repository": "ins78516/myagent-org",
-      "release_tag": "launcher-update-7",
-      "name": "WorkKitLauncher-v1.0.12-update-7.zip",
-      "size": 66677697,
-      "sha256": "16720798a5923e421da427a281b69f2b7fe3c035391992c14d42a4ee3a9e1ef8"
+      "release_tag": "launcher-update-8",
+      "name": "WorkKitLauncher-v1.0.13-update-8.zip",
+      "size": 66678813,
+      "sha256": "c21db5b497c3b0a649693c95094bf54416e10a1d52833054d31480fb2e7edfb9"
     },
-    "payload_manifest_sha256": "636bef78e353ab07a8a6624c82afd1ee1f96a716b95bb33e8f5ca9e812eb207c",
-    "release_notes": "v1.0.12: 관리자 시작·목록 새로고침·키트 받기/적용 시 조직 모듈(스킬) 최신 버전을 자동 확인·적용. 「스킬 업데이트」 버튼 추가."
+    "payload_manifest_sha256": "35f768dbf29687826fbf1c3970b5d8c09aa8a0381e2396cf5773dfff9289f24b",
+    "release_notes": "v1.0.13: 키트 적용 시 기능 패키지 설치 스크립트 실행(시장조사 실행 환경 venv 자동 설치), 설치 UI 개선."
   },
-  "signature": "ABBh0dQHjeAbVV5tkXIkiJpQSH880hwzRfamyyqnBKOpDX5dppaOlBH0nqhHR6zjk4cUgoIcbcO3Qpi2JyMDFR+qV/Pl6y+K2RCGtVzPD67F4H03M3KG2OcKmVGutAHIrxVDE7VqtytLjGK8Lwt4fJ0U9+LL9q+POc3aYV99x0YJ2fSsscuvnjzYYX/wSAhhyZ/guU/LfC/j0SZdbi33AgpLlR2ow2OuHciD8R9yNVUHSu6mkdcTcTonUGUE6+U9hIl2ebc6j7LKSxt3ulpCLZOhjcY2NAfVis9utbaULOa3eLbkFmMrfNMWf2HUVsKL+VUv8SnsYu0mlMThY8dD50YuVuq4iiurSjh26q+0xvu/yth2BC7G+Tc6wFkpxHrwv6h7SK+up1ZVbXQzA+zZNqOd/XeZ0VWvv/qj9mZafbo/xDCOaHRKQnu+5yrIwokn8aZ/z1HuR8exR2Ao+cxYDXn4WzgfylERYrZiijgcOnTS7e0leCPtTsdwhzQ5MB1R"
+  "signature": "dK2dV43v0x4NLpwx9OPwSo0IzsH95u/I72YfvLu9bJE1bZ7VcEr1MMtzzKIhhf1Jk2upq3NwSvun3GXqNWeUGi3InV0JE9aAC8wtQXyJ9kwTF0w5K3v3j0+10HRSvsvq0ycs8IGsRlFstbv8IBkzI51Z6qjmo8G7ql749Oe1jaSOnlRZ1k6AJuNKfUakt2wvjJZDL+l8A5xPjcirjJWqtyh7JmRDrzmyc1T6gqhRb8e6NVF4ibER9u/I+eMsNFLEG9D8S8nnO2HbssbFInQybVty0mUnVwCLJbuf4goCcOK3dOZA7ADylAJ2A6ds+VypWkujiJqwORMiVcR/nXGjQMTi5GOMY+qPUMX1JVmGGtDy9asOJEoGXoJaajK6BeX7EseSfrIuI4F5gycEjdj45bqQwADvmP1bhh9xuDPAwe12ZK+LWvpLJRLfKPy/gwlNn5Eaw6Ai6SjOLGXPXQPjLbUNtb1LcasJelyBDtp2HtiSLdDJEC5hUjsJvtBrmWf4"
 }

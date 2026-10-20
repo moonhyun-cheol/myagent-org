@@ -4,7 +4,7 @@
   "role": "organization-module",
   "accepts_legacy_edits": false,
   "version": "1.0.0-beta.1",
-  "update_sequence": 21,
+  "update_sequence": 22,
   "channel": "beta",
   "provider": "gitea",
   "base_url": "https://git.minyoungcorp.com",

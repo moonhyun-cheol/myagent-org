@@ -3,20 +3,20 @@
   "document": {
     "schema": "my-agent-module-feed/v1",
     "kind": "organization-module",
-    "update_sequence": 21,
+    "update_sequence": 22,
     "minimum_supported_sequence": 1,
     "version": "1.0.0-beta.1",
     "channel": "beta",
-    "published_at": "2026-10-16T00:44:27.065Z",
+    "published_at": "2026-10-20T05:28:40.265Z",
     "asset": {
       "repository": "ins78516/myagent-org",
-      "release_tag": "update-21",
+      "release_tag": "update-22",
       "name": "MYAgent-organization-v1.0.0-beta.1-module.zip",
-      "size": 147648,
-      "sha256": "b2aa1920db8c146376138115baf14729daf83e188ae47303ab51f97d207e3f6a"
+      "size": 154967,
+      "sha256": "e7f64f455eb74ce64bf6c912682fe7cbc1ae465bb47274f9d255267d058b68b1"
     },
-    "payload_manifest_sha256": "37027fd76bf8f335fa121ee1ce34b235f2510638be55b4244306d949026988d1",
-    "release_notes": "Organization module update 21: brand manual URL fixed (hub .218), product lineup URL moved to hub .218, product data API URL removed (not served)"
+    "payload_manifest_sha256": "af87b4b2539d6a710d38aee57f307e52681d5c52efd842d6e5b22f480f6cd739",
+    "release_notes": "update-22: 시장조사 실행 전 점검(missing_deps/missing_api_key 결과 JSON), 세션·결과 폴더를 모듈 밖으로 이동, 컨셉 RA 판단 생성 강화."
   },
-  "signature": "GwDmCR7CI+ZYJ5xlvTx+92B9iKzF2GaKP59nfjW+6qwPp3NUWtHoaK3A32RFg5xH3WzaRs6yyevJiKQJrLbOMq+ceKz/zgk+IOrCzF+ozwIRS6QzgMFbCBiqZ6WEqh9BD8SyfJPrFkb94SNtP/YGR7fxiOOzlpA3fTmMB7TFvlSoqQQFECCRHXcT+5oFjYzUJ+6CyrEOhFiSAKTEgMMqg6felv03esSDDoryMoOwxZ+mnhQJIUPwXghsTaRggvs4lv2jqX2s3R3xYS4B1a3S9y42og/m9dMA78YYHd2VXel74o+iTuRJxM++zOf8ApmJ7gq4pfkEcfHdes6g/i1Q1/qlbmx6/whFq1RfLVseWbmgklkbKRQ6uYPnjp8NgLuFoSoTTPy2GTL6CIc2ogimEjyvGmNN9pfwYUbmFU+9zw3+HdNz8QJ0tT60TMLjLJ0X1xiPPuOBDT0lrrzGJseRfxyVhJL65Xd289GefpkfCP+JB7ptMnDnNqYdlkzF9Cvx"
+  "signature": "dY+W2pkRDqUh4pnIN8eulAxOwgcKxFdF0udD6BQgq0VHrsTIiYgDHtMBVHJCCccfa+z6/C2W9p0W8quh4Z/NO0SSCDtByurpWpXRdrmvWPx1U7dNdp5V/OzvpZaHDPCU3ugWQYWuhTT81YQceMCJWf+OZFBtxDsl7TWpQQGVhKrXk038ohjbabSlFPS52qwqQz+F4VOlrjRVvd1XXQIEiRwC4/qRAdDpKiUrM9o0USu7nz7rs+cO2bOR1LtXleJOWaDxmNvo9YBK7SORmnyjydr1DJ2/KojDLV/m2SlLzrrNAl/RoMEr4g54tuuBTmL7wE6vJT3ZJ6W4IFp1wYVI5XIb9lblQwESGs4JKWnHJjQ2N9v2WlhaJXN74cGvyJWdn6dxZn9RguvM9r2ZDBYqoMl+A6c/eRrBhU8wYaV8wrh5XEnFuu2ZqZVsmd2kzb5P8r38ORTcX753mbX+6zYp0Dn/BlFzGHCLn5YA/Mh6OtOMQ4eaVWbqfohwyGePT4OZ"
 }
