@@ -488,6 +488,39 @@ _STOP_BRIEF = {
     "경쟁",
     "3개만",
     "개만",
+    # Report / analysis vocabulary: the latin last-resort must not lock these
+    # as a product ("report 형식으로 줘" -> report, "... 리뷰 pain" -> pain).
+    "report",
+    "reports",
+    "pdf",
+    "markdown",
+    "json",
+    "csv",
+    "excel",
+    "ppt",
+    "table",
+    "format",
+    "summary",
+    "summarize",
+    "pain",
+    "pains",
+    "review",
+    "reviews",
+    "amazon",
+    "reddit",
+    "price",
+    "pricing",
+    "competitor",
+    "competitors",
+    "gap",
+    "gaps",
+    "trend",
+    "trends",
+    "business",
+    "brief",
+    "data",
+    "source",
+    "sources",
     # Never accept these broad/style/material words as the product itself.
     "화",
     "복",
@@ -790,7 +823,25 @@ def _extract_product_phrase(text: str) -> tuple[str, str]:
             return t.lower(), t.lower()
         continue
 
-    return "product", "product"
+    return UNRESOLVED_PRODUCT, UNRESOLVED_PRODUCT
+
+
+UNRESOLVED_PRODUCT = "product"
+
+
+def brief_needs_clarification(hints: dict[str, str]) -> str | None:
+    """Return a reason code when the brief has no researchable product.
+
+    Every search query is built around the garment label, so an unresolved
+    product searches the literal word ``product`` and returns off-topic hits
+    (tires, SaaS) whatever the season. Season / condition hints are not
+    accepted as scope on their own: they are substring matches and fire on
+    follow-ups such as 「한눈에 정리해줘」 (눈 -> cold), 「살펴봄」 (봄 -> SS)
+    or 「2027 기준으로 다시」 (year only).
+    """
+    if (hints.get("product_brief") or "") != UNRESOLVED_PRODUCT:
+        return None
+    return "no_product"
 
 
 def _product_lock_tokens(brief_phrase: str, search_label: str) -> list[str]:
@@ -1076,6 +1127,8 @@ def _snippets_to_sources(
         "tops": ("jacket", "hoodie", "parka", "재킷", "패딩"),
     }
     topical.extend(family_cues.get(family, ()))
+    # The unresolved placeholder matches generic pages ("Build Real Products").
+    topical = [t for t in topical if t != UNRESOLVED_PRODUCT]
 
     hard_neg = (
         "plumber",
@@ -1104,6 +1157,9 @@ def _snippets_to_sources(
         for tok in topical:
             if tok and tok in blob:
                 score += 2 if tok in {brief_g, garment} or tok in lock_tokens else 1
+        # Domain bonus alone must never admit a page (r/tires, r/SaaS threads).
+        if score <= 0:
+            continue
         if any(n in blob for n in hard_neg):
             score -= 8
         if any(
@@ -1483,7 +1539,7 @@ def _synthesize_from_snippets(
 ) -> ResearchReport:
     hints = _parse_brief_hints(user_brief, target_category)
     llm = get_chat_model(settings)
-    evidence = json.dumps(snippets[:30], ensure_ascii=False, indent=2)
+    evidence = _evidence_payload(snippets)
     user = (
         f"User brief: {user_brief}\n"
         f"Target category: {target_category or 'n/a'}\n"
@@ -1525,7 +1581,7 @@ def _extract_pain_from_snippets(
     if not snippets:
         return None
     llm = get_chat_model(settings)
-    evidence = json.dumps(snippets[:30], ensure_ascii=False, indent=2)
+    evidence = _evidence_payload(snippets)
     user = (
         f"Brief garment/season lock: {hints['garment']} / {hints['season']} ({hints['category_key']})\n"
         "Extract consumer pain themes ONLY from the evidence below.\n"
@@ -1546,6 +1602,31 @@ def _extract_pain_from_snippets(
     except Exception as exc:
         logger.warning("pain extraction failed: %s", exc)
         return None
+
+
+def _evidence_payload(
+    snippets: list[dict[str, Any]], *, limit: int = 24, body_chars: int = 280
+) -> str:
+    """Compact evidence JSON for the LLM prompt.
+
+    Raw search hits carry long bodies and extra keys; an indented dump of 30
+    hits plus the schema hint can overload local Ollama runners (observed as a
+    connection reset mid-generation). Keep only title / trimmed body / link,
+    one line per hit.
+    """
+    compact: list[dict[str, str]] = []
+    for item in snippets[:limit]:
+        if not isinstance(item, dict):
+            continue
+        body = str(item.get("snippet") or item.get("body") or item.get("content") or "")
+        compact.append(
+            {
+                "title": str(item.get("title") or "")[:160],
+                "snippet": re.sub(r"\s+", " ", body)[:body_chars],
+                "link": str(item.get("link") or item.get("url") or ""),
+            }
+        )
+    return "[\n" + ",\n".join(json.dumps(c, ensure_ascii=False) for c in compact) + "\n]"
 
 
 def _sanitize_report(report: ResearchReport) -> ResearchReport:

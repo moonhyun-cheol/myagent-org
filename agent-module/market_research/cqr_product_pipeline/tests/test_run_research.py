@@ -329,3 +329,123 @@ def test_grounded_snippet_fallback_uses_web_titles():
     assert "wetsuit-review" in urls or "dive" in urls
     assert "wateralchemyplumbing" not in urls
     assert "futurism.com" not in urls
+
+
+def test_followup_without_product_needs_brief():
+    """「음? 리포트 형식으로 줘」 must not run a 'product all-season' study."""
+    from cqr_product_pipeline.agents.deep_research import brief_needs_clarification
+
+    for brief in (
+        "음? 리포트 형식으로 줘",
+        "방금 시장조사에서 경쟁 공백 3개만 다시 요약해",
+        "의류 시장조사",
+        # Season / condition / year substrings alone are not a scope.
+        "한눈에 정리해줘",
+        "더 자세히 살펴봄",
+        "현장조사 결과 다시 보여줘",
+        "2027 기준으로 다시 정리해줘",
+        # Report vocabulary must not become the product lock.
+        "report 형식으로 줘",
+        "business 관점으로 요약해",
+        # No garment named: 'pain' used to be locked as the product.
+        "2027 FW 아웃도어 미드에서 미드하이 경쟁사 리뷰 pain",
+    ):
+        assert brief_needs_clarification(_parse_brief_hints(brief, None)) == "no_product", brief
+    for brief in (
+        "2027 fw시즌 스키바지 컨셉 구성을 위한 시장조사 실시",
+        "공사장 현장직들을 위한 작업화, 습한 겨울 환경에 착용",
+        "겨울 슬랙스 시장조사",
+        "Liberator summer cargo Amazon review pain",
+    ):
+        assert brief_needs_clarification(_parse_brief_hints(brief, None)) is None, brief
+
+
+def test_run_research_cli_exits_needs_brief(tmp_path, monkeypatch, capsys):
+    import sys
+
+    import pytest
+
+    from cqr_product_pipeline.cli import run_research
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["run_research", "--brief", "음? 리포트 형식으로 줘", "--output-dir", str(tmp_path)],
+    )
+    with pytest.raises(SystemExit) as exc:
+        run_research.main()
+    assert exc.value.code == run_research.NEEDS_BRIEF_EXIT
+    assert "needs_brief" in capsys.readouterr().out
+    assert not (tmp_path / "research_report.md").exists()
+
+
+def test_sources_need_topical_hit_not_domain_bonus():
+    from cqr_product_pipeline.agents.deep_research import _snippets_to_sources
+
+    hints = _parse_brief_hints("2027 FW 스키바지 시장조사", None)
+    sources = _snippets_to_sources(
+        [
+            {
+                "title": "Goodyear Assurance All-Season : r/tires - Reddit",
+                "link": "https://www.reddit.com/r/tires/comments/x/goodyear/",
+                "snippet": "Good for a year",
+            },
+            {
+                "title": "Find Real Customer Pain Points - Build Real Products",
+                "link": "https://painonsocial.com/",
+                "snippet": "product pain point finder",
+            },
+            {
+                "title": "Best ski pants 2027 review",
+                "link": "https://www.reddit.com/r/skiing/comments/y/ski_pants/",
+                "snippet": "ski pants waterproof fit complaints",
+            },
+        ],
+        hints,
+    )
+    urls = " ".join(s.url for s in sources)
+    assert "r/skiing" in urls
+    assert "r/tires" not in urls
+    assert "painonsocial" not in urls
+
+
+def test_failed_synthesis_report_omits_template_sections():
+    from cqr_product_pipeline.agents.deep_research import _grounded_report_from_snippets
+
+    brief = "2027 FW 스키바지 시장조사"
+    report = _grounded_report_from_snippets(
+        brief,
+        None,
+        [
+            {
+                "title": "Ski pants review fit complaints",
+                "link": "https://example-ski.com/pants",
+                "snippet": "ski pants inseam too long",
+            }
+        ],
+        fallback_note="LLM 종합 실패 (ResponseError: connection reset)",
+    )
+    md = format_research_report_md(
+        report, session_id="fb", brief_lock=_parse_brief_hints(brief, None)
+    )
+    assert "템플릿 폴백" in md
+    assert "생략한 섹션" in md
+    assert "핵심 페르소나" not in md
+    assert "## 컨셉 후보" not in md
+    assert "## 가격 전략" not in md
+    assert "template_pad" not in md
+    assert "Ski pants review" in md
+
+    dry = format_research_report_md(run_deep_research(brief, dry_run=True), session_id="dry")
+    assert "컨셉" in dry and "생략한 섹션" not in dry
+
+
+def test_evidence_payload_is_compact():
+    from cqr_product_pipeline.agents.deep_research import _evidence_payload
+
+    payload = _evidence_payload(
+        [{"title": "t", "body": "x" * 2000, "link": "https://a", "_query": "q", "extra": "y"}] * 40
+    )
+    assert payload.count("https://a") == 24
+    assert "_query" not in payload and "extra" not in payload
+    assert len(payload) < 24 * 400

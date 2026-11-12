@@ -53,11 +53,48 @@ def test_missing_deps_is_reported(monkeypatch, tmp_path):
     assert result["missing"] == ["cqr-fake"]
 
 
-def test_missing_api_key_is_reported(tmp_path):
-    code, result = _run(["research", "summer cargo pants"], {"LLM_PROVIDER": "openai"}, tmp_path)
+def test_api_key_is_required_only_where_an_llm_runs(monkeypatch, tmp_path):
+    mod = _load()
+    monkeypatch.setenv("CQR_MARKET_STATE_DIR", str(tmp_path))
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setattr(mod, "REQUIRED_MODULES", [])
+    monkeypatch.setattr(mod, "HITL_MODULES", [])
+    monkeypatch.setattr(mod, "PROVIDER_MODULES", {})
+    # research collects evidence only: no LLM, so no key.
+    assert mod.preflight("research", dry_run=False) is None
+    failure = mod.preflight("feasibility", dry_run=False)
+    assert failure["status"] == "missing_api_key"
+    assert failure["missing"] == ["OPENAI_API_KEY"]
+
+
+def test_feasibility_and_plan_are_closed_without_internal_corpus(tmp_path):
+    for phase in ("feasibility", "plan"):
+        code, result = _run([phase, "겨울 슬랙스 시장조사"], {}, tmp_path)
+        assert code == 1
+        assert result["status"] == "unavailable"
+    assert not (tmp_path / "state" / "output").exists()
+
+
+def test_followup_message_needs_brief_without_searching(tmp_path):
+    code, result = _run(["research", "음? 리포트 형식으로 줘"], {}, tmp_path)
     assert code == 1
-    assert result["status"] == "missing_api_key"
-    assert result["missing"] == ["OPENAI_API_KEY"]
+    assert result["status"] == "needs_brief"
+    assert "품목:" in result["error"]
+    assert not (tmp_path / "state" / "output").exists()
+
+
+def test_dry_run_with_field_flags(tmp_path):
+    code, result = _run(
+        ["research", "", "--category", "아웃도어", "--competitors", "Columbia, Patagonia", "--dry-run"],
+        {},
+        tmp_path,
+    )
+    assert code == 0, result
+    assert result["report_kind"] == "evidence_pack"
+    assert result["brief_fields"]["category"] == "아웃도어"
+    assert result["brief_fields"]["competitors"] == ["Columbia", "Patagonia"]
+    assert "DRY RUN" in Path(result["markdown_path"]).read_text(encoding="utf-8")
 
 
 def test_dry_run_writes_report_and_state_outside_module(tmp_path):

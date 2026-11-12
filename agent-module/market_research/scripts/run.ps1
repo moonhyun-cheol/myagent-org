@@ -124,7 +124,11 @@ switch ($cmd) {
                     --session-id $sessionId `
                     --output-dir $outDir
             }
+            $researchExit = $LASTEXITCODE
         } finally { Pop-Location }
+        # Exit 3 = needs_brief, 4 = insufficient_evidence: no report was written,
+        # so keep the previous session.
+        if ($researchExit -ne 0) { exit $researchExit }
         Set-SessionMeta @{
             session_id = $sessionId
             brief = $brief

@@ -44,6 +44,12 @@ LABELS: dict[str, dict[str, str]] = {
         "usp": "USP 가설",
         "sources": "## 출처 (관련 스니펫만)",
         "sources_empty": "_품목에 맞는 웹 출처를 남기지 못했습니다 (무관·저품질 URL 필터링)._ ",
+        "skipped": (
+            "## 생략한 섹션\n"
+            "_근거 종합 실패로 페르소나·세그먼트·가격 전략·Job Stories·컨셉 후보는 "
+            "표시하지 않습니다 (카테고리 템플릿이라 조사 결과로 오인될 수 있음). "
+            "LLM 연결을 확인한 뒤 같은 brief로 재실행하세요._"
+        ),
         "next": "_다음: 원할 때만 **타당성** 또는 **기획서** 요청. 기본 워크플로는 `/심층리서치` 여기서 종료._",
     },
     "en": {
@@ -82,6 +88,11 @@ LABELS: dict[str, dict[str, str]] = {
         "usp": "USP hypothesis",
         "sources": "## Sources (topic-filtered)",
         "sources_empty": "_No on-topic sources retained after quality filter._",
+        "skipped": (
+            "## Omitted sections\n"
+            "_Synthesis failed, so personas, segments, pricing, job stories and concepts are "
+            "not shown (category template only). Check the LLM connection and re-run._"
+        ),
         "next": "_Next: request **타당성** or **기획서** only when you want it. Default workflow ends here._",
     },
 }
@@ -116,6 +127,16 @@ def _is_template_fallback(report: ResearchReport) -> bool:
     return bool(report.pricing_strategy.confidence == "insufficient_evidence" and "템플릿" in note)
 
 
+def _is_failed_synthesis(report: ResearchReport) -> bool:
+    """Live run whose LLM synthesis or search failed (not an intentional dry run).
+
+    Personas/segments/pricing/concepts in that case are category skeletons that
+    read like findings, so the renderer omits them instead of only bannering.
+    """
+    note = (report.quant_signals.review_rating_notes or "") + " " + " ".join(report.qual_themes or [])
+    return "LLM 종합 실패" in note or "웹 검색 근거 0건" in note
+
+
 def format_research_report_md(
     report: ResearchReport,
     *,
@@ -126,6 +147,7 @@ def format_research_report_md(
     labels = LABELS["en"] if str(lang).lower().startswith("en") else LABELS["ko"]
     is_ko = not str(lang).lower().startswith("en")
     is_tpl = _is_template_fallback(report)
+    is_failed = _is_failed_synthesis(report)
 
     # Prefer brief_lock KO phrase for product lock line
     product_hint = ""
@@ -206,7 +228,7 @@ def format_research_report_md(
             bullet = _bullet(p)
             if bullet:
                 lines.append(bullet)
-        if report.quant_signals.pain_theme_frequencies:
+        if report.quant_signals.pain_theme_frequencies and not is_failed:
             lines.append("")
             lines.append(labels["freq"] if is_tpl else ("**추정 테마 빈도:**" if is_ko else "**Estimated theme frequency:**"))
             for theme, freq in report.quant_signals.pain_theme_frequencies.items():
@@ -257,7 +279,11 @@ def format_research_report_md(
         lines.append(f"- {labels['confidence']}: {sizing.confidence}")
         lines.append("")
 
-    if report.personas:
+    if is_failed:
+        lines.append(labels["skipped"])
+        lines.append("")
+
+    if report.personas and not is_failed:
         lines.append(labels["personas"])
         for persona in report.personas:
             lines.append(f"### {persona.name} (`{persona.persona_id}`)")
@@ -278,7 +304,7 @@ def format_research_report_md(
                 )
             lines.append("")
 
-    if report.market_segments:
+    if report.market_segments and not is_failed:
         lines.append(labels["segments"])
         lines.append("| Segment | Need / TPO | WTP | 경쟁 | 우선순위 |")
         lines.append("|---|---|---|---|---|")
@@ -291,7 +317,7 @@ def format_research_report_md(
         lines.append("")
 
     pricing = report.pricing_strategy
-    if any(
+    if not is_failed and any(
         (
             pricing.target_price_band,
             pricing.recommended_price,
@@ -338,7 +364,7 @@ def format_research_report_md(
                 lines.append(f"- {'금지 주장' if is_ko else 'avoid'}: {'; '.join(card.avoid_claims)}")
             lines.append("")
 
-    if report.job_stories:
+    if report.job_stories and not is_failed:
         lines.append(labels["job_stories"])
         for story in report.job_stories:
             lines.append(
@@ -371,7 +397,7 @@ def format_research_report_md(
                 lines.append(bullet)
         lines.append("")
 
-    if report.concepts:
+    if report.concepts and not is_failed:
         lines.append(labels["concepts"])
         for c in report.concepts:
             lines.append(f"### {labels['concept']} {c.concept_id}: {c.name}")
