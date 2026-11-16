@@ -705,3 +705,96 @@ def test_cli_insufficient_evidence_exit(tmp_path, monkeypatch, capsys):
     assert exc.value.code == run_research.INSUFFICIENT_EVIDENCE_EXIT
     assert "insufficient_evidence" in capsys.readouterr().out
     assert not (tmp_path / "research_report.md").exists()
+
+
+# --- Market/trend study: period, one search per year, publication dates ---
+
+
+def test_period_years_are_absolute_and_never_in_the_future():
+    from cqr_product_pipeline.agents.evidence_pack import period_years
+
+    assert period_years("최근 3년", 2026) == [2024, 2025, 2026]
+    assert period_years("last 2 years", 2026) == [2025, 2026]
+    assert period_years("2025~2027", 2026) == [2025, 2026]
+    assert period_years("2020-2026", 2026) == [2023, 2024, 2025, 2026]  # one search per year, at most 4
+    assert period_years("", 2026) == []
+
+
+def test_a_period_makes_a_trend_study_and_is_not_a_season():
+    from datetime import date
+
+    now = date.today().year
+    brief = parse_brief("품목: 봄버재킷 / 영문명: bomber jacket / 기간: 최근 2년")
+    assert (brief.study, brief.period, brief.season) == ("trend", f"{now - 1}-{now}", "")
+    assert brief.origin["study"] == "기간에서 추론"
+    sentence = parse_brief("2022~2024 시장 추이 품목: 봄버재킷 / 영문명: bomber jacket")
+    assert (sentence.period, sentence.season, sentence.study) == ("2022-2024", "", "trend")
+    # The user can keep a product study for a period.
+    product = parse_brief("품목: 봄버재킷 / 영문명: bomber jacket / 기간: 2022-2024 / 조사유형: 제품")
+    assert product.study == "product"
+    assert "bomber jacket review complaints problems" in [q for q, _ in build_queries(product)]
+    assert not any(q.endswith("2022") for q, _ in build_queries(product))
+
+
+def test_trend_study_queries_each_year_then_market_size_brands_and_reviews():
+    from cqr_product_pipeline.agents.evidence_pack import MAX_QUERIES
+
+    brief = parse_brief(
+        "", {"product": "봄버재킷", "product_en": "bomber jacket", "period": "2022-2024", "category": "men's outerwear"}
+    )
+    queries = build_queries(brief)
+    assert queries == [
+        ("bomber jacket trend 2022", "market"),
+        ("bomber jacket trend 2023", "market"),
+        ("bomber jacket trend 2024", "market"),
+        ("bomber jacket market size growth", "market"),
+        ("men's outerwear US market size growth", "market"),
+        ("best bomber jacket brands 2024", "competitor"),
+        ("bomber jacket review complaints problems", "review"),
+    ]
+    assert len(queries) <= MAX_QUERIES
+    md = render_markdown(brief, [], {}, queries, "s", dry_run=True)
+    assert "| 조사 유형 | 시장·트렌드 추이 | 기간에서 추론 |" in md
+    assert "연도별로 검색한 해: 2022, 2023, 2024" in md
+
+
+def test_trend_study_gives_market_evidence_most_slots_and_dates_it():
+    from cqr_product_pipeline.agents.evidence_pack import TREND_KIND_QUOTA
+
+    brief = parse_brief(
+        "", {"product": "봄버재킷", "product_en": "bomber jacket", "period": "2022-2024", "category": "men's outerwear"}
+    )
+
+    def searcher(query, max_results):
+        year = query.rsplit(" ", 1)[-1] if query[-4:].isdigit() else ""
+        slug = query.replace(" ", "-").replace("'", "")
+        return [
+            {
+                "title": f"Bomber jacket trends {year}".strip(),
+                "url": f"https://{slug}-{n}.example/a",
+                "snippet": (f"Mar 5, {year} · " if year and n == 0 else "") + f"Bomber jackets look {n} ways.",
+            }
+            for n in range(3)
+        ]
+
+    evidence, stats = collect_evidence(brief, searcher, lambda url: "")
+    assert stats["kind_quota"] == TREND_KIND_QUOTA
+    assert stats["evidence_by_kind"] == {"review": 3, "competitor": 3, "market": 12}
+    assert stats["years"] == [2022, 2023, 2024]
+    assert all(n > 0 for n in stats["evidence_by_year"].values())
+    assert {e.published for e in evidence if e.published} == {"2022-03-05", "2023-03-05", "2024-03-05"}
+    md = render_markdown(brief, evidence, stats, build_queries(brief), "s")
+    assert "- 연도별 근거(" in md and "게시일 2022-03-05" in md
+
+
+def test_publication_date_is_read_from_the_page_and_the_snippet():
+    from cqr_product_pipeline.agents.evidence_pack import page_published, snippet_published
+
+    assert page_published('<meta property="article:published_time" content="2025-03-04T10:00:00Z">') == "2025-03-04"
+    assert (
+        page_published('<script type="application/ld+json">{"datePublished": "2024-11-02T08:00:00-05:00"}</script>')
+        == "2024-11-02"
+    )
+    assert page_published("<html><body>no date here</body></html>") == ""
+    assert snippet_published("Mar 5, 2025 · Bomber jackets are back") == "2025-03-05"
+    assert snippet_published("Bomber jackets are back in 2025") == ""

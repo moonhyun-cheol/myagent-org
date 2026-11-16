@@ -20,6 +20,10 @@ Each evidence item carries a short ``excerpt`` (shown in the pack) and a longer
 ``detail`` (more on-topic passages, and on competitor pages the lines that state
 a price) for the host's synthesis step, which must cite evidence ids and may only
 quote amounts that appear in the cited items.
+
+A market/trend study (``study: trend``, or any brief with a ``period``) searches each
+year of the period, gives most slots to market evidence, and records the date a page
+was published so the synthesis can tell what was said about which year.
 """
 
 from __future__ import annotations
@@ -31,6 +35,7 @@ import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
+from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Callable
@@ -50,6 +55,13 @@ MAX_EVIDENCE = 18
 # market query's second and third hits were reached.
 KIND_QUOTA = {"review": 8, "competitor": 6, "market": 4}
 FETCH_QUOTA = {"review": 7, "competitor": 5, "market": 4}
+# A market/trend study asks how the market moved, so market evidence takes most slots.
+STUDY_TREND = "trend"
+STUDY_PRODUCT = "product"
+TREND_KIND_QUOTA = {"review": 3, "competitor": 5, "market": 10}
+TREND_FETCH_QUOTA = {"review": 2, "competitor": 4, "market": 10}
+TREND_DEFAULT_YEARS = 3  # a trend study without a period looks at the last 3 years
+MAX_PERIOD_YEARS = 4  # one query per year; older years of a longer period are left out
 MAX_PER_DOMAIN = 3
 MIN_BODY_CHARS = 400
 EXCERPT_CHARS = 720
@@ -155,6 +167,8 @@ FIELD_KEYS: dict[str, tuple[str, ...]] = {
     "price_band": ("가격대", "가격", "price_band", "price"),
     "competitors": ("경쟁사", "competitors", "competitor"),
     "focus": ("초점", "포커스", "focus"),
+    "study": ("조사유형", "조사 유형", "study"),
+    "period": ("기간", "period"),
 }
 FIELD_LABELS: tuple[tuple[str, str], ...] = (
     ("product", "품목"),
@@ -165,7 +179,23 @@ FIELD_LABELS: tuple[tuple[str, str], ...] = (
     ("price_band", "가격대"),
     ("competitors", "경쟁사"),
     ("focus", "초점"),
+    ("study", "조사 유형"),
+    ("period", "기간"),
 )
+STUDY_LABELS = {STUDY_TREND: "시장·트렌드 추이", STUDY_PRODUCT: "제품 조사(불만·경쟁·시장)"}
+# Accepted ``조사유형:`` values (lower case).
+_STUDY_VALUES = {
+    "trend": STUDY_TREND,
+    "trends": STUDY_TREND,
+    "market": STUDY_TREND,
+    "market trend": STUDY_TREND,
+    "트렌드": STUDY_TREND,
+    "추이": STUDY_TREND,
+    "시장": STUDY_TREND,
+    "시장·트렌드": STUDY_TREND,
+    "product": STUDY_PRODUCT,
+    "제품": STUDY_PRODUCT,
+}
 KIND_LABELS: tuple[tuple[str, str], ...] = (
     ("review", "리뷰·불만 근거"),
     ("competitor", "경쟁사·가격 근거"),
@@ -197,6 +227,19 @@ _SEASON_CODE_RE = re.compile(r"(?<![A-Za-z0-9])(?:(20\d\d)\s*)?(FW|F/W|SS|S/S)(?
 _SEASON_KO_RE = re.compile(r"(?<![가-힣])(봄|여름|가을|겨울)(?:용|철|에|시즌)?(?![가-힣])")
 _SEASON_EN_RE = re.compile(r"\b(winter|summer)\b", re.IGNORECASE)
 _YEAR_RE = re.compile(r"(?<!\d)(20[2-4]\d)(?!\d)")
+# A period: 2024-2026 / 2024년~2026년, or a relative one: 최근 3년 / 지난 2개년 / last 3 years.
+_PERIOD_RANGE_RE = re.compile(r"(?<!\d)(20\d\d)\s*년?\s*[-–~]\s*(20\d\d)(?!\d)\s*년?")
+_RECENT_YEARS_RE = re.compile(r"(?:최근|지난)\s*(\d{1,2})\s*개?년|\b(?:last|past)\s+(\d{1,2})\s+years\b", re.IGNORECASE)
+# Publication date a page declares, and the date Yahoo prints before a snippet ("Mar 5, 2025 · …").
+_PUBLISHED_META_RE = re.compile(
+    r"<meta\b[^>]*?(?:property|name|itemprop)\s*=\s*[\"'](?:article:published_time|og:published_time|"
+    r"datePublished|publish[-_]?date|pubdate|parsely-pub-date|sailthru\.date|date)[\"'][^>]*>",
+    re.IGNORECASE,
+)
+_LD_PUBLISHED_RE = re.compile(r"\"datePublished\"\s*:\s*\"([^\"]{8,40})\"")
+_ISO_DATE_RE = re.compile(r"(?<!\d)(20\d\d)-(\d\d)-(\d\d)")
+_MONTHS = {m: n for n, m in enumerate("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(), 1)}
+_SNIPPET_DATE_RE = re.compile(r"^\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2}),\s+(20\d\d)\b")
 _USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
@@ -214,6 +257,8 @@ class ResearchBrief:
     price_band: str = ""
     competitors: list[str] = field(default_factory=list)
     focus: str = ""
+    study: str = ""  # STUDY_TREND | STUDY_PRODUCT | "" (product study)
+    period: str = ""  # "2024-2026" / "2025"
     origin: dict[str, str] = field(default_factory=dict)
 
     @property
@@ -244,6 +289,8 @@ class Evidence:
     detail: str = ""
     # USD prices from the page's structured product data or its price lines.
     page_prices: list[str] = field(default_factory=list)
+    # Publication date the page declares, or the date in front of the search snippet (YYYY-MM-DD).
+    published: str = ""
 
 
 def _clean(text: str) -> str:
@@ -292,6 +339,65 @@ def _season_from_text(text: str) -> str:
     return " ".join(x for x in (year.group(1) if year else "", word.group(1) if word else "") if x)
 
 
+def _study_value(value: str) -> str:
+    return _STUDY_VALUES.get(_clean(value).lower(), "")
+
+
+def period_years(period: str, current_year: int | None = None) -> list[int]:
+    """Years a period covers, oldest first. Future years are left out, and of a long period
+    only the last MAX_PERIOD_YEARS are kept (one search per year)."""
+    now = current_year or date.today().year
+    text = period or ""
+    if match := _PERIOD_RANGE_RE.search(text):
+        first, last = sorted((int(match.group(1)), int(match.group(2))))
+        years = list(range(first, last + 1))
+    elif match := _RECENT_YEARS_RE.search(text):
+        count = int(match.group(1) or match.group(2))
+        years = list(range(now - count + 1, now + 1)) if count > 0 else []
+    else:
+        years = sorted({int(y) for y in _YEAR_RE.findall(text)})
+    return [y for y in years if y <= now][-MAX_PERIOD_YEARS:]
+
+
+def study_years(brief: ResearchBrief, current_year: int | None = None) -> list[int]:
+    """Years a trend study searches: the period's, else the last TREND_DEFAULT_YEARS."""
+    years = period_years(brief.period, current_year)
+    if years:
+        return years
+    now = current_year or date.today().year
+    return list(range(now - TREND_DEFAULT_YEARS + 1, now + 1))
+
+
+def _period_text(years: list[int]) -> str:
+    return "" if not years else str(years[0]) if len(years) == 1 else f"{years[0]}-{years[-1]}"
+
+
+def _period_from_text(text: str) -> str:
+    """A period written in the sentence (최근 3년, 2024~2026) as "2024-2026"; a lone year is a season, not a period."""
+    if _PERIOD_RANGE_RE.search(text) or _RECENT_YEARS_RE.search(text):
+        return _period_text(period_years(text))
+    return ""
+
+
+def page_published(html: str) -> str:
+    """Publication date a page declares (article:published_time, JSON-LD datePublished, …) as YYYY-MM-DD."""
+    head = html[:300_000]
+    values = [c.group(1) for tag in _PUBLISHED_META_RE.findall(head) if (c := _CONTENT_RE.search(tag))]
+    values += _LD_PUBLISHED_RE.findall(head)
+    for value in values:
+        if match := _ISO_DATE_RE.search(value):
+            return "-".join(match.groups())
+    return ""
+
+
+def snippet_published(snippet: str) -> str:
+    """The date a search engine prints in front of a snippet ("Mar 5, 2025 · …") as YYYY-MM-DD."""
+    match = _SNIPPET_DATE_RE.match(snippet or "")
+    if not match:
+        return ""
+    return f"{match.group(3)}-{_MONTHS[match.group(1)]:02d}-{int(match.group(2)):02d}"
+
+
 def _rule_product(text: str) -> tuple[str, str]:
     """Product phrase read from free text by the legacy rule parser (fallback only)."""
     try:
@@ -328,8 +434,21 @@ def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBr
             values[name], origin[name] = value.strip(), FROM_FIELD
     free = raw[: matches[0].start()].strip() if matches else raw
 
-    if "season" not in values and (season := _season_from_text(free)):
+    if "period" not in values and (period := _period_from_text(free)):
+        values["period"], origin["period"] = period, FROM_TEXT
+    elif values.get("period") and (years := period_years(values["period"])):
+        values["period"] = _period_text(years)  # 최근 3년 -> 2024-2026
+    # A period (최근 3년, 2024-2026) is not a season year.
+    season_text = _RECENT_YEARS_RE.sub(" ", _PERIOD_RANGE_RE.sub(" ", free))
+    if "season" not in values and (season := _season_from_text(season_text)):
         values["season"], origin["season"] = season, FROM_TEXT
+    if study := _study_value(values.get("study", "")):
+        values["study"] = study
+    else:
+        values.pop("study", None)
+        origin.pop("study", None)
+        if period_years(values.get("period", "")):
+            values["study"], origin["study"] = STUDY_TREND, "기간에서 추론"
     if "price_band" not in values and (price := _PRICE_BAND_RE.search(free)):
         values["price_band"], origin["price_band"] = _clean(price.group(0)), FROM_TEXT
     if not values.get("product") and values.get("product_en") and not values.get("category"):
@@ -363,6 +482,8 @@ def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBr
         price_band=values.get("price_band", ""),
         competitors=competitors,
         focus=values.get("focus", ""),
+        study=values.get("study", ""),
+        period=values.get("period", ""),
         origin=origin,
     )
 
@@ -393,6 +514,20 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
     channel = _english(brief.channel) or "amazon"
     price = _english(brief.price_band)
     competitors = [c for c in brief.competitors if not _has_korean(c)]
+    if brief.study == STUDY_TREND:
+        # How the market moved: one query per year, market size, then a few brand and review queries.
+        years = study_years(brief)
+        for year in years:
+            add(f"{term} trend {year}", "market")
+        category = _english(brief.category)
+        add(f"{term} market size growth", "market")
+        if category and category.lower() != term.lower():
+            add(f"{category} US market size growth", "market")
+        for name in competitors[:2]:
+            add(f"{name} {term} {years[-1]}", "competitor")
+        add(f"best {term} brands {years[-1]}", "competitor")
+        add(f"{term} review complaints problems", "review")
+        return queries[:MAX_QUERIES]
     if brief.product:
         add(f"{term} review complaints problems", "review")
         add(f"{term} reddit issues worth it", "review")
@@ -549,6 +684,7 @@ class Page(str):
     locales: tuple[str, ...] = ()
     offers: tuple[str, ...] = ()
     via: str = "urllib"
+    published: str = ""
 
 
 def _usd(value: object) -> str:
@@ -686,6 +822,7 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
     page = Page(html_to_text(html))
     page.locales = page_locales(html)
     page.offers = structured_prices(html)
+    page.published = page_published(html)
     page.via = via
     return page
 
@@ -942,8 +1079,10 @@ def collect_evidence(
             return ""
 
     # Fetch slots go to pages that can be read, shared out per kind; the rest keep their snippet.
+    trend = brief.study == STUDY_TREND
+    kind_quota, fetch_quota = (TREND_KIND_QUOTA, TREND_FETCH_QUOTA) if trend else (KIND_QUOTA, FETCH_QUOTA)
     readable = [i for i, row in enumerate(rows) if not _host_in(row["domain"], _NO_FETCH_HOSTS)]
-    to_fetch = _allocate(rows, readable, FETCH_QUOTA, MAX_FETCH)
+    to_fetch = _allocate(rows, readable, fetch_quota, MAX_FETCH)
     bodies = [""] * len(rows)
     with ThreadPoolExecutor(max_workers=8) as pool:
         for index, body in zip(to_fetch, pool.map(_body, [rows[i] for i in to_fetch])):
@@ -971,7 +1110,7 @@ def collect_evidence(
             excerpts[index] = (excerpt, "본문" if from_body else "요약문")
     kind_order = {kind: n for n, (kind, _label) in enumerate(KIND_LABELS)}
     chosen = sorted(
-        _allocate(rows, usable, KIND_QUOTA, MAX_EVIDENCE, MAX_PER_DOMAIN),
+        _allocate(rows, usable, kind_quota, MAX_EVIDENCE, MAX_PER_DOMAIN),
         key=lambda i: (kind_order.get(rows[i]["kind"], len(kind_order)), i),
     )
     evidence: list[Evidence] = []
@@ -1001,6 +1140,7 @@ def collect_evidence(
                 query=row["query"],
                 detail=detail[:DETAIL_CHARS],
                 page_prices=list(dict.fromkeys(_clean(p) for p in page_prices))[:8],
+                published=getattr(body, "published", "") or snippet_published(row["snippet"]),
             )
         )
     stats = {
@@ -1021,10 +1161,21 @@ def collect_evidence(
         "off_topic_dropped": off_topic,
         "evidence": len(evidence),
         "evidence_body": sum(1 for e in evidence if e.source == "본문"),
-        "kind_quota": dict(KIND_QUOTA),
+        "kind_quota": dict(kind_quota),
         "evidence_by_kind": {kind: sum(1 for e in evidence if e.kind == kind) for kind, _label in KIND_LABELS},
     }
+    if trend:
+        years = study_years(brief)
+        stats["years"] = years
+        stats["evidence_by_year"] = {str(y): sum(1 for e in evidence if about_year(e, y)) for y in years}
     return evidence, stats
+
+
+def about_year(item: Evidence, year: int) -> bool:
+    """Published that year, or the item's text names the year."""
+    if item.published.startswith(str(year)):
+        return True
+    return bool(re.search(rf"(?<!\d){year}(?!\d)", f"{item.title} {item.excerpt} {item.detail}"))
 
 
 def _cell(text: str) -> str:
@@ -1036,12 +1187,18 @@ def _brief_table(brief: ResearchBrief) -> list[str]:
     for name, label in FIELD_LABELS:
         value = getattr(brief, name)
         value = ", ".join(value) if isinstance(value, list) else value
+        if name == "study":
+            value = STUDY_LABELS.get(value, value)
         lines.append(f"| {label} | {_cell(value) or '미지정'} | {brief.origin.get(name, '-') if value else '-'} |")
     if left_out := _unsearchable(brief):
         lines += [
             "",
             "한국어로 적혀 미국 시장 검색에 쓰지 않은 값: " + ", ".join(left_out) + ". 영어로 적으면 검색에 반영됩니다.",
         ]
+    if brief.study == STUDY_TREND:
+        years = ", ".join(str(y) for y in study_years(brief))
+        default = "" if period_years(brief.period) else f" (기간을 지정하지 않아 최근 {TREND_DEFAULT_YEARS}년)"
+        lines += ["", f"연도별로 검색한 해: {years}{default}"]
     lines += ["", f"해석이 틀렸거나 항목을 더 지정하려면 필드로 다시 요청하세요: `{FIELD_EXAMPLE}`"]
     return lines
 
@@ -1106,6 +1263,12 @@ def render_markdown(
             + ", ".join(f"{label} {by_kind.get(kind, 0)}({quota.get(kind, 0)})" for kind, label in KIND_LABELS)
             + ". 할당을 못 채운 종류의 남은 자리는 다른 종류가 씁니다."
         )
+    by_year = stats.get("evidence_by_year") or {}
+    if by_year:
+        out.append(
+            "- 연도별 근거(게시일이 그해이거나 내용에 그해가 나온 근거): "
+            + ", ".join(f"{year}년 {n}건" for year, n in by_year.items())
+        )
     if via := stats.get("search_via"):
         labels = {"yahoo": "Yahoo 직접 조회", "ddgs": "ddgs 라이브러리(대체 경로)"}
         out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
@@ -1125,7 +1288,12 @@ def render_markdown(
             missing.append(f"{label}: 할당 {quota[kind]}건 중 {len(items)}건만 확보")
         out += [f"## {label} ({len(items)}건)", ""]
         for item in items:
-            out += [f"### {item.id}. {item.title}", "", f"- 출처: {item.domain} · {item.source} · 검색어 `{item.query}`"]
+            published = f" · 게시일 {item.published}" if item.published else ""
+            out += [
+                f"### {item.id}. {item.title}",
+                "",
+                f"- 출처: {item.domain} · {item.source}{published} · 검색어 `{item.query}`",
+            ]
             if item.prices:
                 out.append(f"- 발췌 안 가격 표기: {', '.join(item.prices)}")
             if extra := [p for p in item.page_prices if p not in item.prices]:
@@ -1135,6 +1303,7 @@ def render_markdown(
         low = name.lower()
         if not any(low in f"{e.title} {e.excerpt}".lower() for e in evidence):
             missing.append(f"경쟁사 `{name}`: 이 브랜드를 언급한 근거 0건")
+    missing += [f"{year}년: 그해를 다룬 근거 0건" for year, n in by_year.items() if not n]
     missing.append("시장 규모·페르소나·세그먼트·가격 전략·컨셉 후보: 이 파이프라인은 산출하지 않습니다(종합 단계 없음)")
     out += ["## 근거가 없는 항목", "", *[f"- {m}" for m in missing], ""]
     out += ["## 실행한 검색어", "", *[f"- `{q}`" for q, _ in queries], ""]

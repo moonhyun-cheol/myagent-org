@@ -72,6 +72,8 @@ FIELD_FLAGS = (
     "price_band",
     "competitors",
     "focus",
+    "study",
+    "period",
 )
 FIELD_EXAMPLE = (
     "/심층리서치 품목: 스키바지 / 영문명: ski pants / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
