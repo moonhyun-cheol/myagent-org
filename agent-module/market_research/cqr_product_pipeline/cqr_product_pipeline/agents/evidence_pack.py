@@ -25,11 +25,18 @@ A market/trend study (``study: trend``, or any brief with a ``period``) searches
 year of the period, gives most slots to market evidence, and records the date a page
 was published and last updated so the synthesis can tell what was said about which year.
 A page whose content date is older than the period (and that names no year of it) is
-marked ``before_period`` and only used when nothing newer fills the slot.
+marked ``before_period`` and only used when nothing newer fills the slot. A page without a
+date is dated from its URL when it can be (``/2018/05/``, ``…-in-2022``, a Reddit post id):
+an SEO page keeps its original year in the URL while the title is moved to this year. One
+that stays without a date and names no year of the period is marked ``undated`` and comes
+after dated pages.
 
 The brief's target customer (``gender``, ``style``) shapes the queries: men's bomber
 jacket, best men's military bomber jacket. A result whose title is for the other gender
 is dropped. The CLI fills a brief without one with CQR's customer (``TARGET_DEFAULTS``).
+Market-size queries do not name the gender (reports rarely split by it); their results are
+marked ``all_genders`` so the synthesis does not compare their brands and prices with the
+target customer's products.
 
 On a market page the lines that state a market figure (USD 41.07 Billion, CAGR) are kept
 even when they do not repeat the product name: a US outerwear report gave a 127-character
@@ -359,6 +366,10 @@ class Evidence:
     updated: str = ""
     # Trend study: the content date is before the period and the text names no year of it.
     before_period: bool = False
+    # Trend study: no date found (page, snippet or URL) and the text names no year of the period.
+    undated: bool = False
+    # Found by a query without the target gender (market size): may cover every gender.
+    all_genders: bool = False
 
 
 def content_date(item: Evidence) -> str:
@@ -1183,6 +1194,47 @@ def _years_named(text: str, years: list[int]) -> bool:
     return any(re.search(rf"(?<!\d){y}(?!\d)", text) for y in years)
 
 
+_URL_YEAR_RE = re.compile(r"(?<![0-9])(20[0-9]{2})(?![0-9])")
+_REDDIT_POST_RE = re.compile(r"/comments/([0-9a-z]{5,8})(?:/|$)", re.IGNORECASE)
+# First Reddit post id of each January (base 36, approximate to a month or two). Ids are
+# sequential, so an id gives the year it was posted: 4p3ji0 is 2016, 9d6xqk is 2018.
+_REDDIT_YEAR_START = (
+    (2016, "3z0000"),
+    (2017, "5l0000"),
+    (2018, "7n0000"),
+    (2019, "ab0000"),
+    (2020, "eh0000"),
+    (2021, "kn0000"),
+    (2022, "rs0000"),
+    (2023, "1000000"),
+    (2024, "18v0000"),
+    (2025, "1hq0000"),
+)
+
+
+def url_year(url: str, current_year: int | None = None) -> int:
+    """Year a URL dates its page to: a Reddit post id, else a year in the path. 0 when none.
+
+    A Reddit id newer than the last table entry gives 0: its year is not known.
+    """
+    parts = urlsplit(url or "")
+    if match := _REDDIT_POST_RE.search(parts.path):
+        post = int(match.group(1).lower(), 36)
+        found = 0
+        for year, start in _REDDIT_YEAR_START:
+            if post < int(start, 36):
+                return found or year - 1
+            found = year
+        return 0
+    latest = (current_year or date.today().year) + 1
+    years = [int(y) for y in _URL_YEAR_RE.findall(parts.path) if 2000 <= int(y) <= latest]
+    return min(years) if years else 0
+
+
+def _gender_named(text: str) -> bool:
+    return bool(re.search(r"\b(?:men|mens|women|womens|unisex)\b", re.sub(r"['’]s\b", "", text.lower())))
+
+
 def _excerpt(text: str, terms: list[str], width: int = 340, windows: int = 2) -> str:
     """Up to ``windows`` on-topic passages, in page order. Blocks without a sentence are skipped."""
     scored: list[tuple[int, int, int, str]] = []
@@ -1284,6 +1336,7 @@ def collect_evidence(
     figures: dict[int, list[str]] = {}
     dates: dict[int, tuple[str, str]] = {}  # (published, updated)
     stale: set[int] = set()
+    undated: set[int] = set()
     years = study_years(brief) if trend else []
     off_topic = 0
     for index, (row, body) in enumerate(zip(rows, bodies)):
@@ -1308,11 +1361,20 @@ def collect_evidence(
             published = getattr(body, "published", "") or snippet_published(row["snippet"])
             dates[index] = (published, getattr(body, "updated", ""))
             when = dates[index][1] or published
-            if years and when and int(when[:4]) < years[0]:
-                if not _years_named(f"{row['title']} {row['snippet']} {excerpt}", years):
-                    stale.add(index)
-    # A trend study reads an older page only when nothing from the period fills the slot.
-    usable.sort(key=lambda i: i in stale)
+            if years:
+                named = _years_named(f"{row['title']} {row['snippet']} {excerpt}", years)
+                if when:
+                    if int(when[:4]) < years[0] and not named:
+                        stale.add(index)
+                elif year := url_year(row["url"]):
+                    # The URL keeps the year an SEO page was written; its title may name this year.
+                    if year < years[0]:
+                        stale.add(index)
+                elif not named:
+                    undated.add(index)
+    # A trend study reads an undated page after dated ones, an older page only when nothing
+    # from the period fills the slot.
+    usable.sort(key=lambda i: (i in stale, i in undated))
     kind_order = {kind: n for n, (kind, _label) in enumerate(KIND_LABELS)}
     chosen = sorted(
         _allocate(rows, usable, kind_quota, MAX_EVIDENCE, MAX_PER_DOMAIN),
@@ -1353,6 +1415,8 @@ def collect_evidence(
                 published=published,
                 updated=updated,
                 before_period=index in stale,
+                undated=index in undated,
+                all_genders=brief.gender in {"men", "women"} and not _gender_named(row["query"]),
             )
         )
     stats = {
@@ -1382,6 +1446,7 @@ def collect_evidence(
         stats["evidence_by_year"] = {str(y): sum(1 for e in evidence if about_year(e, y)) for y in years}
         stats["before_period_found"] = len(stale)
         stats["before_period_kept"] = sum(1 for e in evidence if e.before_period)
+        stats["undated_kept"] = sum(1 for e in evidence if e.undated)
     return evidence, stats
 
 
@@ -1503,6 +1568,8 @@ def render_markdown(
             f"- 조사 기간 이전에 게시·수정된 페이지 {found}건은 기간 안의 근거가 모자랄 때만 썼습니다 "
             f"(채택 {stats.get('before_period_kept', 0)}건)"
         )
+    if undated_kept := stats.get("undated_kept"):
+        out.append(f"- 게시일을 확인하지 못한 페이지 {undated_kept}건은 날짜가 확인된 근거 뒤에 채택했습니다")
     if via := stats.get("search_via"):
         labels = {"yahoo": "Yahoo 직접 조회", "ddgs": "ddgs 라이브러리(대체 경로)"}
         out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
@@ -1527,6 +1594,10 @@ def render_markdown(
                 published += f" · 수정일 {item.updated}"
             if item.before_period:
                 published += " · 조사 기간 이전 글"
+            if item.undated:
+                published += " · 게시일 확인 불가"
+            if item.all_genders:
+                published += " · 성별 구분 없는 검색 결과"
             out += [
                 f"### {item.id}. {item.title}",
                 "",

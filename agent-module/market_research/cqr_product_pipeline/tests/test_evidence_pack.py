@@ -948,3 +948,47 @@ def test_market_figure_lines_are_kept_on_market_pages():
     assert item.kind == "market" and item.source == "본문"
     assert "USD 41.07 Billion" in item.excerpt
     assert "[시장 수치 줄]" in item.detail and "CAGR 3.37%" in item.detail
+
+
+def test_trend_study_dates_pages_from_the_url():
+    from cqr_product_pipeline.agents.evidence_pack import url_year
+
+    assert url_year("https://www.reddit.com/r/malefashionadvice/comments/4p3ji0/looking_for_a_bomber/") == 2016
+    assert url_year("https://www.reddit.com/r/malefashionadvice/comments/9d6xqk/your_favorite/") == 2018
+    assert url_year("https://www.reddit.com/r/x/comments/1zzzzzz/new/") == 0  # newer than the table
+    assert url_year("https://shop.example/blogs/news/best-bomber-jackets-for-men-in-2022") == 2022
+    assert url_year("https://www.esquire.com/style/g2932/best-bomber-jackets/") == 0
+
+    rows = [
+        {"title": "Best Bomber Jackets for Men in 2026", "url": "https://seo.example/best-bomber-jackets-in-2022", "snippet": "bomber jacket"},
+        {"title": "Affordable bomber jacket?", "url": "https://www.reddit.com/r/mfa/comments/4p3ji0/bomber/", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket notes", "url": "https://nodate.example/a", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket guide", "url": "https://dated.example/b", "snippet": "Mar 5, 2025 · bomber jacket"},
+    ]
+    brief = parse_brief("", {**BOMBER, "gender": "men", "period": "2024-2026"})
+    evidence, stats = collect_evidence(brief, lambda q, n: rows, lambda url: "")
+    by_url = {e.url: e for e in evidence}
+    assert by_url[rows[0]["url"]].before_period  # the URL keeps the year the title was moved from
+    assert by_url[rows[1]["url"]].before_period  # a 2016 Reddit thread
+    assert by_url[rows[2]["url"]].undated and not by_url[rows[2]["url"]].before_period
+    assert not by_url[rows[3]["url"]].undated and not by_url[rows[3]["url"]].before_period
+    assert stats["before_period_found"] == 2 and stats["undated_kept"] == 1
+    md = render_markdown(brief, evidence, stats, [], "s")
+    assert "게시일 확인 불가" in md and "날짜가 확인된 근거 뒤에" in md
+
+
+def test_market_size_results_without_the_gender_are_marked():
+    brief = parse_brief("", {**BOMBER, "gender": "men", "period": "2024-2026"})
+    queries = dict(build_queries(brief))
+    assert "bomber jacket market size growth" in queries  # market reports rarely split by gender
+
+    def searcher(query, max_results):
+        slug = query.replace(" ", "-").replace("'", "")
+        return [{"title": f"Bomber jacket {query}", "url": f"https://{slug}.example/r", "snippet": "bomber jacket"}]
+
+    evidence, stats = collect_evidence(brief, searcher, lambda url: "")
+    marked = {e.query for e in evidence if e.all_genders}
+    assert "bomber jacket market size growth" in marked
+    assert not any("men's" in q for q in marked)
+    md = render_markdown(brief, evidence, stats, [], "s")
+    assert "성별 구분 없는 검색 결과" in md
