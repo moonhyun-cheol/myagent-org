@@ -298,8 +298,8 @@ def test_every_evidence_kind_gets_its_share():
     from cqr_product_pipeline.agents.evidence_pack import FETCH_QUOTA, KIND_QUOTA, MAX_EVIDENCE, MAX_FETCH
 
     brief = parse_brief(SHARE_BRIEF)
-    # One market query after six review/competitor ones: by rank alone it got 2 of 18 slots.
-    assert [k for _q, k in build_queries(brief)].count("market") == 1
+    # Market queries come after six review/competitor ones: by rank alone they got 2 of 18 slots.
+    assert [k for _q, k in build_queries(brief)].count("market") == 2
     fetched: list[str] = []
 
     def fetcher(url):
@@ -323,10 +323,117 @@ def test_a_kind_short_of_results_hands_its_slots_to_the_others(tmp_path):
         parse_brief(SHARE_BRIEF), tmp_path, "s4", searcher=_share_searcher(market_rows=1), fetcher=lambda url: ""
     )
     by_kind = result["stats"]["evidence_by_kind"]
-    assert by_kind["market"] == 1 and sum(by_kind.values()) == MAX_EVIDENCE
+    assert by_kind["market"] == 2 and sum(by_kind.values()) == MAX_EVIDENCE
     md = (tmp_path / "research_report.md").read_text(encoding="utf-8")
-    assert "시장·트렌드 근거: 할당 4건 중 1건만 확보" in md
-    assert "종류별 채택 건수(할당): 리뷰·불만 근거 9(8), 경쟁사·가격 근거 8(6), 시장·트렌드 근거 1(4)" in md
+    assert "시장·트렌드 근거: 할당 4건 중 2건만 확보" in md
+    assert (
+        f"종류별 채택 건수(할당): 리뷰·불만 근거 {by_kind['review']}(8), "
+        f"경쟁사·가격 근거 {by_kind['competitor']}(6), 시장·트렌드 근거 2(4)"
+    ) in md
+    assert by_kind["review"] > 8 or by_kind["competitor"] > 6
+
+
+def test_a_singular_noun_alone_is_another_word():
+    from cqr_product_pipeline.agents.evidence_pack import on_topic
+
+    # "Slack" the chat app filled 3 of 8 review slots of a slacks brief.
+    assert not on_topic(["slacks"], "Slack Reviews | Slack takes my money every month")
+    assert on_topic(["slacks"], "The best dress slacks for the office")
+    assert not on_topic(["men's dress slacks"], "Slack mentioned members of the workspace")
+    assert on_topic(["men's dress slacks"], "Men's slacks that survive a commute")
+    # Next to another word of the term the singular is the product: "Peak Cargo Pant".
+    assert on_topic(["tactical cargo pants"], "5.11 Peak Cargo Pant")
+    # Whole words: no bootcut for boots, no workflow for work.
+    assert not on_topic(["work boots"], "bootcut jeans for work")
+    assert not on_topic(["work boots"], "workflow boots")
+    assert on_topic(["work boots"], "Workers review their boots")
+
+
+def test_market_queries_are_kept_and_may_name_the_category():
+    brief = parse_brief(
+        "품목: 슬랙스 / 영문명: dress slacks / 카테고리: men's dress pants / 시즌: 겨울 / "
+        "경쟁사: Bonobos, Haggar, Dockers, Banana Republic / 가격: $40-90 / 초점: stretch, wrinkle"
+    )
+    queries = build_queries(brief)
+    assert len(queries) <= 10
+    assert [q for q, k in queries if k == "market"] == [
+        "dress slacks US market trends winter",
+        "men's dress pants US market size growth",
+    ]
+
+    def searcher(query, max_results):
+        if "market" not in query:
+            return [{"title": f"dress slacks {query}", "url": f"https://r.example/{len(query)}", "snippet": "dress slacks"}]
+        return [
+            {"title": "Men's Dress Pants Market Size 2030", "url": "https://m.example/a", "snippet": "men's dress pants grew 4%"},
+            {"title": "Winter Wear Market", "url": "https://m.example/b", "snippet": "winter wear reached $600 billion"},
+        ]
+
+    evidence, _stats = collect_evidence(brief, searcher, lambda url: "")
+    market = [e.url for e in evidence if e.kind == "market"]
+    assert market == ["https://m.example/a"]  # the category counts for market rows only
+
+
+def test_structured_prices_come_from_offer_data():
+    from cqr_product_pipeline.agents.evidence_pack import structured_prices
+
+    html = (
+        '<html><head><script type="application/ld+json">{"@type":"Product","name":"Peak Cargo Pant",'
+        '"offers":{"@type":"Offer","price":"89.49","priceCurrency":"USD"}}</script>'
+        '<script type="application/ld+json">[{"@type":"Offer","price":120,"priceCurrency":"CAD"}]</script>'
+        '<meta property="product:price:amount" content="99.00"/></head><body>x</body></html>'
+    )
+    assert structured_prices(html) == ("$89.49", "$99")
+    assert structured_prices('<meta property="og:price:currency" content="EUR"><meta property="og:price:amount" content="10">') == ()
+
+
+def test_competitor_pages_keep_their_price_lines_for_synthesis():
+    from cqr_product_pipeline.agents.evidence_pack import Page
+
+    body = Page(
+        "5.11 Peak Cargo Pant\n$89.49\nThe tactical cargo pants we wore for a season held up well, "
+        "though the cargo pockets sagged when loaded. " * 6 + "\nShipping over $50 is free."
+    )
+    body.offers = ("$99",)
+
+    def searcher(query, max_results):
+        host = f"shop{len(query)}.example"  # one domain per query: at most 3 items per domain
+        return [{"title": "5.11 tactical cargo pants", "url": f"https://{host}/p", "snippet": "tactical cargo pants"}]
+
+    brief = parse_brief("품목: 카고바지 / 영문명: tactical cargo pants / 경쟁사: 5.11")
+    evidence, _stats = collect_evidence(brief, searcher, lambda url: body)
+    item = next(e for e in evidence if e.kind == "competitor")
+    assert item.source == "본문"
+    assert item.page_prices[:2] == ["$99", "$89.49"]
+    assert "[가격 표기 줄] 5.11 Peak Cargo Pant $89.49" in item.detail
+    assert len(item.detail) > len(item.excerpt) or item.detail.startswith(item.excerpt[:40])
+
+
+def test_a_refused_fetch_is_retried_with_a_browser_like_client(monkeypatch):
+    import urllib.error
+
+    from cqr_product_pipeline.agents import evidence_pack as ep
+
+    def refused(url, timeout):
+        raise urllib.error.HTTPError(url, 403, "Forbidden", {}, None)
+
+    monkeypatch.setattr(ep, "_fetch_urllib", refused)
+    monkeypatch.setattr(
+        ep,
+        "_fetch_impersonated",
+        lambda url, timeout: '<html lang="en-US"><body><p>Ski pants review. They leaked.</p>'
+        '<script type="application/ld+json">{"@type":"Offer","price":"199","priceCurrency":"USD"}</script></body></html>',
+    )
+    page = ep.fetch_text("https://blocked.example/review")
+    assert "Ski pants review." in page and page.via == "impersonated"
+    assert page.locales == ("en-us",) and page.offers == ("$199",)
+
+    def not_found(url, timeout):
+        raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(ep, "_fetch_urllib", not_found)
+    with pytest.raises(urllib.error.HTTPError):
+        ep.fetch_text("https://gone.example/x")
 
 
 def test_season_words_must_stand_alone():

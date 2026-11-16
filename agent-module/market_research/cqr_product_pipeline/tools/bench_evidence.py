@@ -42,6 +42,8 @@ BRIEFS = {
     "cargo_pants": "품목: 카고바지 / 영문명: tactical cargo pants / 경쟁사: 5.11, TRUEWERK / 가격: $35-65",
     "ski_pants": "품목: 스키바지 / 영문명: ski pants / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280",
     "slacks": "품목: 슬랙스 / 영문명: slacks / 시즌: 겨울 / 가격: $40-90",
+    # What the host's brief step sends for the same request: a US search name and a category.
+    "slacks_host": "품목: 슬랙스 / 영문명: men's dress slacks / 카테고리: men's dress pants / 시즌: 겨울 / 가격: $40-90",
     "outdoor_category": "카테고리: outdoor apparel / 경쟁사: Columbia, Patagonia / 가격: $60-150 / 시즌: 2027 FW",
 }
 SOCIAL = ("tiktok.com", "youtube.com", "instagram.com", "facebook.com", "pinterest.com", "x.com", "twitter.com")
@@ -59,12 +61,14 @@ def _social(domain: str) -> bool:
     return any(domain == s or domain.endswith("." + s) for s in SOCIAL)
 
 
-def _as_page(text: str, locales: list[str]) -> str:
+def _as_page(text: str, locales: list[str], offers: list[str] | None = None, via: str = "urllib") -> str:
     page_cls = getattr(ep, "Page", None)
     if page_cls is None:
         return text
     page = page_cls(text)
     page.locales = tuple(locales)
+    page.offers = tuple(offers or ())
+    page.via = via
     return page
 
 
@@ -93,6 +97,8 @@ def live_io(record: dict):
         record["pages"][url] = {
             "text": str(body),
             "locales": list(getattr(body, "locales", ()) or ()),
+            "offers": list(getattr(body, "offers", ()) or ()),
+            "via": getattr(body, "via", "urllib"),
             "secs": round(time.time() - started, 1),
         }
         return body
@@ -120,7 +126,7 @@ def replay_io(record: dict, misses: list[str]):
             raise OSError("unrecorded")
         if "error" in entry:
             raise OSError(entry["error"])
-        return _as_page(entry["text"], entry.get("locales", []))
+        return _as_page(entry["text"], entry.get("locales", []), entry.get("offers"), entry.get("via", "urllib"))
 
     return searcher, fetcher
 
@@ -145,7 +151,10 @@ def metrics(evidence: list, stats: dict, secs: float, searches: dict | None) -> 
         "evidence": len(evidence),
         "body": sum(1 for e in evidence if e.source == "본문"),
         "kinds": dict(Counter(e.kind for e in evidence)),
-        "competitor_with_price": sum(1 for e in evidence if e.kind == "competitor" and e.prices),
+        "competitor_with_price": sum(
+            1 for e in evidence if e.kind == "competitor" and (e.prices or getattr(e, "page_prices", None))
+        ),
+        "fetch_impersonated_ok": stats.get("fetch_impersonated_ok", 0),
         "market_with_figure": sum(1 for e in evidence if e.kind == "market" and _FIGURE_RE.search(e.excerpt)),
         "social": sum(1 for e in evidence if _social(e.domain)),
         "prices": sorted({p for e in evidence for p in e.prices}),
@@ -153,8 +162,8 @@ def metrics(evidence: list, stats: dict, secs: float, searches: dict | None) -> 
 
 
 def evidence_rows(evidence: list) -> list[dict]:
-    keys = ("id", "kind", "source", "domain", "title", "url", "query", "prices", "excerpt")
-    return [{k: getattr(e, k) for k in keys} for e in evidence]
+    keys = ("id", "kind", "source", "domain", "title", "url", "query", "prices", "page_prices", "excerpt", "detail")
+    return [{k: getattr(e, k, None) for k in keys} for e in evidence]
 
 
 def write_sheet(path: Path, runs: list[dict]) -> None:

@@ -15,6 +15,11 @@ Search goes to search.yahoo.com first (see ``yahoo_search``): in the runtime the
 host uses, Yahoo is the only ddgs text engine that answers, it ignores the
 region parameter, and ddgs reads only one of the two page layouts Yahoo serves,
 so most ddgs calls came back empty. ddgs stays as the fallback.
+
+Each evidence item carries a short ``excerpt`` (shown in the pack) and a longer
+``detail`` (more on-topic passages, and on competitor pages the lines that state
+a price) for the host's synthesis step, which must cite evidence ids and may only
+quote amounts that appear in the cited items.
 """
 
 from __future__ import annotations
@@ -22,6 +27,7 @@ from __future__ import annotations
 import json
 import re
 import time
+import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
@@ -33,6 +39,8 @@ from urllib.parse import unquote_plus, urlsplit
 PACK_SCHEMA = "cqr.market_research.evidence_pack/1"
 MIN_EVIDENCE = 3
 MAX_QUERIES = 10
+# Market queries are planned last but never cut: they get these slots out of MAX_QUERIES.
+MARKET_QUERIES = 2
 RESULTS_PER_QUERY = 6
 MAX_FETCH = 16
 MAX_EVIDENCE = 18
@@ -44,6 +52,9 @@ KIND_QUOTA = {"review": 8, "competitor": 6, "market": 4}
 FETCH_QUOTA = {"review": 7, "competitor": 5, "market": 4}
 MAX_PER_DOMAIN = 3
 MIN_BODY_CHARS = 400
+EXCERPT_CHARS = 720
+DETAIL_CHARS = 2400
+PRICE_LINES = 6
 SEARCH_SPACING = 0.8  # seconds between live queries; back-to-back calls get throttled
 SEARCH_RETRY_DELAY = 2.0
 SEARCH_TIMEOUT = 10
@@ -96,6 +107,21 @@ _USD_RE = re.compile(r"(?:(?<=US)|(?<![A-Za-z]))\$\s?\d|\bUSD\b")
 _HTML_LANG_RE = re.compile(r"<html\b[^>]*?\blang\s*=\s*[\"']?([A-Za-z]{2,3}(?:[-_][A-Za-z0-9]{2,8})*)", re.IGNORECASE)
 _OG_LOCALE_RE = re.compile(r"<meta\b[^>]*?(?:property|name)\s*=\s*[\"']og:locale[\"'][^>]*>", re.IGNORECASE)
 _CONTENT_RE = re.compile(r"\bcontent\s*=\s*[\"']([^\"']+)", re.IGNORECASE)
+# Structured product price: schema.org Offer in JSON-LD, or a product:price meta tag.
+# Product pages often render the visible price with script, so it is not in the text.
+_LD_JSON_RE = re.compile(
+    r"<script\b[^>]*type\s*=\s*[\"']application/ld\+json[\"'][^>]*>(.*?)</script>", re.IGNORECASE | re.DOTALL
+)
+_META_PRICE_RE = re.compile(
+    r"<meta\b[^>]*?(?:property|name|itemprop)\s*=\s*[\"'](?:product:price:amount|og:price:amount)[\"'][^>]*>",
+    re.IGNORECASE,
+)
+_META_CURRENCY_RE = re.compile(
+    r"<meta\b[^>]*?(?:property|name|itemprop)\s*=\s*[\"'](?:product:price:currency|og:price:currency)[\"'][^>]*>",
+    re.IGNORECASE,
+)
+# Status codes a browser-like client sometimes gets past (bot walls, rate limits).
+_RETRY_IMPERSONATED = frozenset({401, 403, 429, 503})
 OFF_MARKET_LABELS = {
     "domain": "국가 도메인",
     "edition": "국가판 서브도메인",
@@ -214,6 +240,10 @@ class Evidence:
     excerpt: str
     prices: list[str]
     query: str
+    # Longer on-topic passages (+ price lines on competitor pages) for the synthesis step.
+    detail: str = ""
+    # USD prices from the page's structured product data or its price lines.
+    page_prices: list[str] = field(default_factory=list)
 
 
 def _clean(text: str) -> str:
@@ -380,32 +410,65 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
             add(f"{name} {term} review complaints quality", "review")
         add(f"{term} brands customer complaints reddit", "review")
         add(f"{term} brands price comparison {price}", "competitor")
+    queries = queries[: MAX_QUERIES - MARKET_QUERIES]
+    # A narrow product name rarely appears in market reports ("slacks US market trends winter"
+    # returned winter-wear reports only), so the second market query asks for size and growth
+    # without the season, at the brief's category level when one is given in English.
+    category = _english(brief.category) if brief.product else ""
     add(f"{term} US market trends {_season_en(brief.season)}", "market")
-    return queries[:MAX_QUERIES]
+    if category and category.lower() != term.lower():
+        add(f"{category} US market size growth", "market")
+    else:
+        add(f"{term} market size growth", "market")
+    return queries
 
 
-def scope_terms(brief: ResearchBrief) -> list[str]:
-    """Terms a kept result must mention. Korean terms are left out: kept pages are English."""
+def scope_terms(brief: ResearchBrief, kind: str = "") -> list[str]:
+    """Terms a kept result must mention. Korean terms are left out: kept pages are English.
+
+    A market result may name the brief's category instead of the product: a market report
+    covers the category (men's dress pants), not one product name in it (slacks).
+    """
     if brief.product:
         terms = [brief.product, brief.product_en]
+        if kind == "market":
+            terms.append(brief.category)
     else:
         terms = [brief.category, brief.product_en, *brief.competitors]
     return list(dict.fromkeys(t for t in terms if t and not _has_korean(t)))
 
 
-def _tokens(term: str) -> list[str]:
+def _token_pairs(term: str) -> list[tuple[str, str]]:
+    """(word as written, stem) per word: pants -> pant. 'ss' / 'us' / 'is' endings are not plurals."""
     out = []
-    for tok in re.findall(r"[a-z0-9]+|[가-힣]+", term.lower()):
-        if tok.isascii() and len(tok) > 3 and tok.endswith("s"):
-            tok = tok[:-1]  # pants ~ pant
-        out.append(tok)
+    for tok in re.findall(r"[a-z0-9]+|[가-힣]+", re.sub(r"['’]s\b", "", term.lower())):  # men's -> men
+        stem = tok
+        if tok.isascii() and len(tok) > 3 and tok.endswith("s") and not tok.endswith(("ss", "us", "is")):
+            stem = tok[:-1]  # pants ~ pant
+        out.append((tok, stem))
     return out
 
 
+def _tokens(term: str) -> list[str]:
+    return [stem for _word, stem in _token_pairs(term)]
+
+
 def _token_hit(tok: str, low_text: str) -> bool:
+    """A modifier word with a regular ending: ski ~ skiing / skier, men ~ men's, work ~ workers.
+
+    Not a bare prefix: "men" must not match "mention", nor "work" "workflow".
+    """
     if tok.isascii():
-        return bool(re.search(r"(?<![a-z0-9])" + re.escape(tok), low_text))
+        return bool(re.search(r"(?<![a-z0-9])" + re.escape(tok) + r"(?:s|es|['’]s|ing|ers?|ly)?(?![a-z0-9])", low_text))
     return tok in low_text
+
+
+def _noun_hit(stem: str, low_text: str, plural_only: str = "") -> bool:
+    """The head noun as a whole word, singular or plural: pant / pants, not panther or bootcut."""
+    if not stem.isascii():
+        return stem in low_text
+    word = re.escape(plural_only) if plural_only else re.escape(stem) + r"(?:s|es)?"
+    return bool(re.search(r"(?<![a-z0-9])" + word + r"(?![a-z0-9])", low_text))
 
 
 def _term_hit(term: str, low_text: str) -> bool:
@@ -413,14 +476,22 @@ def _term_hit(term: str, low_text: str) -> bool:
 
     ``tactical cargo pants`` matches a page about cargo pants or tactical pants; ``ski pants``
     and ``work boots`` still need both words. Requiring every word dropped most cargo-pants pages.
+
+    The singular of a plural noun counts only next to another word of the term: "Peak Cargo
+    Pant" is a cargo pants page, but "Slack" alone is the chat app, not slacks.
     """
-    tokens = _tokens(term)
-    if not tokens:
+    pairs = _token_pairs(term)
+    if not pairs:
         return False
-    *modifiers, head = tokens
-    if not _token_hit(head, low_text):
+    *modifiers, (head_word, head) = pairs
+    if not _noun_hit(head, low_text):
         return False
-    return sum(1 for tok in modifiers if _token_hit(tok, low_text)) * 2 >= len(modifiers)
+    hits = sum(1 for _word, stem in modifiers if _token_hit(stem, low_text))
+    if hits * 2 < len(modifiers):
+        return False
+    if head_word != head and not hits:
+        return _noun_hit(head, low_text, plural_only=head_word)
+    return True
 
 
 def on_topic(terms: list[str], text: str) -> bool:
@@ -472,9 +543,58 @@ def foreign_locale(locales: tuple[str, ...] | list[str]) -> bool:
 
 
 class Page(str):
-    """Page text that also carries the locales the page declares (see ``page_locales``)."""
+    """Page text that also carries what the markup said: declared locales (``page_locales``),
+    structured USD prices (``structured_prices``) and how it was fetched (``via``)."""
 
     locales: tuple[str, ...] = ()
+    offers: tuple[str, ...] = ()
+    via: str = "urllib"
+
+
+def _usd(value: object) -> str:
+    try:
+        amount = float(str(value).replace(",", "").strip())
+    except ValueError:
+        return ""
+    if not 0 < amount < 100_000:
+        return ""
+    return f"${int(amount):,}" if amount == int(amount) else f"${amount:,.2f}"
+
+
+def structured_prices(html: str) -> tuple[str, ...]:
+    """USD prices a page states in schema.org Offer data (JSON-LD) or product:price meta tags."""
+    found: list[str] = []
+
+    def walk(node: object) -> None:
+        if isinstance(node, list):
+            for item in node:
+                walk(item)
+            return
+        if not isinstance(node, dict):
+            return
+        kind = node.get("@type")
+        kinds = " ".join(kind) if isinstance(kind, list) else str(kind or "")
+        if "Offer" in kinds or "priceCurrency" in node:
+            if str(node.get("priceCurrency") or "USD").upper() == "USD":
+                for key in ("price", "lowPrice", "highPrice"):
+                    if isinstance(node.get(key), (int, float, str)) and (amount := _usd(node[key])):
+                        found.append(amount)
+        for value in node.values():
+            if isinstance(value, (dict, list)):
+                walk(value)
+
+    for block in _LD_JSON_RE.findall(html):
+        try:
+            walk(json.loads(block.strip()))
+        except ValueError:
+            continue
+    currency_tag = _META_CURRENCY_RE.search(html[:200_000])
+    currency = _CONTENT_RE.search(currency_tag.group(0)) if currency_tag else None
+    if (currency.group(1) if currency else "USD").strip().upper() == "USD":
+        for tag in _META_PRICE_RE.findall(html[:200_000]):
+            if (content := _CONTENT_RE.search(tag)) and (amount := _usd(content.group(1))):
+                found.append(amount)
+    return tuple(dict.fromkeys(found))[:6]
 
 
 class _TextExtractor(HTMLParser):
@@ -512,8 +632,8 @@ def html_to_text(html: str) -> str:
     return "\n".join(line for line in lines if line)
 
 
-def fetch_text(url: str, timeout: float = 8.0) -> str:
-    """Page body as plain text. Raises on network errors; '' for non-HTML."""
+def _fetch_urllib(url: str, timeout: float) -> str | None:
+    """Raw HTML, or None when the response is not HTML."""
     request = urllib.request.Request(
         url,
         headers={
@@ -524,15 +644,49 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310 - http(s) only
         if "html" not in (response.headers.get("Content-Type") or "").lower():
-            return ""
+            return None
         charset = response.headers.get_content_charset() or "utf-8"
         raw = response.read(800_000)
     try:
-        html = raw.decode(charset, errors="replace")
+        return raw.decode(charset, errors="replace")
     except LookupError:
-        html = raw.decode("utf-8", errors="replace")
+        return raw.decode("utf-8", errors="replace")
+
+
+def _fetch_impersonated(url: str, timeout: float) -> str:
+    """Raw HTML through the browser-impersonating client ddgs ships (primp). Raises when it fails too."""
+    from ddgs.http_client import HttpClient
+
+    response = HttpClient(timeout=max(1, int(timeout))).get(url)
+    if response.status_code >= 400:
+        raise OSError(f"HTTP {response.status_code}")
+    html = (response.text or "")[:800_000]
+    return html if "<html" in html[:5000].lower() or "<body" in html.lower() else ""
+
+
+def fetch_text(url: str, timeout: float = 8.0) -> str:
+    """Page body as plain text. Raises on network errors; '' for non-HTML.
+
+    A 403 / 429 / 503 or a dropped connection is retried once with a browser-like client:
+    some review and retail sites refuse a plain urllib request but serve a browser.
+    """
+    via = "urllib"
+    try:
+        html = _fetch_urllib(url, timeout)
+    except urllib.error.HTTPError as exc:
+        if exc.code not in _RETRY_IMPERSONATED:
+            raise
+        html, via = _fetch_impersonated(url, timeout), "impersonated"
+    except (urllib.error.URLError, ConnectionError) as exc:
+        if isinstance(getattr(exc, "reason", None), TimeoutError):
+            raise  # a slow page is not retried: it would only double the wait
+        html, via = _fetch_impersonated(url, timeout), "impersonated"
+    if html is None:
+        return ""
     page = Page(html_to_text(html))
     page.locales = page_locales(html)
+    page.offers = structured_prices(html)
+    page.via = via
     return page
 
 
@@ -689,6 +843,25 @@ def _unmerge(found: list[dict]) -> list[dict]:
     return rows
 
 
+def _price_lines(text: str, limit: int = PRICE_LINES) -> list[str]:
+    """Lines of a page that state a US-dollar price, with the line before when the price stands alone.
+
+    Product tiles and spec tables put the price on its own short line under the name.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    for index, line in enumerate(lines):
+        if len(line) > 240 or not _PRICE_RE.search(line) or _FOREIGN_CURRENCY_RE.search(line):
+            continue
+        if len(line) < 40 and index:
+            line = f"{lines[index - 1][:160]} {line}"
+        if line not in out:
+            out.append(line.strip())
+        if len(out) >= limit:
+            break
+    return out
+
+
 def _excerpt(text: str, terms: list[str], width: int = 340, windows: int = 2) -> str:
     """Up to ``windows`` on-topic passages, in page order. Blocks without a sentence are skipped."""
     scored: list[tuple[int, int, int, str]] = []
@@ -777,6 +950,7 @@ def collect_evidence(
             bodies[index] = body
 
     terms = scope_terms(brief)
+    market_terms = scope_terms(brief, "market")
     excerpt_terms = [t for t in _parts(brief.focus) if not _has_korean(t)] + terms
     usable: list[int] = []
     excerpts: dict[int, tuple[str, str]] = {}
@@ -785,9 +959,10 @@ def collect_evidence(
         if foreign_locale(getattr(body, "locales", ())):
             _drop_off_market(row["domain"], "locale")  # e.g. a UK or Canadian site on a .com domain
             continue
-        head_ok = on_topic(terms, f"{row['title']} {row['snippet']}")
-        body_ok = len(body) >= MIN_BODY_CHARS and on_topic(terms, body)
-        from_body = _excerpt(body, excerpt_terms) if body_ok else ""
+        row_terms = market_terms if row["kind"] == "market" else terms
+        head_ok = on_topic(row_terms, f"{row['title']} {row['snippet']}")
+        body_ok = len(body) >= MIN_BODY_CHARS and on_topic(row_terms, body)
+        from_body = _excerpt(body, excerpt_terms + row_terms[len(terms):]) if body_ok else ""
         if not from_body and not head_ok:
             off_topic += 1
             continue
@@ -803,6 +978,16 @@ def collect_evidence(
     for number, index in enumerate(chosen, 1):  # numbered in the order the pack lists them
         row = rows[index]
         excerpt, source = excerpts[index]
+        body = bodies[index]
+        detail, page_prices = excerpt, list(getattr(body, "offers", ()) or ())
+        if source == "본문":
+            row_terms = market_terms if row["kind"] == "market" else terms
+            detail = _excerpt(body, excerpt_terms + row_terms[len(terms):], width=600, windows=4)
+            if row["kind"] == "competitor":
+                lines = _price_lines(body)
+                if lines:
+                    detail += "\n[가격 표기 줄] " + " | ".join(lines)
+                page_prices += [p for line in lines for p in _PRICE_RE.findall(line)]
         evidence.append(
             Evidence(
                 id=f"E{number}",
@@ -811,9 +996,11 @@ def collect_evidence(
                 url=row["url"],
                 domain=row["domain"],
                 source=source,
-                excerpt=excerpt[:720],
+                excerpt=excerpt[:EXCERPT_CHARS],
                 prices=list(dict.fromkeys(_clean(p) for p in _PRICE_RE.findall(excerpt)))[:5],
                 query=row["query"],
+                detail=detail[:DETAIL_CHARS],
+                page_prices=list(dict.fromkeys(_clean(p) for p in page_prices))[:8],
             )
         )
     stats = {
@@ -828,6 +1015,9 @@ def collect_evidence(
         "listing_dropped": len(listing),
         "fetch_attempted": len(to_fetch),
         "fetch_ok": sum(1 for b in bodies if len(b) >= MIN_BODY_CHARS),
+        "fetch_impersonated_ok": sum(
+            1 for b in bodies if len(b) >= MIN_BODY_CHARS and getattr(b, "via", "") == "impersonated"
+        ),
         "off_topic_dropped": off_topic,
         "evidence": len(evidence),
         "evidence_body": sum(1 for e in evidence if e.source == "본문"),
@@ -901,8 +1091,10 @@ def render_markdown(
             "- 미국 외 출처로 본 이유: "
             + ", ".join(f"{OFF_MARKET_LABELS.get(k, k)} {n}건" for k, n in sorted(by.items(), key=lambda kv: -kv[1]))
         )
+    fallback = stats.get("fetch_impersonated_ok", 0)
     out += [
-        f"- 본문 수집 {stats['fetch_ok']}/{stats['fetch_attempted']}건",
+        f"- 본문 수집 {stats['fetch_ok']}/{stats['fetch_attempted']}건"
+        + (f" (일반 요청이 막혀 브라우저형 요청으로 읽은 {fallback}건 포함)" if fallback else ""),
         f"- 채택 근거 {stats['evidence']}건 (본문 {stats['evidence_body']}건, "
         f"검색 요약문만 {stats['evidence'] - stats['evidence_body']}건)",
     ]
@@ -936,6 +1128,8 @@ def render_markdown(
             out += [f"### {item.id}. {item.title}", "", f"- 출처: {item.domain} · {item.source} · 검색어 `{item.query}`"]
             if item.prices:
                 out.append(f"- 발췌 안 가격 표기: {', '.join(item.prices)}")
+            if extra := [p for p in item.page_prices if p not in item.prices]:
+                out.append(f"- 페이지의 상품 정보·가격 줄에 적힌 가격: {', '.join(extra)}")
             out += [f"- {item.url}", "", f"> {item.excerpt}", ""]
     for name in brief.competitors:
         low = name.lower()
