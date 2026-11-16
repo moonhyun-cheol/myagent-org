@@ -6,9 +6,10 @@ gaps, personas, sizing and pricing conclusions are deliberately not produced
 here; a section without evidence is reported as missing instead of being filled.
 
 The target market is the United States (CQR is a US brand). Queries are English;
-results on another country's domain or in a non-Latin script are dropped and
-counted. A brief whose product or category has no English name is not searched
-at all.
+results on another country's domain or country edition, in a non-Latin script,
+priced only in another currency, or on a page that declares another country's
+locale are dropped and counted. A brief whose product or category has no
+English name is not searched at all.
 
 Search goes to search.yahoo.com first (see ``yahoo_search``): in the runtime the
 host uses, Yahoo is the only ddgs text engine that answers, it ignores the
@@ -76,10 +77,32 @@ _COUNTRY_CODES = frozenset(
 # than a country: ir. investor relations, my. account, hr. careers, id. login.
 _NOT_A_COUNTRY_EDITION = frozenset({"us", "pr", "gu", "vi", "as", "mp", "um", "ir", "my", "hr", "id"}) | _GENERIC_CC_TLDS
 _EDITION_LABEL_RE = re.compile(r"^(?:[a-z]{2}-)?([a-z]{2})$")  # ca / en-gb / fr-ca
-# Amazon pages about one item: a product (/dp/, /gp/product/, mobile /gp/aw/d/) or its reviews.
-# Anything else there (/s?k=…, /b?node=…, /stores/, best-seller lists) is a product list whose
-# snippet is shop navigation, not a review or a price for one product.
-_AMAZON_ITEM_PATH_RE = re.compile(r"/(?:dp|gp/product|gp/aw/d|product-reviews|gp/customer-reviews)/")
+_US_REGIONS = frozenset({"us", "pr", "gu", "vi", "as", "mp", "um"})
+# Retailer pages about one item: a product page or its reviews. Anything else on the
+# retailer's main host (search /s?k=…, category /b?node=… /browse/ /c/, stores, best-seller
+# lists) is a product list whose snippet is shop navigation, not a review or a price for
+# one product. Matched on the exact host, so corporate.target.com and the like are kept.
+_RETAIL_ITEM_PATHS = {
+    "amazon.com": re.compile(r"/(?:dp|gp/product|gp/aw/d|product-reviews|gp/customer-reviews)/"),
+    "walmart.com": re.compile(r"/(?:ip|reviews/product)/"),
+    "target.com": re.compile(r"/p/"),
+}
+# Money written in another currency. A result priced only this way is not a US listing.
+_FOREIGN_CURRENCY_RE = re.compile(
+    r"[£€₹]\s?\d|\d\s?€|(?<![A-Za-z])(?:CA|AU|NZ|HK|SG|C|A|S)\$\s?\d"
+    r"|\b(?:GBP|EUR|CAD|AUD|NZD|INR)\s?\d|\d\s?(?:GBP|EUR|CAD|AUD|NZD|INR)\b"
+)
+_USD_RE = re.compile(r"(?:(?<=US)|(?<![A-Za-z]))\$\s?\d|\bUSD\b")
+_HTML_LANG_RE = re.compile(r"<html\b[^>]*?\blang\s*=\s*[\"']?([A-Za-z]{2,3}(?:[-_][A-Za-z0-9]{2,8})*)", re.IGNORECASE)
+_OG_LOCALE_RE = re.compile(r"<meta\b[^>]*?(?:property|name)\s*=\s*[\"']og:locale[\"'][^>]*>", re.IGNORECASE)
+_CONTENT_RE = re.compile(r"\bcontent\s*=\s*[\"']([^\"']+)", re.IGNORECASE)
+OFF_MARKET_LABELS = {
+    "domain": "국가 도메인",
+    "edition": "국가판 서브도메인",
+    "script": "비라틴 문자",
+    "currency": "외화로만 적힌 가격",
+    "locale": "페이지가 선언한 언어·지역",
+}
 _KOREAN_RE = re.compile(r"[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7A3]")
 # Season wording for an English query.
 _SEASON_EN = {
@@ -136,7 +159,13 @@ _FIELD_RE = re.compile(
     re.IGNORECASE,
 )
 _PRICE_BAND_RE = re.compile(r"\$\s?\d{1,4}(?:\s?[-–~]\s?\$?\d{1,4})?")
-_PRICE_RE = re.compile(r"\$\s?\d{2,4}(?:\.\d{2})?")
+# A US-dollar price: $89, $9.99, $1,299. Not CA$/A$ amounts, and not a figure with a
+# magnitude ($17.9 billion, $2.5M, $100k), which is a market size rather than a price.
+_PRICE_RE = re.compile(
+    r"(?:(?<=US)|(?<![A-Za-z]))\$\s?(?:\d{1,3}(?:,\d{3})+|\d{1,5})(?:\.\d{1,2})?"
+    r"(?!\d|[.,]\d)(?!\s?(?:[mb]illion|trillion|bn|mn|[mbk])\b)",
+    re.IGNORECASE,
+)
 _SEASON_CODE_RE = re.compile(r"(?<![A-Za-z0-9])(?:(20\d\d)\s*)?(FW|F/W|SS|S/S)(?![A-Za-z])", re.IGNORECASE)
 # 「봄버재킷」「살펴봄」 must not read as spring: the word has to stand alone.
 _SEASON_KO_RE = re.compile(r"(?<![가-힣])(봄|여름|가을|겨울)(?:용|철|에|시즌)?(?![가-힣])")
@@ -356,9 +385,12 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
 
 
 def scope_terms(brief: ResearchBrief) -> list[str]:
+    """Terms a kept result must mention. Korean terms are left out: kept pages are English."""
     if brief.product:
-        return [t for t in (brief.product, brief.product_en) if t]
-    return [t for t in (brief.category, brief.product_en, *brief.competitors) if t]
+        terms = [brief.product, brief.product_en]
+    else:
+        terms = [brief.category, brief.product_en, *brief.competitors]
+    return list(dict.fromkeys(t for t in terms if t and not _has_korean(t)))
 
 
 def _tokens(term: str) -> list[str]:
@@ -370,17 +402,25 @@ def _tokens(term: str) -> list[str]:
     return out
 
 
+def _token_hit(tok: str, low_text: str) -> bool:
+    if tok.isascii():
+        return bool(re.search(r"(?<![a-z0-9])" + re.escape(tok), low_text))
+    return tok in low_text
+
+
 def _term_hit(term: str, low_text: str) -> bool:
+    """The term's last word (the noun: pants, boots, apparel) and at least half of the words before it.
+
+    ``tactical cargo pants`` matches a page about cargo pants or tactical pants; ``ski pants``
+    and ``work boots`` still need both words. Requiring every word dropped most cargo-pants pages.
+    """
     tokens = _tokens(term)
     if not tokens:
         return False
-    for tok in tokens:
-        if tok.isascii():
-            if not re.search(r"(?<![a-z0-9])" + re.escape(tok), low_text):
-                return False
-        elif tok not in low_text:
-            return False
-    return True
+    *modifiers, head = tokens
+    if not _token_hit(head, low_text):
+        return False
+    return sum(1 for tok in modifiers if _token_hit(tok, low_text)) * 2 >= len(modifiers)
 
 
 def on_topic(terms: list[str], text: str) -> bool:
@@ -388,17 +428,53 @@ def on_topic(terms: list[str], text: str) -> bool:
     return any(_term_hit(term, low) for term in terms)
 
 
-def _outside_us(domain: str, text: str) -> bool:
-    """Another country's domain (.kr, .co.uk, ca.pinterest.com, …) or a result not written in Latin script."""
+def _off_market_reason(domain: str, text: str) -> str:
+    """Why a search result is not a US source ('' when it may be one); keys of OFF_MARKET_LABELS."""
     labels = domain.split(".")
     tld = labels[-1]
     if len(tld) == 2 and tld.isalpha() and tld not in _GENERIC_CC_TLDS:
-        return True
+        return "domain"
     edition = _EDITION_LABEL_RE.match(labels[0]) if len(labels) >= 3 else None
     if edition and edition.group(1) in _COUNTRY_CODES and edition.group(1) not in _NOT_A_COUNTRY_EDITION:
-        return True
+        return "edition"
     letters = [ch for ch in text if ch.isalpha()]
-    return sum(1 for ch in letters if ord(ch) > 0x24F) * 10 > len(letters) * 3
+    if sum(1 for ch in letters if ord(ch) > 0x24F) * 10 > len(letters) * 3:
+        return "script"
+    if _FOREIGN_CURRENCY_RE.search(text) and not _USD_RE.search(text):
+        return "currency"
+    return ""
+
+
+def page_locales(html: str) -> tuple[str, ...]:
+    """Language tags a page declares in ``<html lang>`` and ``og:locale`` (lower case, ``-`` separated)."""
+    head = html[:60_000]
+    found: list[str] = []
+    if match := _HTML_LANG_RE.search(head):
+        found.append(match.group(1))
+    for tag in _OG_LOCALE_RE.findall(head):
+        if content := _CONTENT_RE.search(tag):
+            found.append(content.group(1))
+    return tuple(dict.fromkeys(tag.strip().lower().replace("_", "-") for tag in found if tag.strip()))
+
+
+def foreign_locale(locales: tuple[str, ...] | list[str]) -> bool:
+    """A declared locale of another country (en-gb, en_CA) or another language without the US (de, fr-fr)."""
+    for tag in locales:
+        parts = tag.strip().lower().replace("_", "-").split("-")
+        lang = parts[0]
+        region = next((p for p in parts[1:] if len(p) == 2 and p.isalpha()), "")
+        if region:
+            if region in _COUNTRY_CODES and region not in _US_REGIONS:
+                return True
+        elif lang != "en" and 2 <= len(lang) <= 3 and lang.isalpha():
+            return True
+    return False
+
+
+class Page(str):
+    """Page text that also carries the locales the page declares (see ``page_locales``)."""
+
+    locales: tuple[str, ...] = ()
 
 
 class _TextExtractor(HTMLParser):
@@ -452,9 +528,12 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
         charset = response.headers.get_content_charset() or "utf-8"
         raw = response.read(800_000)
     try:
-        return html_to_text(raw.decode(charset, errors="replace"))
+        html = raw.decode(charset, errors="replace")
     except LookupError:
-        return html_to_text(raw.decode("utf-8", errors="replace"))
+        html = raw.decode("utf-8", errors="replace")
+    page = Page(html_to_text(html))
+    page.locales = page_locales(html)
+    return page
 
 
 _last_search = 0.0
@@ -465,8 +544,9 @@ def _host_in(domain: str, hosts: tuple[str, ...]) -> bool:
 
 
 def _listing_page(domain: str, path: str) -> bool:
-    """An Amazon search or category page (see _AMAZON_ITEM_PATH_RE)."""
-    return _host_in(domain, ("amazon.com",)) and not _AMAZON_ITEM_PATH_RE.search(path + "/")
+    """A retailer's search, category or store page (see _RETAIL_ITEM_PATHS)."""
+    item_path = _RETAIL_ITEM_PATHS.get(domain)
+    return bool(item_path) and not item_path.search(path + "/")
 
 
 def _allocate(
@@ -624,7 +704,7 @@ def _excerpt(text: str, terms: list[str], width: int = 340, windows: int = 2) ->
     for _hits, _sentences, _order, block in sorted(sorted(scored, reverse=True)[:windows], key=lambda s: -s[2]):
         if len(block) > width:
             low = block.lower()
-            found = [p for p in (low.find(tok) for term in terms for tok in _tokens(term)[:1]) if p >= 0]
+            found = [p for p in (low.find(tok) for term in terms for tok in _tokens(term)[-1:]) if p >= 0]
             begin = max(0, min(found) - 110) if found else 0
             if begin:  # start on a word boundary, not mid-word
                 begin = block.find(" ", begin) + 1
@@ -644,15 +724,24 @@ def collect_evidence(
     rows: list[dict] = []
     seen: set[str] = set()
     search_errors: list[str] = []
+    empty_queries: list[str] = []
     off_market: list[str] = []
+    off_market_by: dict[str, int] = {}
     listing: list[str] = []
     search_via: dict[str, int] = {}  # queries answered per search path
+
+    def _drop_off_market(domain: str, reason: str) -> None:
+        off_market.append(domain)
+        off_market_by[reason] = off_market_by.get(reason, 0) + 1
+
     for query, kind in queries:
         try:
             found = _search(searcher, query)
         except Exception as exc:  # noqa: BLE001 - one failed query must not end the run
             search_errors.append(f"{query} ({type(exc).__name__}: {_clean(str(exc))[:60]})")
             continue
+        if not found:
+            empty_queries.append(query)
         if found and found[0].get("via"):
             search_via[found[0]["via"]] = search_via.get(found[0]["via"], 0) + 1
         for rank, row in enumerate(_unmerge(found)):
@@ -662,13 +751,14 @@ def collect_evidence(
             if parts.scheme not in {"http", "https"} or key in seen or _host_in(domain, _NON_SOURCE_HOSTS):
                 continue
             seen.add(key)
-            if _outside_us(domain, f"{row['title']} {row['snippet']}"):
-                off_market.append(domain)
+            if reason := _off_market_reason(domain, f"{row['title']} {row['snippet']}"):
+                _drop_off_market(domain, reason)
                 continue
             if _listing_page(domain, parts.path):
                 listing.append(row["url"])
                 continue
             rows.append({**row, "domain": domain, "kind": kind, "query": query, "rank": rank})
+    results = len(rows) + len(off_market) + len(listing)
     # Rank order across queries: every query's first hit, then every second hit, …
     rows.sort(key=lambda r: r["rank"])
 
@@ -687,11 +777,14 @@ def collect_evidence(
             bodies[index] = body
 
     terms = scope_terms(brief)
-    excerpt_terms = [t for t in re.split(r"[,/·]", brief.focus) if t.strip()] + terms
+    excerpt_terms = [t for t in _parts(brief.focus) if not _has_korean(t)] + terms
     usable: list[int] = []
     excerpts: dict[int, tuple[str, str]] = {}
     off_topic = 0
     for index, (row, body) in enumerate(zip(rows, bodies)):
+        if foreign_locale(getattr(body, "locales", ())):
+            _drop_off_market(row["domain"], "locale")  # e.g. a UK or Canadian site on a .com domain
+            continue
         head_ok = on_topic(terms, f"{row['title']} {row['snippet']}")
         body_ok = len(body) >= MIN_BODY_CHARS and on_topic(terms, body)
         from_body = _excerpt(body, excerpt_terms) if body_ok else ""
@@ -726,10 +819,12 @@ def collect_evidence(
     stats = {
         "queries": len(queries),
         "search_errors": search_errors,
+        "empty_queries": empty_queries,
         "search_via": search_via,
-        "results": len(rows) + len(off_market) + len(listing),
+        "results": results,
         "off_market_dropped": len(off_market),
         "off_market_domains": sorted(set(off_market)),
+        "off_market_by": off_market_by,
         "listing_dropped": len(listing),
         "fetch_attempted": len(to_fetch),
         "fetch_ok": sum(1 for b in bodies if len(b) >= MIN_BODY_CHARS),
@@ -798,8 +893,15 @@ def render_markdown(
         "",
         f"- 검색 {stats['queries']}회, 결과 {stats['results']}건, "
         f"미국 외 출처라 제외 {stats['off_market_dropped']}건{dropped_from}, "
-        f"Amazon 상품 목록 페이지라 제외 {stats.get('listing_dropped', 0)}건, "
+        f"소매처(Amazon·Walmart·Target) 상품 목록 페이지라 제외 {stats.get('listing_dropped', 0)}건, "
         f"주제와 무관해 제외 {stats['off_topic_dropped']}건",
+    ]
+    if by := stats.get("off_market_by"):
+        out.append(
+            "- 미국 외 출처로 본 이유: "
+            + ", ".join(f"{OFF_MARKET_LABELS.get(k, k)} {n}건" for k, n in sorted(by.items(), key=lambda kv: -kv[1]))
+        )
+    out += [
         f"- 본문 수집 {stats['fetch_ok']}/{stats['fetch_attempted']}건",
         f"- 채택 근거 {stats['evidence']}건 (본문 {stats['evidence_body']}건, "
         f"검색 요약문만 {stats['evidence'] - stats['evidence_body']}건)",
@@ -817,6 +919,8 @@ def render_markdown(
         out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
     if stats["search_errors"]:
         out.append(f"- 실패한 검색 {len(stats['search_errors'])}회: " + "; ".join(stats["search_errors"]))
+    if empty := stats.get("empty_queries"):
+        out.append(f"- 결과가 없던 검색 {len(empty)}회: " + "; ".join(f"`{q}`" for q in empty))
     out.append("")
 
     missing: list[str] = []

@@ -32,13 +32,15 @@ The pack contains: 브리프 해석표, 수집 요약, 리뷰·불만 근거, �
 
 Evidence is capped at 18 items with a share per kind (리뷰·불만 8, 경쟁사·가격 6, 시장·트렌드 4); a kind that cannot fill its share hands the rest to the others. `수집 요약` shows the count and share per kind, and a kind under its share is listed under 근거가 없는 항목. The kind says which query found the page, not that the excerpt contains a complaint, a price or a market figure — read the excerpt before using it as such.
 
+A result is on topic when it names the product noun (the last word of `영문명`: pants, boots) and at least half of the words before it (`tactical cargo pants` → cargo pants or tactical pants). `발췌 안 가격 표기` lists US-dollar amounts only; figures with a magnitude (`$17.9 billion`, `$2.5M`) are market sizes, not prices, and are not listed there. Queries that returned nothing are listed in `수집 요약`.
+
 The pack does **not** contain market gaps, personas, segments, TAM/SAM/SOM, pricing strategy, concept candidates or pain-frequency percentages. Do not present those as pipeline findings.
 
 ### US market only
 
 - Queries are English and go to search.yahoo.com. No Korean queries are built. The search engine itself is not told a region, so the US scope comes from the English queries and the filter below, not from a regional search.
-- Results on another country's domain (`.kr`, `.co.uk`, `.ca`, …), on a country edition of a site (`ca.pinterest.com`, `en-gb.…`) or written in a non-Latin script are dropped; the pack reports how many. A foreign site on a `.com` domain is not detected.
-- Amazon search and category pages (`/s?k=…`, `/b?node=…`) are dropped as product lists; Amazon product (`/dp/`) and review (`/product-reviews/`) pages are kept, with their search snippet only.
+- Results on another country's domain (`.kr`, `.co.uk`, `.ca`, …), on a country edition of a site (`ca.pinterest.com`, `en-gb.…`), written in a non-Latin script, priced only in another currency (£, €, CA$, …) or on a page that declares another country's locale (`<html lang="en-GB">`, `og:locale`) are dropped; the pack reports how many and why. A foreign site on a `.com` domain that declares no locale and shows no foreign price is still not detected.
+- Search, category and store pages of Amazon, Walmart and Target are dropped as product lists; their product (`/dp/`, `/ip/`, `/p/`) and review pages are kept. Amazon pages keep their search snippet only.
 - A Korean product or category needs an English name. Fill `영문명` with the name used in the US when passing the brief (스키바지 → `영문명: ski pants`); ask if unsure. Without one (and no rule-dictionary match) nothing is searched and the host returns `needs_brief` with `reason: no_english_name`.
 - `경쟁사`, `초점`, `채널`, `가격` must be written in English. Korean values are left out of the queries and listed under the brief table. Seasons are translated (`겨울` → winter, `2027 FW` → 2027 fall winter).
 - Other markets (Korea, …) are not supported by the pipeline. Say so if asked.

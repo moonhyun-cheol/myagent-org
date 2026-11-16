@@ -177,7 +177,99 @@ def test_amazon_product_lists_are_dropped_but_products_and_reviews_are_kept(tmp_
         "https://www.amazon.com/Ski-Pants/product-reviews/B000GC7GVS",
         "https://gear.example/ski-pants",
     }
-    assert "Amazon 상품 목록 페이지라 제외 2건" in (tmp_path / "research_report.md").read_text(encoding="utf-8")
+    assert "상품 목록 페이지라 제외 2건" in (tmp_path / "research_report.md").read_text(encoding="utf-8")
+
+
+def test_walmart_and_target_product_lists_are_dropped_too():
+    def searcher(query, max_results):
+        return [
+            {"title": "Ski pants - Walmart.com", "url": "https://www.walmart.com/search?q=ski+pants", "snippet": "ski pants"},
+            {"title": "Ski pants - Walmart", "url": "https://www.walmart.com/browse/clothing/ski-pants/5438", "snippet": "ski pants"},
+            {"title": "Arctix ski pants", "url": "https://www.walmart.com/ip/Arctix-Ski-Pants/123", "snippet": "ski pants $39"},
+            {"title": "Ski pants : Target", "url": "https://www.target.com/s?searchTerm=ski+pants", "snippet": "ski pants"},
+            {"title": "All in Motion ski pants", "url": "https://www.target.com/p/ski-pants/-/A-1", "snippet": "ski pants $45"},
+            # Not the shop: a press page on a subdomain is a possible market source.
+            {"title": "Target ski pants sales", "url": "https://corporate.target.com/news/ski", "snippet": "ski pants sales"},
+        ]
+
+    evidence, stats = collect_evidence(parse_brief("품목: 스키바지 / 영문명: ski pants"), searcher, lambda url: "")
+    assert stats["listing_dropped"] == 3
+    assert {e.url for e in evidence} == {
+        "https://www.walmart.com/ip/Arctix-Ski-Pants/123",
+        "https://www.target.com/p/ski-pants/-/A-1",
+        "https://corporate.target.com/news/ski",
+    }
+
+
+def test_topic_needs_the_noun_and_half_of_the_words_before_it():
+    from cqr_product_pipeline.agents.evidence_pack import on_topic, scope_terms
+
+    brief = parse_brief("품목: 카고바지 / 영문명: tactical cargo pants")
+    # The Korean name never appears on an English page, so it is not a topic term.
+    assert scope_terms(brief) == ["tactical cargo pants"]
+    terms = scope_terms(brief)
+    for text in ("Best cargo pants for work", "These tactical pants ripped", "tactical cargo pant review"):
+        assert on_topic(terms, text), text
+    for text in ("cargo shorts review", "work pants that last", "tactical cargo vest"):
+        assert not on_topic(terms, text), text
+    # Two-word names still need both words.
+    assert on_topic(["ski pants"], "pants for skiing")
+    assert not on_topic(["ski pants"], "ski jacket review")
+    assert not on_topic(["work boots"], "hiking boots review")
+
+
+def test_prices_are_us_dollar_amounts_not_market_sizes():
+    from cqr_product_pipeline.agents.evidence_pack import _PRICE_RE
+
+    text = (
+        "The market will reach $17.9 billion by 2030 ($2.5M last year, $100k grants). "
+        "Boots run $1,299 or $89.99, CA$129 in Canada, US$45 imported, and the cheapest is $17."
+    )
+    assert _PRICE_RE.findall(text) == ["$1,299", "$89.99", "$45", "$17"]
+
+
+def test_foreign_prices_and_declared_locales_mark_non_us_pages():
+    from cqr_product_pipeline.agents.evidence_pack import Page, foreign_locale, page_locales
+
+    html = (
+        '<html lang="en-GB"><head><meta property="og:locale" content="en_GB"/>'
+        '<meta property="og:locale:alternate" content="fr_FR"/></head><body>x</body></html>'
+    )
+    assert page_locales(html) == ("en-gb",)
+    assert [foreign_locale(t) for t in (("en-gb",), ("en-ca",), ("de",), ("en",), ("en-us",), ("es-us",), ())] == [
+        True, True, True, False, False, False, False,
+    ]
+
+    def page(locale):
+        body = Page(SKI_BODY)
+        body.locales = (locale,)
+        return body
+
+    def searcher(query, max_results):
+        return [
+            {"title": "Ski pants review", "url": "https://uksnow.example.com/r", "snippet": "ski pants from £120"},
+            {"title": "Ski pants deals", "url": "https://deals.example/a", "snippet": "ski pants C$129 or $99 in the US"},
+            {"title": "Ski pants tested", "url": "https://gear-uk.example/t", "snippet": "ski pants tested"},
+            {"title": "Ski pants tested", "url": "https://gear-us.example/t", "snippet": "ski pants tested"},
+        ]
+
+    bodies = {"https://gear-uk.example/t": page("en-gb"), "https://gear-us.example/t": page("en-us")}
+    brief = parse_brief("품목: 스키바지 / 영문명: ski pants")
+    evidence, stats = collect_evidence(brief, searcher, lambda url: bodies.get(url, ""))
+    assert {e.url for e in evidence} == {"https://deals.example/a", "https://gear-us.example/t"}
+    assert stats["off_market_by"] == {"currency": 1, "locale": 1}
+    assert stats["off_market_domains"] == ["gear-uk.example", "uksnow.example.com"]
+    md = render_markdown(brief, evidence, stats, build_queries(brief), "s")
+    assert "미국 외 출처로 본 이유: 외화로만 적힌 가격 1건, 페이지가 선언한 언어·지역 1건" in md
+
+
+def test_queries_without_results_are_counted():
+    brief = parse_brief("품목: 스키바지 / 영문명: ski pants")
+    quiet = build_queries(brief)[0][0]
+    evidence, stats = collect_evidence(brief, lambda q, n: [] if q == quiet else _searcher(q, n), _fetcher)
+    assert stats["empty_queries"] == [quiet]
+    md = render_markdown(brief, evidence, stats, build_queries(brief), "s")
+    assert f"결과가 없던 검색 1회: `{quiet}`" in md
 
 
 SHARE_BRIEF = "품목: 스키바지 / 영문명: ski pants / 경쟁사: Burton, Patagonia / 가격: $90-280"
