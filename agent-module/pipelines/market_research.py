@@ -74,6 +74,8 @@ FIELD_FLAGS = (
     "focus",
     "study",
     "period",
+    "gender",
+    "style",
 )
 FIELD_EXAMPLE = (
     "/심층리서치 품목: 스키바지 / 영문명: ski pants / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
@@ -248,9 +250,9 @@ def _phase_closed_result(phase: str) -> dict:
 def _research_brief(brief: str, fields: dict[str, str]):
     """Parsed brief plus the reason it cannot be researched (None when it can)."""
     _bootstrap()
-    from cqr_product_pipeline.agents.evidence_pack import brief_gate, parse_brief
+    from cqr_product_pipeline.agents.evidence_pack import TARGET_DEFAULTS, brief_gate, parse_brief
 
-    parsed = parse_brief(brief, fields)
+    parsed = parse_brief(brief, fields, defaults=TARGET_DEFAULTS)
     return parsed, brief_gate(parsed)
 
 
@@ -375,6 +377,10 @@ def cmd_research(
             "price_band": parsed.price_band,
             "competitors": parsed.competitors,
             "focus": parsed.focus,
+            "study": parsed.study,
+            "period": parsed.period,
+            "gender": parsed.gender,
+            "style": parsed.style,
         },
         "exit_code": code,
     }, md)

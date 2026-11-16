@@ -23,7 +23,17 @@ quote amounts that appear in the cited items.
 
 A market/trend study (``study: trend``, or any brief with a ``period``) searches each
 year of the period, gives most slots to market evidence, and records the date a page
-was published so the synthesis can tell what was said about which year.
+was published and last updated so the synthesis can tell what was said about which year.
+A page whose content date is older than the period (and that names no year of it) is
+marked ``before_period`` and only used when nothing newer fills the slot.
+
+The brief's target customer (``gender``, ``style``) shapes the queries: men's bomber
+jacket, best men's military bomber jacket. A result whose title is for the other gender
+is dropped. The CLI fills a brief without one with CQR's customer (``TARGET_DEFAULTS``).
+
+On a market page the lines that state a market figure (USD 41.07 Billion, CAGR) are kept
+even when they do not repeat the product name: a US outerwear report gave a 127-character
+excerpt without them.
 """
 
 from __future__ import annotations
@@ -67,6 +77,46 @@ MIN_BODY_CHARS = 400
 EXCERPT_CHARS = 720
 DETAIL_CHARS = 2400
 PRICE_LINES = 6
+FIGURE_LINES = 4
+PRICE_LINE_MARK = "[가격 표기 줄]"
+FIGURE_LINE_MARK = "[시장 수치 줄]"
+# CQR's customer, used by the CLI when a brief names no target: menswear in military and
+# workwear styles. ``성별: 전체`` / ``스타일: 전체`` turns either off for one study.
+TARGET_DEFAULTS = {"gender": "men", "style": "military, workwear"}
+FROM_DEFAULT = "CQR 기본 타깃"
+GENDER_LABELS = {"men": "남성", "women": "여성", "unisex": "공용", "all": "전체(성별 무관)"}
+_GENDER_VALUES = {
+    **dict.fromkeys(("men", "men's", "mens", "male", "남성", "남자", "남성용"), "men"),
+    **dict.fromkeys(("women", "women's", "womens", "female", "여성", "여자", "여성용"), "women"),
+    **dict.fromkeys(("unisex", "공용", "남녀공용", "유니섹스"), "unisex"),
+    **dict.fromkeys(("all", "any", "none", "전체", "무관", "상관없음", "없음"), "all"),
+}
+_ALL_VALUES = frozenset({"all", "any", "none", "전체", "무관", "상관없음", "없음"})
+# Style values as English search words (밀리터리 -> military).
+_STYLE_EN = {
+    "밀리터리": "military",
+    "워크웨어": "workwear",
+    "워킹": "workwear",
+    "작업복": "workwear",
+    "택티컬": "tactical",
+    "아웃도어": "outdoor",
+    "헤리티지": "heritage",
+}
+# Gender named in the sentence or in the product name (여성 봄버재킷, men's dress slacks).
+_GENDER_TEXT = (
+    (re.compile(r"남녀\s?공용|유니섹스|\bunisex\b", re.IGNORECASE), "unisex"),
+    (re.compile(r"(?<![가-힣])(?:여성|여자)|\b(?:women|womens|ladies)\b", re.IGNORECASE), "women"),
+    (re.compile(r"(?<![가-힣])(?:남성|남자)|\b(?:men['’]s|mens)\b", re.IGNORECASE), "men"),
+)
+# A result title written for one gender. "men" inside "women" is not a word boundary.
+_TITLE_GENDER = {
+    "women": re.compile(r"\b(?:women|womens|woman|ladies|female)(?:['’]s)?\b", re.IGNORECASE),
+    "men": re.compile(r"\b(?:men|mens|male|unisex)(?:['’]s)?\b", re.IGNORECASE),
+}
+# A market figure: USD 41.07 Billion, $17.9 billion, US$2.5 bn, CAGR.
+_MARKET_FIGURE_RE = re.compile(
+    r"(?:US\$|\bUSD\s?|\$)\s?\d[\d.,]*\s?(?:billion|million|trillion|bn|mn)\b|\bCAGR\b", re.IGNORECASE
+)
 SEARCH_SPACING = 0.8  # seconds between live queries; back-to-back calls get throttled
 SEARCH_RETRY_DELAY = 2.0
 SEARCH_TIMEOUT = 10
@@ -169,6 +219,8 @@ FIELD_KEYS: dict[str, tuple[str, ...]] = {
     "focus": ("초점", "포커스", "focus"),
     "study": ("조사유형", "조사 유형", "study"),
     "period": ("기간", "period"),
+    "gender": ("성별", "gender"),
+    "style": ("스타일", "세그먼트", "style", "segment"),
 }
 FIELD_LABELS: tuple[tuple[str, str], ...] = (
     ("product", "품목"),
@@ -181,6 +233,8 @@ FIELD_LABELS: tuple[tuple[str, str], ...] = (
     ("focus", "초점"),
     ("study", "조사 유형"),
     ("period", "기간"),
+    ("gender", "성별 타깃"),
+    ("style", "스타일 타깃"),
 )
 STUDY_LABELS = {STUDY_TREND: "시장·트렌드 추이", STUDY_PRODUCT: "제품 조사(불만·경쟁·시장)"}
 # Accepted ``조사유형:`` values (lower case).
@@ -237,6 +291,14 @@ _PUBLISHED_META_RE = re.compile(
     re.IGNORECASE,
 )
 _LD_PUBLISHED_RE = re.compile(r"\"datePublished\"\s*:\s*\"([^\"]{8,40})\"")
+# Last-modified date. Updated guides keep their first publication date (Esquire's "best
+# bomber jackets for 2026" says 2016-08-25 and dateModified 2026-01-20).
+_MODIFIED_META_RE = re.compile(
+    r"<meta\b[^>]*?(?:property|name|itemprop)\s*=\s*[\"'](?:article:modified_time|og:updated_time|"
+    r"dateModified|last-modified|modified[-_]?date|parsely-updated)[\"'][^>]*>",
+    re.IGNORECASE,
+)
+_LD_MODIFIED_RE = re.compile(r"\"dateModified\"\s*:\s*\"([^\"]{8,40})\"")
 _ISO_DATE_RE = re.compile(r"(?<!\d)(20\d\d)-(\d\d)-(\d\d)")
 _MONTHS = {m: n for n, m in enumerate("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(), 1)}
 _SNIPPET_DATE_RE = re.compile(r"^\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2}),\s+(20\d\d)\b")
@@ -259,6 +321,8 @@ class ResearchBrief:
     focus: str = ""
     study: str = ""  # STUDY_TREND | STUDY_PRODUCT | "" (product study)
     period: str = ""  # "2024-2026" / "2025"
+    gender: str = ""  # men | women | unisex | all | "" (not stated)
+    style: str = ""  # "military, workwear" (English search words)
     origin: dict[str, str] = field(default_factory=dict)
 
     @property
@@ -291,6 +355,15 @@ class Evidence:
     page_prices: list[str] = field(default_factory=list)
     # Publication date the page declares, or the date in front of the search snippet (YYYY-MM-DD).
     published: str = ""
+    # Last-modified date the page declares, when it is after ``published``.
+    updated: str = ""
+    # Trend study: the content date is before the period and the text names no year of it.
+    before_period: bool = False
+
+
+def content_date(item: Evidence) -> str:
+    """Date of the version that was read: the update date, else the publication date."""
+    return item.updated or item.published
 
 
 def _clean(text: str) -> str:
@@ -327,7 +400,24 @@ def _unsearchable(brief: ResearchBrief) -> list[str]:
             left_out.append(f"{label} `{value}`")
     if any(_has_korean(w) for w in _season_words(brief.season)):
         left_out.append(f"시즌 `{brief.season}`")
+    left_out += [f"스타일 `{p}`" for p in _parts(brief.style) if _has_korean(p)]
     return left_out
+
+
+def _gender_value(value: str) -> str:
+    return _GENDER_VALUES.get(_clean(value).lower(), "")
+
+
+def _style_value(value: str) -> str:
+    """English style words: 밀리터리, 워크웨어 -> military, workwear. '' for 전체 / all."""
+    if _clean(value).lower() in _ALL_VALUES:
+        return ""
+    return ", ".join(dict.fromkeys(_STYLE_EN.get(p, _STYLE_EN.get(p.lower(), p)) for p in _parts(value)))
+
+
+def _gender_from_text(text: str) -> str:
+    found = {gender for pattern, gender in _GENDER_TEXT if pattern.search(text)}
+    return "" if not found else found.pop() if len(found) == 1 else "all"
 
 
 def _season_from_text(text: str) -> str:
@@ -390,6 +480,17 @@ def page_published(html: str) -> str:
     return ""
 
 
+def page_updated(html: str) -> str:
+    """Latest last-modified date a page declares (article:modified_time, JSON-LD dateModified) as
+    YYYY-MM-DD; '' when there is none after the publication date."""
+    head = html[:300_000]
+    values = [c.group(1) for tag in _MODIFIED_META_RE.findall(head) if (c := _CONTENT_RE.search(tag))]
+    values += _LD_MODIFIED_RE.findall(head)
+    dates = sorted("-".join(m.groups()) for value in values if (m := _ISO_DATE_RE.search(value)))
+    latest = dates[-1] if dates else ""
+    return latest if latest > page_published(html) else ""
+
+
 def snippet_published(snippet: str) -> str:
     """The date a search engine prints in front of a snippet ("Mar 5, 2025 · …") as YYYY-MM-DD."""
     match = _SNIPPET_DATE_RE.match(snippet or "")
@@ -417,8 +518,13 @@ def _rule_product(text: str) -> tuple[str, str]:
     return product, english
 
 
-def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBrief:
-    """Explicit fields are used verbatim; only what is missing is read from the sentence."""
+def parse_brief(
+    raw: str, overrides: dict[str, str] | None = None, defaults: dict[str, str] | None = None
+) -> ResearchBrief:
+    """Explicit fields are used verbatim; only what is missing is read from the sentence.
+
+    ``defaults`` fills a target the brief does not state (the CLI passes ``TARGET_DEFAULTS``).
+    """
     raw = (raw or "").strip()
     values: dict[str, str] = {}
     origin: dict[str, str] = {}
@@ -467,6 +573,22 @@ def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBr
             if english:
                 values["product_en"], origin["product_en"] = english, "규칙 사전"
 
+    # Target customer: the field, else a gender the sentence or product name states, else the default.
+    defaults = defaults or {}
+    gender = _gender_value(values.get("gender", ""))
+    if not gender:
+        origin.pop("gender", None)
+        # Not the category: it names the market-size segment (men's outerwear), not the customer.
+        named = " ".join((free, values.get("product", ""), values.get("product_en", "")))
+        if gender := _gender_from_text(named):
+            origin["gender"] = FROM_TEXT
+        elif gender := _gender_value(defaults.get("gender", "")):
+            origin["gender"] = FROM_DEFAULT
+    if "style" in values:
+        style = _style_value(values["style"])  # '' for 전체: the field still says so
+    elif style := _style_value(defaults.get("style", "")):
+        origin["style"] = FROM_DEFAULT
+
     competitors = [
         c
         for c in (_clean(x) for x in re.split(r",|·|/|;|\band\b|및", values.get("competitors", "")))
@@ -484,6 +606,8 @@ def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBr
         focus=values.get("focus", ""),
         study=values.get("study", ""),
         period=values.get("period", ""),
+        gender=gender,
+        style=style,
         origin=origin,
     )
 
@@ -497,12 +621,38 @@ def brief_gate(brief: ResearchBrief) -> str | None:
     return None
 
 
+def _for_target(brief: ResearchBrief, term: str, style: str = "") -> str:
+    """The term for the brief's customer: men's bomber jacket, men's military bomber jacket."""
+    words = set(_tokens(term))
+    if style and not set(_tokens(style)) <= words:
+        term = f"{style} {term}"
+    prefix = {"men": "men's", "women": "women's"}.get(brief.gender, "")
+    if prefix and not words & {"men", "women", "unisex"}:
+        term = f"{prefix} {term}"
+    return term
+
+
+def _off_target(gender: str, title: str) -> bool:
+    """A result titled for the other gender only ("Best Bomber Jackets for Women" in a men's study)."""
+    other = {"men": "women", "women": "men"}.get(gender)
+    if not other:
+        return False
+    return bool(_TITLE_GENDER[other].search(title)) and not _TITLE_GENDER[gender].search(title)
+
+
 def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
-    """English, US-market search plan built only from brief values (no seeded brands or price bands)."""
+    """English, US-market search plan built only from brief values (no seeded brands or price bands).
+
+    Review, trend and brand queries name the target customer (men's …); market-size queries do
+    not, since market reports rarely split by gender. Each target style adds one brand query.
+    """
     term = brief.search_term
     queries: list[tuple[str, str]] = []
     if not term:
         return queries
+    who = _for_target(brief, term)
+    styles = [s for s in _parts(brief.style) if not _has_korean(s)][:2]
+    styled = [_for_target(brief, term, s) for s in styles]
 
     def add(text: str, kind: str) -> None:
         text = _clean(text)
@@ -518,39 +668,45 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
         # How the market moved: one query per year, market size, then a few brand and review queries.
         years = study_years(brief)
         for year in years:
-            add(f"{term} trend {year}", "market")
+            add(f"{who} trend {year}", "market")
         category = _english(brief.category)
         add(f"{term} market size growth", "market")
         if category and category.lower() != term.lower():
             add(f"{category} US market size growth", "market")
         for name in competitors[:2]:
             add(f"{name} {term} {years[-1]}", "competitor")
-        add(f"best {term} brands {years[-1]}", "competitor")
-        add(f"{term} review complaints problems", "review")
+        add(f"best {who} brands {years[-1]}", "competitor")
+        add(f"{who} review complaints problems", "review")
+        for target in styled:
+            add(f"best {target} {years[-1]}", "competitor")
         return queries[:MAX_QUERIES]
     if brief.product:
-        add(f"{term} review complaints problems", "review")
-        add(f"{term} reddit issues worth it", "review")
+        add(f"{who} review complaints problems", "review")
+        add(f"{who} reddit issues worth it", "review")
         if focus:
-            add(f"{term} {focus} complaints", "review")
-        add(f"{term} {channel} customer reviews 1 star", "review")
+            add(f"{who} {focus} complaints", "review")
+        add(f"{who} {channel} customer reviews 1 star", "review")
         for name in competitors[:4]:
             add(f"{name} {term} review price", "competitor")
         if not competitors:
-            add(f"best {term} comparison price", "competitor")
+            add(f"best {who} comparison price", "competitor")
         if price:
-            add(f"{term} {price} best value", "competitor")
+            add(f"{who} {price} best value", "competitor")
+        for target in styled:
+            add(f"best {target} brands", "competitor")
     else:
         for name in competitors[:5]:
             add(f"{name} {term} review complaints quality", "review")
-        add(f"{term} brands customer complaints reddit", "review")
-        add(f"{term} brands price comparison {price}", "competitor")
+        add(f"{who} brands customer complaints reddit", "review")
+        add(f"{who} brands price comparison {price}", "competitor")
+        for target in styled:
+            add(f"best {target} brands", "competitor")
     queries = queries[: MAX_QUERIES - MARKET_QUERIES]
     # A narrow product name rarely appears in market reports ("slacks US market trends winter"
     # returned winter-wear reports only), so the second market query asks for size and growth
     # without the season, at the brief's category level when one is given in English.
     category = _english(brief.category) if brief.product else ""
-    add(f"{term} US market trends {_season_en(brief.season)}", "market")
+    add(f"{who} US market trends {_season_en(brief.season)}", "market")
     if category and category.lower() != term.lower():
         add(f"{category} US market size growth", "market")
     else:
@@ -685,6 +841,7 @@ class Page(str):
     offers: tuple[str, ...] = ()
     via: str = "urllib"
     published: str = ""
+    updated: str = ""
 
 
 def _usd(value: object) -> str:
@@ -823,6 +980,7 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
     page.locales = page_locales(html)
     page.offers = structured_prices(html)
     page.published = page_published(html)
+    page.updated = page_updated(html)
     page.via = via
     return page
 
@@ -999,6 +1157,32 @@ def _price_lines(text: str, limit: int = PRICE_LINES) -> list[str]:
     return out
 
 
+def _figure_lines(text: str, limit: int = FIGURE_LINES, width: int = 400) -> list[str]:
+    """Lines of a market page that state a market figure (USD 41.07 Billion, CAGR), with the line
+    before when the figure stands alone ("Base year 2024" / "USD 41.07 Billion")."""
+    lines = text.split("\n")
+    out: list[str] = []
+    for index, line in enumerate(lines):
+        match = _MARKET_FIGURE_RE.search(line)
+        if not match:
+            continue
+        if len(line) > width:
+            begin = max(0, match.start() - width // 3)
+            line = line[begin : begin + width]
+        elif len(line) < 40 and index and not _MARKET_FIGURE_RE.search(lines[index - 1]):
+            # The label line ("Base year 2024"), unless it is itself a figure line already kept.
+            line = f"{lines[index - 1][:160]} {line}"
+        if (line := line.strip()) not in out:
+            out.append(line)
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _years_named(text: str, years: list[int]) -> bool:
+    return any(re.search(rf"(?<!\d){y}(?!\d)", text) for y in years)
+
+
 def _excerpt(text: str, terms: list[str], width: int = 340, windows: int = 2) -> str:
     """Up to ``windows`` on-topic passages, in page order. Blocks without a sentence are skipped."""
     scored: list[tuple[int, int, int, str]] = []
@@ -1038,6 +1222,7 @@ def collect_evidence(
     off_market: list[str] = []
     off_market_by: dict[str, int] = {}
     listing: list[str] = []
+    off_target: list[str] = []
     search_via: dict[str, int] = {}  # queries answered per search path
 
     def _drop_off_market(domain: str, reason: str) -> None:
@@ -1067,8 +1252,11 @@ def collect_evidence(
             if _listing_page(domain, parts.path):
                 listing.append(row["url"])
                 continue
+            if _off_target(brief.gender, row["title"]):
+                off_target.append(row["url"])
+                continue
             rows.append({**row, "domain": domain, "kind": kind, "query": query, "rank": rank})
-    results = len(rows) + len(off_market) + len(listing)
+    results = len(rows) + len(off_market) + len(listing) + len(off_target)
     # Rank order across queries: every query's first hit, then every second hit, …
     rows.sort(key=lambda r: r["rank"])
 
@@ -1093,6 +1281,10 @@ def collect_evidence(
     excerpt_terms = [t for t in _parts(brief.focus) if not _has_korean(t)] + terms
     usable: list[int] = []
     excerpts: dict[int, tuple[str, str]] = {}
+    figures: dict[int, list[str]] = {}
+    dates: dict[int, tuple[str, str]] = {}  # (published, updated)
+    stale: set[int] = set()
+    years = study_years(brief) if trend else []
     off_topic = 0
     for index, (row, body) in enumerate(zip(rows, bodies)):
         if foreign_locale(getattr(body, "locales", ())):
@@ -1102,12 +1294,25 @@ def collect_evidence(
         head_ok = on_topic(row_terms, f"{row['title']} {row['snippet']}")
         body_ok = len(body) >= MIN_BODY_CHARS and on_topic(row_terms, body)
         from_body = _excerpt(body, excerpt_terms + row_terms[len(terms):]) if body_ok else ""
+        if body_ok and row["kind"] == "market" and (found := _figure_lines(body)):
+            # A market report states its figures without repeating the product name.
+            figures[index] = found
+            if not _MARKET_FIGURE_RE.search(from_body):
+                from_body = " … ".join([found[0], from_body] if from_body else found[:2])
         if not from_body and not head_ok:
             off_topic += 1
             continue
         if excerpt := from_body or row["snippet"]:
             usable.append(index)
             excerpts[index] = (excerpt, "본문" if from_body else "요약문")
+            published = getattr(body, "published", "") or snippet_published(row["snippet"])
+            dates[index] = (published, getattr(body, "updated", ""))
+            when = dates[index][1] or published
+            if years and when and int(when[:4]) < years[0]:
+                if not _years_named(f"{row['title']} {row['snippet']} {excerpt}", years):
+                    stale.add(index)
+    # A trend study reads an older page only when nothing from the period fills the slot.
+    usable.sort(key=lambda i: i in stale)
     kind_order = {kind: n for n, (kind, _label) in enumerate(KIND_LABELS)}
     chosen = sorted(
         _allocate(rows, usable, kind_quota, MAX_EVIDENCE, MAX_PER_DOMAIN),
@@ -1121,12 +1326,17 @@ def collect_evidence(
         detail, page_prices = excerpt, list(getattr(body, "offers", ()) or ())
         if source == "본문":
             row_terms = market_terms if row["kind"] == "market" else terms
-            detail = _excerpt(body, excerpt_terms + row_terms[len(terms):], width=600, windows=4)
+            detail = _excerpt(body, excerpt_terms + row_terms[len(terms):], width=600, windows=4) or excerpt
+            # Marked lines go after the cut, so a long body cannot push them out.
+            detail = detail[:DETAIL_CHARS]
             if row["kind"] == "competitor":
                 lines = _price_lines(body)
                 if lines:
-                    detail += "\n[가격 표기 줄] " + " | ".join(lines)
+                    detail += f"\n{PRICE_LINE_MARK} " + " | ".join(lines)
                 page_prices += [p for line in lines for p in _PRICE_RE.findall(line)]
+            if index in figures:
+                detail += f"\n{FIGURE_LINE_MARK} " + " | ".join(figures[index])
+        published, updated = dates[index]
         evidence.append(
             Evidence(
                 id=f"E{number}",
@@ -1138,9 +1348,11 @@ def collect_evidence(
                 excerpt=excerpt[:EXCERPT_CHARS],
                 prices=list(dict.fromkeys(_clean(p) for p in _PRICE_RE.findall(excerpt)))[:5],
                 query=row["query"],
-                detail=detail[:DETAIL_CHARS],
+                detail=detail,
                 page_prices=list(dict.fromkeys(_clean(p) for p in page_prices))[:8],
-                published=getattr(body, "published", "") or snippet_published(row["snippet"]),
+                published=published,
+                updated=updated,
+                before_period=index in stale,
             )
         )
     stats = {
@@ -1153,6 +1365,7 @@ def collect_evidence(
         "off_market_domains": sorted(set(off_market)),
         "off_market_by": off_market_by,
         "listing_dropped": len(listing),
+        "off_target_dropped": len(off_target),
         "fetch_attempted": len(to_fetch),
         "fetch_ok": sum(1 for b in bodies if len(b) >= MIN_BODY_CHARS),
         "fetch_impersonated_ok": sum(
@@ -1165,15 +1378,16 @@ def collect_evidence(
         "evidence_by_kind": {kind: sum(1 for e in evidence if e.kind == kind) for kind, _label in KIND_LABELS},
     }
     if trend:
-        years = study_years(brief)
         stats["years"] = years
         stats["evidence_by_year"] = {str(y): sum(1 for e in evidence if about_year(e, y)) for y in years}
+        stats["before_period_found"] = len(stale)
+        stats["before_period_kept"] = sum(1 for e in evidence if e.before_period)
     return evidence, stats
 
 
 def about_year(item: Evidence, year: int) -> bool:
-    """Published that year, or the item's text names the year."""
-    if item.published.startswith(str(year)):
+    """The version read is from that year (update date, else publication date), or the text names the year."""
+    if content_date(item).startswith(str(year)):
         return True
     return bool(re.search(rf"(?<!\d){year}(?!\d)", f"{item.title} {item.excerpt} {item.detail}"))
 
@@ -1189,7 +1403,17 @@ def _brief_table(brief: ResearchBrief) -> list[str]:
         value = ", ".join(value) if isinstance(value, list) else value
         if name == "study":
             value = STUDY_LABELS.get(value, value)
+        elif name == "gender":
+            value = GENDER_LABELS.get(value, value)
+        elif name == "style" and not value and name in brief.origin:
+            value = "전체(스타일 무관)"
         lines.append(f"| {label} | {_cell(value) or '미지정'} | {brief.origin.get(name, '-') if value else '-'} |")
+    if FROM_DEFAULT in (brief.origin.get("gender"), brief.origin.get("style")):
+        lines += [
+            "",
+            "성별·스타일을 적지 않아 CQR 기본 타깃으로 검색했습니다. 다른 타깃이면 "
+            "`성별: 여성`, `성별: 전체`, `스타일: 전체`처럼 지정하세요.",
+        ]
     if left_out := _unsearchable(brief):
         lines += [
             "",
@@ -1241,7 +1465,12 @@ def render_markdown(
         f"- 검색 {stats['queries']}회, 결과 {stats['results']}건, "
         f"미국 외 출처라 제외 {stats['off_market_dropped']}건{dropped_from}, "
         f"소매처(Amazon·Walmart·Target) 상품 목록 페이지라 제외 {stats.get('listing_dropped', 0)}건, "
-        f"주제와 무관해 제외 {stats['off_topic_dropped']}건",
+        + (
+            f"제목이 다른 성별 대상이라 제외 {stats['off_target_dropped']}건, "
+            if brief.gender in {"men", "women"} and "off_target_dropped" in stats
+            else ""
+        )
+        + f"주제와 무관해 제외 {stats['off_topic_dropped']}건",
     ]
     if by := stats.get("off_market_by"):
         out.append(
@@ -1269,6 +1498,11 @@ def render_markdown(
             "- 연도별 근거(게시일이 그해이거나 내용에 그해가 나온 근거): "
             + ", ".join(f"{year}년 {n}건" for year, n in by_year.items())
         )
+    if found := stats.get("before_period_found"):
+        out.append(
+            f"- 조사 기간 이전에 게시·수정된 페이지 {found}건은 기간 안의 근거가 모자랄 때만 썼습니다 "
+            f"(채택 {stats.get('before_period_kept', 0)}건)"
+        )
     if via := stats.get("search_via"):
         labels = {"yahoo": "Yahoo 직접 조회", "ddgs": "ddgs 라이브러리(대체 경로)"}
         out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
@@ -1289,6 +1523,10 @@ def render_markdown(
         out += [f"## {label} ({len(items)}건)", ""]
         for item in items:
             published = f" · 게시일 {item.published}" if item.published else ""
+            if item.updated:
+                published += f" · 수정일 {item.updated}"
+            if item.before_period:
+                published += " · 조사 기간 이전 글"
             out += [
                 f"### {item.id}. {item.title}",
                 "",

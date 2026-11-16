@@ -12,6 +12,7 @@ from cqr_product_pipeline.agents.evidence_pack import (
     FIELD_EXAMPLE,
     FIELD_KEYS,
     MIN_EVIDENCE,
+    TARGET_DEFAULTS,
     brief_gate,
     parse_brief,
     run_evidence_pack,
@@ -67,7 +68,8 @@ def main() -> None:
     overrides = {name: getattr(args, name) for name in FIELD_KEYS if getattr(args, name)}
     if args.target_category and "category" not in overrides:
         overrides["category"] = args.target_category
-    brief = parse_brief(args.brief, overrides)
+    # A brief without a target customer is researched for CQR's (men, military / workwear).
+    brief = parse_brief(args.brief, overrides, defaults=TARGET_DEFAULTS)
     reason = brief_gate(brief)
     if reason:
         print(

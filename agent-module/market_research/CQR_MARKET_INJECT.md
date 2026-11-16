@@ -42,7 +42,13 @@ Evidence is capped at 18 items with a share per kind (리뷰·불만 8, 경쟁�
 
 A result is on topic when it names the product noun (the last word of `영문명`: pants, boots, as a whole word) and at least half of the words before it (`tactical cargo pants` → cargo pants or tactical pants). The singular of a plural name counts only next to another word of it ("Peak Cargo Pant" yes, "Slack" alone no). Market results may name the `카테고리` instead (`men's dress pants` for slacks); two market queries are always run (trends with the season, and size/growth at the category level). `발췌 안 가격 표기` lists US-dollar amounts only; figures with a magnitude (`$17.9 billion`, `$2.5M`) are market sizes, not prices. Competitor pages also list `페이지의 상품 정보·가격 줄에 적힌 가격` (schema.org offer data and price lines). Pages that refuse a plain request (403, dropped connection) are retried once with a browser-like client. Queries that returned nothing are listed in `수집 요약`.
 
-A market/trend study (`조사유형: trend`, or any brief with a `기간`) searches each year of the period (`bomber jacket trend 2024`, …; at most 4 years, future years left out, the last 3 years when no period is given) plus market size, brand and review queries, and shares the 18 items as 시장·트렌드 10, 경쟁사·가격 5, 리뷰·불만 3. Each item records the date the page declares (or the date in front of the search snippet) as `게시일`, and `수집 요약` counts the items per year (published that year or naming it); a year with none is listed under 근거가 없는 항목. A sentence's `최근 N년` / `2024~2026` is read as the period, not as a season.
+A market/trend study (`조사유형: trend`, or any brief with a `기간`) searches each year of the period (`bomber jacket trend 2024`, …; at most 4 years, future years left out, the last 3 years when no period is given) plus market size, brand and review queries, and shares the 18 items as 시장·트렌드 10, 경쟁사·가격 5, 리뷰·불만 3. Each item records the date the page declares (or the date in front of the search snippet) as `게시일`, and the last-modified date as `수정일` when it is later. Updated guides keep their first publication date (Esquire's "best bomber jackets for 2026" says 2016-08-25, modified 2026-01-20), so the year of an item is its `수정일`, else its `게시일`, or a year its text names. `수집 요약` counts the items per year; a year with none is listed under 근거가 없는 항목. A page older than the period that names no year of it is marked `조사 기간 이전 글` and only used when nothing from the period fills the slot. A sentence's `최근 N년` / `2024~2026` is read as the period, not as a season.
+
+On a market page the lines that state a market figure (`USD 41.07 Billion`, `CAGR 3.37%`) are kept in the excerpt and in `detail` under `[시장 수치 줄]`, even when they do not repeat the product name.
+
+### Target customer
+
+CQR's customer is the default target: `성별` men and `스타일` military, workwear (`CQR 기본 타깃` in the brief table). Review, trend and brand queries name it (`men's bomber jacket trend 2025`, `best men's military bomber jacket 2026`); market-size queries do not. A result whose title is for the other gender only (`… for Women`) is dropped and counted. A gender in the sentence or the product name (`여성 봄버재킷`, `men's dress slacks`) replaces the default; `성별: 전체` and `스타일: 전체` turn the target off for one study.
 
 The pack does **not** contain market gaps, personas, segments, TAM/SAM/SOM, pricing strategy, concept candidates or pain-frequency percentages. Do not present those as pipeline findings.
 
@@ -64,7 +70,7 @@ Explicit fields are used verbatim. Separate them with `/`, `;` or new lines.
 /심층리서치 카테고리: outdoor apparel / 경쟁사: Columbia, Patagonia / 가격: $60-150 / 시즌: 2027 FW
 ```
 
-Fields: `품목`, `영문명` (English name used for the US search), `카테고리`, `시즌`, `채널`, `가격`, `경쟁사`, `초점`, `조사유형` (`trend` 시장·트렌드 추이 | `product` 제품 조사), `기간` (`2024-2026`, `최근 3년`). A product **or** a category is required, and it must have an English name.
+Fields: `품목`, `영문명` (English name used for the US search), `카테고리`, `시즌`, `채널`, `가격`, `경쟁사`, `초점`, `조사유형` (`trend` 시장·트렌드 추이 | `product` 제품 조사), `기간` (`2024-2026`, `최근 3년`), `성별` (`남성` / `여성` / `공용` / `전체`), `스타일` (`밀리터리, 워크웨어` or English words; `전체` for none). A product **or** a category is required, and it must have an English name.
 
 ```
 /심층리서치 품목: 봄버재킷 / 영문명: bomber jacket / 카테고리: men's outerwear / 조사유형: trend / 기간: 2024-2026

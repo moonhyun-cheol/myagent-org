@@ -798,3 +798,153 @@ def test_publication_date_is_read_from_the_page_and_the_snippet():
     assert page_published("<html><body>no date here</body></html>") == ""
     assert snippet_published("Mar 5, 2025 · Bomber jackets are back") == "2025-03-05"
     assert snippet_published("Bomber jackets are back in 2025") == ""
+
+
+# --- Target customer (gender, style), update dates, market figures ---
+
+BOMBER = {"product": "봄버재킷", "product_en": "bomber jacket"}
+
+
+def test_cqr_customer_is_the_default_target_and_shapes_the_queries():
+    from cqr_product_pipeline.agents.evidence_pack import FROM_DEFAULT, MAX_QUERIES, TARGET_DEFAULTS
+
+    brief = parse_brief("", {**BOMBER, "period": "2022-2024", "category": "outerwear jackets"}, defaults=TARGET_DEFAULTS)
+    assert (brief.gender, brief.style) == ("men", "military, workwear")
+    assert brief.origin["gender"] == brief.origin["style"] == FROM_DEFAULT
+    queries = build_queries(brief)
+    assert queries[:3] == [(f"men's bomber jacket trend {y}", "market") for y in (2022, 2023, 2024)]
+    texts = [q for q, _ in queries]
+    assert "bomber jacket market size growth" in texts  # market reports are not split by gender
+    assert "best men's military bomber jacket 2024" in texts and "best men's workwear bomber jacket 2024" in texts
+    assert len(queries) <= MAX_QUERIES
+    md = render_markdown(brief, [], {}, queries, "s", dry_run=True)
+    assert "| 성별 타깃 | 남성 | CQR 기본 타깃 |" in md and "CQR 기본 타깃으로 검색했습니다" in md
+
+    # A gender the user states wins; 전체 turns the target off.
+    women = parse_brief("여성 봄버재킷 품목: 봄버재킷 / 영문명: bomber jacket", defaults=TARGET_DEFAULTS)
+    assert women.gender == "women" and women.origin["gender"] == "문장 해석(규칙)"
+    assert "women's bomber jacket review complaints problems" in [q for q, _ in build_queries(women)]
+    off = parse_brief("품목: 봄버재킷 / 영문명: bomber jacket / 성별: 전체 / 스타일: 전체", defaults=TARGET_DEFAULTS)
+    assert (off.gender, off.style) == ("all", "")
+    off_queries = [q for q, _ in build_queries(off)]
+    assert "bomber jacket review complaints problems" in off_queries
+    assert not any("men's" in q or "military" in q for q in off_queries)
+    assert "| 스타일 타깃 | 전체(스타일 무관) | 입력 필드 |" in render_markdown(off, [], {}, [], "s", dry_run=True)
+    # Korean style words are translated or reported as not searched; a gendered name is not doubled.
+    styled = parse_brief("품목: 봄버재킷 / 영문명: bomber jacket / 스타일: 밀리터리, 캠핑", defaults=TARGET_DEFAULTS)
+    assert styled.style == "military, 캠핑"
+    assert "스타일 `캠핑`" in render_markdown(styled, [], {}, build_queries(styled), "s", dry_run=True)
+    slacks = parse_brief("", {"product": "슬랙스", "product_en": "men's dress slacks"}, defaults=TARGET_DEFAULTS)
+    assert slacks.gender == "men"
+    assert not any("men's men's" in q for q, _ in build_queries(slacks))
+
+
+def test_cli_researches_for_the_cqr_customer_by_default(tmp_path, monkeypatch):
+    from cqr_product_pipeline.cli import run_research
+
+    seen = {}
+
+    def fake_pack(brief, output_dir, session_id, dry_run=False):
+        seen["brief"] = brief
+        return {"status": "insufficient_evidence", "evidence_count": 0, "stats": {}}
+
+    monkeypatch.setattr(run_research, "run_evidence_pack", fake_pack)
+    monkeypatch.setattr(
+        sys, "argv", ["run_research", "--brief", "품목: 스키바지 / 영문명: ski pants", "--output-dir", str(tmp_path)]
+    )
+    with pytest.raises(SystemExit):
+        run_research.main()
+    assert (seen["brief"].gender, seen["brief"].style) == ("men", "military, workwear")
+
+
+def test_results_titled_for_the_other_gender_are_dropped():
+    def searcher(query, max_results):
+        return [
+            {"title": "23 Best Bomber Jackets for Women in 2024", "url": "https://w.example/a", "snippet": "bomber jackets"},
+            {"title": "Best Bomber Jackets for Men and Women", "url": "https://mw.example/b", "snippet": "bomber jackets"},
+            {"title": "Bomber jacket review", "url": "https://r.example/c", "snippet": "my bomber jacket ripped"},
+        ]
+
+    brief = parse_brief("", {**BOMBER, "gender": "남성"})
+    evidence, stats = collect_evidence(brief, searcher, lambda url: "")
+    urls = {e.url for e in evidence}
+    assert "https://w.example/a" not in urls
+    assert {"https://mw.example/b", "https://r.example/c"} <= urls
+    assert stats["off_target_dropped"] == 1
+    md = render_markdown(brief, evidence, stats, build_queries(brief), "s")
+    assert "제목이 다른 성별 대상이라 제외 1건" in md
+
+
+def test_update_date_is_the_content_date():
+    from cqr_product_pipeline.agents.evidence_pack import Page, about_year, page_updated
+
+    html = (
+        '<meta content="2016-08-25T23:17:00Z" property="article:published_time">'
+        '<script type="application/ld+json">{"datePublished":"2016-08-25","dateModified":"2026-01-20T15:52:00-05:00"}'
+        "</script>"
+    )
+    assert page_updated(html) == "2026-01-20"
+    assert page_updated('<meta property="article:published_time" content="2025-03-04">') == ""
+
+    page = Page("short")
+    page.published, page.updated = "2016-08-25", "2023-05-01"
+    brief = parse_brief("", {**BOMBER, "period": "2022-2024"})
+
+    def searcher(query, max_results):
+        return [{"title": "Best bomber jackets", "url": "https://upd.example/b", "snippet": "bomber jackets tested"}]
+
+    evidence, stats = collect_evidence(brief, searcher, lambda url: page)
+    (item,) = evidence
+    assert (item.published, item.updated, item.before_period) == ("2016-08-25", "2023-05-01", False)
+    assert about_year(item, 2023) and not about_year(item, 2022)
+    assert stats["evidence_by_year"]["2023"] == 1
+    assert "게시일 2016-08-25 · 수정일 2023-05-01" in render_markdown(brief, evidence, stats, [], "s")
+
+
+def test_trend_study_uses_pages_older_than_the_period_last():
+    from cqr_product_pipeline.agents.evidence_pack import MAX_EVIDENCE
+
+    old = {"title": "Bomber jacket review", "url": "https://old.example/a", "snippet": "Dec 8, 2010 · bomber jacket notes"}
+    rows = [old] + [
+        {"title": f"Bomber jacket guide {n}", "url": f"https://new{n}.example/x", "snippet": f"bomber jacket {n}"}
+        for n in range(MAX_EVIDENCE + 2)
+    ]
+    brief = parse_brief("", {**BOMBER, "period": "2022-2024"})
+    evidence, stats = collect_evidence(brief, lambda q, n: rows, lambda url: "")
+    assert len(evidence) == MAX_EVIDENCE
+    assert "https://old.example/a" not in {e.url for e in evidence}  # rank 0, but older than the period
+    assert (stats["before_period_found"], stats["before_period_kept"]) == (1, 0)
+
+    # With room to spare it is kept and marked.
+    evidence, stats = collect_evidence(brief, lambda q, n: rows[:3], lambda url: "")
+    kept = next(e for e in evidence if e.url == old["url"])
+    assert kept.before_period and stats["before_period_kept"] == 1
+    assert "조사 기간 이전 글" in render_markdown(brief, evidence, stats, [], "s")
+
+
+def test_market_figure_lines_are_kept_on_market_pages():
+    body = "\n".join(
+        [
+            "United States Outerwear Market Report",
+            "Explore potential revenue opportunities across the outerwear jackets segmentation landscape, "
+            "including Jackets, Men, Synthetics.",
+            "Base year 2024",
+            "USD 41.07 Billion",
+            "Based on Deep Market Insights findings, the United States Outerwear Market reached USD 41.07 Billion "
+            "in 2024 and is estimated to attain USD 54.91 Billion by 2033.",
+            "Forecast CAGR 3.37%",
+        ]
+        + ["Our analysts cover apparel demand across regions and channels every quarter."] * 8
+    )
+    brief = parse_brief("", {**BOMBER, "category": "outerwear jackets"})
+
+    def searcher(query, max_results):
+        if "market" not in query:
+            return []
+        return [{"title": "United States Outerwear Market Size Report", "url": "https://m.example/us", "snippet": "report"}]
+
+    evidence, _stats = collect_evidence(brief, searcher, lambda url: body)
+    (item,) = evidence
+    assert item.kind == "market" and item.source == "본문"
+    assert "USD 41.07 Billion" in item.excerpt
+    assert "[시장 수치 줄]" in item.detail and "CAGR 3.37%" in item.detail
