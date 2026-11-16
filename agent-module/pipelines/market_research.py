@@ -11,7 +11,8 @@ Host invokes:
 ``품목: … / 시즌: … / 경쟁사: … / 가격: …`` or ``--product`` style flags; the
 sentence is only a fallback), the web is searched with those values, page
 bodies are fetched and only on-topic excerpts are kept. No LLM runs and nothing
-is filled from templates.
+is filled from templates. The target market is the United States: queries are
+English and non-US sources are dropped (the search engine takes no region).
 
 Failure contract (stdout JSON, exit 1): ``status`` is one of
 ``missing_deps`` / ``missing_api_key`` / ``pipeline_failed`` / ``no_session`` /
@@ -19,8 +20,9 @@ Failure contract (stdout JSON, exit 1): ``status`` is one of
 The host shows ``error`` verbatim, so it carries the user-facing guidance.
 
 - ``needs_brief``: no product or category could be read (e.g. a follow-up like
-  「리포트 형식으로 줘」). No search runs, no output folder is created and the
-  previous session is kept.
+  「리포트 형식으로 줘」), or it has no English name to search the US market
+  with (``reason: no_english_name``). No search runs, no output folder is
+  created and the previous session is kept.
 - ``insufficient_evidence``: fewer than the minimum on-topic sources were
   found. No report is written and the previous session is kept.
 - ``unavailable``: ``feasibility`` / ``plan`` stay closed while the internal
@@ -71,7 +73,17 @@ FIELD_FLAGS = (
     "competitors",
     "focus",
 )
-FIELD_EXAMPLE = "/심층리서치 품목: 스키바지 / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
+FIELD_EXAMPLE = (
+    "/심층리서치 품목: 스키바지 / 영문명: ski pants / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
+)
+# brief_gate reason -> user-facing guidance (the host shows ``error`` verbatim).
+NEEDS_BRIEF_ERRORS = {
+    "no_english_name": (
+        "미국 시장을 검색할 영문 품목명을 찾지 못해 검색하지 않았습니다. "
+        "`영문명:` 필드를 붙여 다시 요청하세요."
+    ),
+}
+NEEDS_BRIEF_DEFAULT_ERROR = "조사할 품목이나 카테고리를 찾지 못해 검색하지 않았습니다. 필드로 다시 요청하세요."
 PHASE_CLOSED_ERROR = (
     "타당성·기획서 단계는 지금 사용할 수 없습니다. 내부 자료(제품·원가·브랜드 인덱스)가 "
     "파이프라인에 연결되지 않아 점수와 판정을 낼 근거가 없습니다. "
@@ -251,18 +263,16 @@ def _brief_gate(brief: str) -> str | None:
     return brief_needs_clarification(_parse_brief_hints(brief, None))
 
 
-def _needs_brief_result(phase: str, brief: str, previous: dict | None) -> dict:
+def _needs_brief_result(phase: str, brief: str, previous: dict | None, reason: str | None = None) -> dict:
     """Failure result that keeps the previous session pointer untouched."""
     result: dict = {
         "ok": False,
         "pipeline": "market_research",
         "phase": phase,
         "status": "needs_brief",
+        "reason": reason,
         "brief": brief,
-        "error": (
-            "조사할 품목이나 카테고리를 찾지 못해 검색하지 않았습니다. "
-            f"필드로 다시 요청하세요. 예: {FIELD_EXAMPLE}"
-        ),
+        "error": f"{NEEDS_BRIEF_ERRORS.get(reason or '', NEEDS_BRIEF_DEFAULT_ERROR)} 예: {FIELD_EXAMPLE}",
         "exit_code": NEEDS_BRIEF_EXIT,
     }
     if previous:
@@ -298,10 +308,11 @@ def _insufficient_result(brief: str, out: Path, session_id: str) -> dict:
         "output_dir": str(out.resolve()),
         "stats": stats,
         "error": (
-            f"브리프 주제에 맞는 근거가 {stats.get('evidence', 0)}건뿐이라 리포트를 만들지 않았습니다"
+            f"브리프 주제에 맞는 미국 시장 근거가 {stats.get('evidence', 0)}건뿐이라 리포트를 만들지 않았습니다"
             f"(최소 {MIN_EVIDENCE}건). 검색 {stats.get('queries', 0)}회, 결과 {stats.get('results', 0)}건, "
+            f"미국 외 출처라 제외 {stats.get('off_market_dropped', 0)}건, "
             f"주제와 무관해 제외 {stats.get('off_topic_dropped', 0)}건. "
-            f"품목의 영문명이나 경쟁사를 필드로 지정해 다시 요청하세요. 예: {FIELD_EXAMPLE} / 영문명: ski pants"
+            f"영문명을 미국에서 쓰는 품목명으로 바꾸거나 경쟁사를 필드로 지정해 다시 요청하세요. 예: {FIELD_EXAMPLE}"
         ),
         "exit_code": INSUFFICIENT_EVIDENCE_EXIT,
     }
@@ -318,7 +329,7 @@ def cmd_research(
     # follow-up message leaves no empty session dir and stdout stays one JSON.
     parsed, reason = _research_brief(brief, fields)
     if reason:
-        return _needs_brief_result("research", brief, _read_session())
+        return _needs_brief_result("research", brief, _read_session(), reason)
     session_id = uuid.uuid4().hex[:8]
     out = output_dir or _default_output(session_id)
     out.mkdir(parents=True, exist_ok=True)

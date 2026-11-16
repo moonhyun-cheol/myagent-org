@@ -84,15 +84,35 @@ def test_followup_message_needs_brief_without_searching(tmp_path):
     assert not (tmp_path / "state" / "output").exists()
 
 
+def test_korean_brief_without_english_name_asks_for_it(tmp_path):
+    code, result = _run(["research", "", "--category", "아웃도어", "--competitors", "Columbia"], {}, tmp_path)
+    assert code == 1
+    assert result["status"] == "needs_brief"
+    assert result["reason"] == "no_english_name"
+    assert "영문명" in result["error"]
+    assert not (tmp_path / "state" / "output").exists()
+
+
 def test_dry_run_with_field_flags(tmp_path):
     code, result = _run(
-        ["research", "", "--category", "아웃도어", "--competitors", "Columbia, Patagonia", "--dry-run"],
+        [
+            "research",
+            "",
+            "--category",
+            "아웃도어",
+            "--product-en",
+            "outdoor apparel",
+            "--competitors",
+            "Columbia, Patagonia",
+            "--dry-run",
+        ],
         {},
         tmp_path,
     )
     assert code == 0, result
     assert result["report_kind"] == "evidence_pack"
     assert result["brief_fields"]["category"] == "아웃도어"
+    assert result["brief_fields"]["product_en"] == "outdoor apparel"
     assert result["brief_fields"]["competitors"] == ["Columbia", "Patagonia"]
     assert "DRY RUN" in Path(result["markdown_path"]).read_text(encoding="utf-8")
 

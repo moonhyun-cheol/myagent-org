@@ -18,9 +18,17 @@ from cqr_product_pipeline.agents.evidence_pack import (
 )
 from cqr_product_pipeline.config.paths import MARKET_RESEARCH_ROOT
 
-# Exit code for briefs without a product or category. The host wrapper maps it
-# to ``status=needs_brief``; no search runs and no report is written.
+# Exit code for briefs without a product or category, or without an English name
+# to search the US market with. The host wrapper maps it to ``status=needs_brief``;
+# no search runs and no report is written.
 NEEDS_BRIEF_EXIT = 3
+NEEDS_BRIEF_ERRORS = {
+    "no_scope": "브리프에서 조사할 품목이나 카테고리를 찾지 못했습니다. 웹 검색을 실행하지 않았습니다.",
+    "no_english_name": (
+        "미국 시장을 검색할 영문 품목명을 찾지 못했습니다. `영문명:` 필드를 붙여 주세요. "
+        "웹 검색을 실행하지 않았습니다."
+    ),
+}
 # Exit code when fewer than MIN_EVIDENCE on-topic sources were found. The
 # wrapper maps it to ``status=insufficient_evidence``; no report is written.
 INSUFFICIENT_EVIDENCE_EXIT = 4
@@ -68,7 +76,7 @@ def main() -> None:
                     "status": "needs_brief",
                     "reason": reason,
                     "brief": args.brief,
-                    "error": "브리프에서 조사할 품목이나 카테고리를 찾지 못했습니다. 웹 검색을 실행하지 않았습니다.",
+                    "error": NEEDS_BRIEF_ERRORS.get(reason, NEEDS_BRIEF_ERRORS["no_scope"]),
                     "example": FIELD_EXAMPLE,
                 },
                 ensure_ascii=False,

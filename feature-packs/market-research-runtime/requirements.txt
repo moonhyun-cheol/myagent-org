@@ -11,4 +11,7 @@ langchain-text-splitters>=0.3
 chromadb>=0.5
 pydantic>=2.0
 pydantic-settings>=2.0
-ddgs>=9.0
+# Pinned: ddgs releases change which search engines answer and how their pages are
+# parsed (9.14.4 and 9.16.1 returned different results for the same query).
+# evidence_pack.py also uses ddgs.http_client and the lxml it pulls in.
+ddgs==9.16.1

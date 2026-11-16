@@ -4,6 +4,16 @@ No LLM and no templates. Every line of the output is one of: the brief as the
 user gave it, a counted statistic, or a verbatim excerpt with its URL. Market
 gaps, personas, sizing and pricing conclusions are deliberately not produced
 here; a section without evidence is reported as missing instead of being filled.
+
+The target market is the United States (CQR is a US brand). Queries are English;
+results on another country's domain or in a non-Latin script are dropped and
+counted. A brief whose product or category has no English name is not searched
+at all.
+
+Search goes to search.yahoo.com first (see ``yahoo_search``): in the runtime the
+host uses, Yahoo is the only ddgs text engine that answers, it ignores the
+region parameter, and ddgs reads only one of the two page layouts Yahoo serves,
+so most ddgs calls came back empty. ddgs stays as the fallback.
 """
 
 from __future__ import annotations
@@ -17,7 +27,7 @@ from dataclasses import asdict, dataclass, field
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Callable
-from urllib.parse import urlsplit
+from urllib.parse import unquote_plus, urlsplit
 
 PACK_SCHEMA = "cqr.market_research.evidence_pack/1"
 MIN_EVIDENCE = 3
@@ -25,13 +35,63 @@ MAX_QUERIES = 10
 RESULTS_PER_QUERY = 6
 MAX_FETCH = 16
 MAX_EVIDENCE = 18
+# Evidence and fetch slots per kind, taken in rank order. A kind that cannot fill its
+# share hands the rest to the others, so the totals stay MAX_EVIDENCE / MAX_FETCH.
+# Without shares the review queries (3-4 of 8) used the slots up before the single
+# market query's second and third hits were reached.
+KIND_QUOTA = {"review": 8, "competitor": 6, "market": 4}
+FETCH_QUOTA = {"review": 7, "competitor": 5, "market": 4}
 MAX_PER_DOMAIN = 3
 MIN_BODY_CHARS = 400
 SEARCH_SPACING = 0.8  # seconds between live queries; back-to-back calls get throttled
 SEARCH_RETRY_DELAY = 2.0
+SEARCH_TIMEOUT = 10
+YAHOO_SEARCH_URL = "https://search.yahoo.com/search"
 # Search-engine redirect / ad links are not sources.
-_NON_SOURCE_HOSTS = ("bing.com", "duckduckgo.com", "google.com")
+_NON_SOURCE_HOSTS = ("bing.com", "duckduckgo.com", "google.com", "search.yahoo.com")
+# Hosts whose pages never gave a readable body in measured runs (login wall /
+# bot page). Their search snippet is still used; no fetch slot is spent on them.
+_NO_FETCH_HOSTS = ("reddit.com", "amazon.com")
 _SENTENCE_END_RE = re.compile(r"[.!?…](?:\s|$)")
+MARKET = "US"
+MARKET_LABEL = "미국"
+SEARCH_REGION = "us-en"
+# Two-letter TLDs used as generic ones, not as another country's market.
+_GENERIC_CC_TLDS = frozenset({"us", "co", "io", "ai", "me", "tv", "cc", "gg", "ly", "to", "fm"})
+# ISO 3166-1 alpha-2 codes (+ "uk"). A first host label like ca. / uk. / en-gb. is that
+# country's edition of a site (ca.pinterest.com), so it is not a US source.
+_COUNTRY_CODES = frozenset(
+    (
+        "ad ae af ag ai al am ao aq ar as at au aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq br bs bt bv bw "
+        "by bz ca cc cd cf cg ch ci ck cl cm cn co cr cu cv cw cx cy cz de dj dk dm do dz ec ee eg eh er es et fi "
+        "fj fk fm fo fr ga gb gd ge gf gg gh gi gl gm gn gp gq gr gs gt gu gw gy hk hm hn hr ht hu id ie il im in "
+        "io iq ir is it je jm jo jp ke kg kh ki km kn kp kr kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md me "
+        "mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nc ne nf ng ni nl no np nr nu nz om pa pe pf "
+        "pg ph pk pl pm pn pr ps pt pw py qa re ro rs ru rw sa sb sc sd se sg sh si sj sk sl sm sn so sr ss st sv "
+        "sx sy sz tc td tf tg th tj tk tl tm tn to tr tt tv tw tz ua ug um us uy uz va vc ve vg vi vn vu wf ws ye "
+        "yt za zm zw uk"
+    ).split()
+)
+# First labels that are the US or a US territory, or that sites use for a function rather
+# than a country: ir. investor relations, my. account, hr. careers, id. login.
+_NOT_A_COUNTRY_EDITION = frozenset({"us", "pr", "gu", "vi", "as", "mp", "um", "ir", "my", "hr", "id"}) | _GENERIC_CC_TLDS
+_EDITION_LABEL_RE = re.compile(r"^(?:[a-z]{2}-)?([a-z]{2})$")  # ca / en-gb / fr-ca
+# Amazon pages about one item: a product (/dp/, /gp/product/, mobile /gp/aw/d/) or its reviews.
+# Anything else there (/s?k=…, /b?node=…, /stores/, best-seller lists) is a product list whose
+# snippet is shop navigation, not a review or a price for one product.
+_AMAZON_ITEM_PATH_RE = re.compile(r"/(?:dp|gp/product|gp/aw/d|product-reviews|gp/customer-reviews)/")
+_KOREAN_RE = re.compile(r"[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7A3]")
+# Season wording for an English query.
+_SEASON_EN = {
+    "봄": "spring",
+    "여름": "summer",
+    "가을": "fall",
+    "겨울": "winter",
+    "봄여름": "spring summer",
+    "가을겨울": "fall winter",
+    "SS": "spring summer",
+    "FW": "fall winter",
+}
 
 Searcher = Callable[[str, int], list[dict]]
 Fetcher = Callable[[str], str]
@@ -64,7 +124,9 @@ KIND_LABELS: tuple[tuple[str, str], ...] = (
 )
 FROM_FIELD = "입력 필드"
 FROM_TEXT = "문장 해석(규칙)"
-FIELD_EXAMPLE = "/심층리서치 품목: 스키바지 / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
+FIELD_EXAMPLE = (
+    "/심층리서치 품목: 스키바지 / 영문명: ski pants / 시즌: 2027 FW / 경쟁사: Burton, Patagonia / 가격: $90-280"
+)
 
 _KEY_TO_FIELD = {key.lower(): name for name, keys in FIELD_KEYS.items() for key in keys}
 _FIELD_RE = re.compile(
@@ -105,7 +167,11 @@ class ResearchBrief:
 
     @property
     def search_term(self) -> str:
-        return self.product_en or self.product or self.category
+        """English name the US-market queries are built on ('' when the brief has none)."""
+        for value in (self.product_en, self.product, self.category):
+            if value and not _has_korean(value):
+                return value
+        return ""
 
 
 @dataclass
@@ -123,6 +189,39 @@ class Evidence:
 
 def _clean(text: str) -> str:
     return re.sub(r"\s+", " ", str(text or "")).strip()
+
+
+def _has_korean(text: str) -> bool:
+    return bool(_KOREAN_RE.search(text or ""))
+
+
+def _english(value: str) -> str:
+    return "" if _has_korean(value) else value
+
+
+def _parts(value: str) -> list[str]:
+    return [p.strip() for p in re.split(r"[,/·]", value or "") if p.strip()]
+
+
+def _season_words(season: str) -> list[str]:
+    return [_SEASON_EN.get(w.upper() if w.isascii() else w, w) for w in (season or "").split()]
+
+
+def _season_en(season: str) -> str:
+    """Season for an English query: 겨울 -> winter, FW -> fall winter; untranslatable words are left out."""
+    return " ".join(w for w in _season_words(season) if not _has_korean(w))
+
+
+def _unsearchable(brief: ResearchBrief) -> list[str]:
+    """Brief values left out of the English queries because they are written in Korean."""
+    left_out = [f"경쟁사 `{c}`" for c in brief.competitors if _has_korean(c)]
+    left_out += [f"초점 `{p}`" for p in _parts(brief.focus) if _has_korean(p)]
+    for label, value in (("채널", brief.channel), ("가격대", brief.price_band)):
+        if _has_korean(value):
+            left_out.append(f"{label} `{value}`")
+    if any(_has_korean(w) for w in _season_words(brief.season)):
+        left_out.append(f"시즌 `{brief.season}`")
+    return left_out
 
 
 def _season_from_text(text: str) -> str:
@@ -210,58 +309,49 @@ def parse_brief(raw: str, overrides: dict[str, str] | None = None) -> ResearchBr
 
 
 def brief_gate(brief: ResearchBrief) -> str | None:
-    """Reason code when there is nothing to research, else None."""
-    return None if brief.scope else "no_scope"
+    """Reason code when the brief cannot be researched, else None."""
+    if not brief.scope:
+        return "no_scope"
+    if not brief.search_term:
+        return "no_english_name"  # nothing to search the US market with
+    return None
 
 
 def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
-    """Search plan built only from brief values (no seeded brands or price bands)."""
+    """English, US-market search plan built only from brief values (no seeded brands or price bands)."""
     term = brief.search_term
-    korean = not term.isascii()
     queries: list[tuple[str, str]] = []
+    if not term:
+        return queries
 
     def add(text: str, kind: str) -> None:
         text = _clean(text)
         if text and text not in {q for q, _ in queries}:
             queries.append((text, kind))
 
+    # Korean values would only pull Korean pages into a US study; see _unsearchable().
+    focus = " ".join(p for p in _parts(brief.focus) if not _has_korean(p))
+    channel = _english(brief.channel) or "amazon"
+    price = _english(brief.price_band)
+    competitors = [c for c in brief.competitors if not _has_korean(c)]
     if brief.product:
-        if korean:
-            add(f"{term} 후기 단점", "review")
-            add(f"{term} 리뷰 불만 {brief.focus}", "review")
-        else:
-            add(f"{term} review complaints problems", "review")
-            add(f"{term} reddit issues worth it", "review")
-            if brief.focus:
-                add(f"{term} {brief.focus} complaints", "review")
-            add(f"{term} {brief.channel or 'amazon'} customer reviews 1 star", "review")
-            if brief.product != term:
-                add(f"{brief.product} 후기 단점", "review")
-        for name in brief.competitors[:4]:
-            add(f"{name} {term} 후기 가격" if korean else f"{name} {term} review price", "competitor")
-        if not brief.competitors:
-            add(f"{term} 추천 비교 가격" if korean else f"best {term} comparison price", "competitor")
-        if brief.price_band:
-            add(
-                f"{term} {brief.price_band} 가성비 비교" if korean else f"{term} {brief.price_band} best value",
-                "competitor",
-            )
+        add(f"{term} review complaints problems", "review")
+        add(f"{term} reddit issues worth it", "review")
+        if focus:
+            add(f"{term} {focus} complaints", "review")
+        add(f"{term} {channel} customer reviews 1 star", "review")
+        for name in competitors[:4]:
+            add(f"{name} {term} review price", "competitor")
+        if not competitors:
+            add(f"best {term} comparison price", "competitor")
+        if price:
+            add(f"{term} {price} best value", "competitor")
     else:
-        for name in brief.competitors[:5]:
-            add(
-                f"{name} {term} 후기 단점" if korean else f"{name} {term} review complaints quality",
-                "review",
-            )
-        add(f"{term} 브랜드 후기 불만" if korean else f"{term} brands customer complaints reddit", "review")
-        add(
-            f"{term} 브랜드 가격대 비교 {brief.price_band}"
-            if korean
-            else f"{term} brands price comparison {brief.price_band}",
-            "competitor",
-        )
-    # A Korean season word does not help an English query (and the reverse is fine).
-    season = brief.season if korean or brief.season.isascii() else ""
-    add(f"{term} 시장 트렌드 {season}" if korean else f"{term} market trends {season}", "market")
+        for name in competitors[:5]:
+            add(f"{name} {term} review complaints quality", "review")
+        add(f"{term} brands customer complaints reddit", "review")
+        add(f"{term} brands price comparison {price}", "competitor")
+    add(f"{term} US market trends {_season_en(brief.season)}", "market")
     return queries[:MAX_QUERIES]
 
 
@@ -296,6 +386,19 @@ def _term_hit(term: str, low_text: str) -> bool:
 def on_topic(terms: list[str], text: str) -> bool:
     low = text.lower()
     return any(_term_hit(term, low) for term in terms)
+
+
+def _outside_us(domain: str, text: str) -> bool:
+    """Another country's domain (.kr, .co.uk, ca.pinterest.com, …) or a result not written in Latin script."""
+    labels = domain.split(".")
+    tld = labels[-1]
+    if len(tld) == 2 and tld.isalpha() and tld not in _GENERIC_CC_TLDS:
+        return True
+    edition = _EDITION_LABEL_RE.match(labels[0]) if len(labels) >= 3 else None
+    if edition and edition.group(1) in _COUNTRY_CODES and edition.group(1) not in _NOT_A_COUNTRY_EDITION:
+        return True
+    letters = [ch for ch in text if ch.isalpha()]
+    return sum(1 for ch in letters if ord(ch) > 0x24F) * 10 > len(letters) * 3
 
 
 class _TextExtractor(HTMLParser):
@@ -340,7 +443,7 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
         headers={
             "User-Agent": _USER_AGENT,
             "Accept": "text/html,application/xhtml+xml",
-            "Accept-Language": "en-US,en;q=0.8,ko;q=0.6",
+            "Accept-Language": "en-US,en;q=0.9",
         },
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310 - http(s) only
@@ -357,21 +460,122 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
 _last_search = 0.0
 
 
-def ddg_search(query: str, max_results: int) -> list[dict]:
-    from ddgs import DDGS
+def _host_in(domain: str, hosts: tuple[str, ...]) -> bool:
+    return any(domain == host or domain.endswith("." + host) for host in hosts)
 
+
+def _listing_page(domain: str, path: str) -> bool:
+    """An Amazon search or category page (see _AMAZON_ITEM_PATH_RE)."""
+    return _host_in(domain, ("amazon.com",)) and not _AMAZON_ITEM_PATH_RE.search(path + "/")
+
+
+def _allocate(
+    rows: list[dict], candidates: list[int], quota: dict[str, int], total: int, per_domain: int = 0
+) -> list[int]:
+    """Row indexes picked in candidate (rank) order: each kind up to its quota first, then any kind up to ``total``.
+
+    ``per_domain`` > 0 caps how many picks a single domain may take.
+    """
+    picked: list[int] = []
+    taken: set[int] = set()
+    kinds: dict[str, int] = {}
+    domains: dict[str, int] = {}
+    for within_quota in (True, False):
+        for index in candidates:
+            if len(picked) >= total:
+                return picked
+            row = rows[index]
+            if index in taken:
+                continue
+            if within_quota and kinds.get(row["kind"], 0) >= quota.get(row["kind"], 0):
+                continue
+            if per_domain and domains.get(row["domain"], 0) >= per_domain:
+                continue
+            taken.add(index)
+            picked.append(index)
+            kinds[row["kind"]] = kinds.get(row["kind"], 0) + 1
+            domains[row["domain"]] = domains.get(row["domain"], 0) + 1
+    return picked
+
+
+def _yahoo_target(href: str) -> str:
+    """Real URL behind a r.search.yahoo.com redirect link."""
+    if "/RU=" not in href:
+        return href
+    target = href.split("/RU=", 1)[1]
+    return unquote_plus(target.split("/RK=", 1)[0].split("/RS=", 1)[0])
+
+
+def parse_yahoo_results(page: str) -> list[dict]:
+    """Organic results from a Yahoo result page, in page order.
+
+    Yahoo serves a desktop and a mobile layout depending on the browser profile,
+    and result blocks sit inside one another in the parsed tree. Reading every
+    title under a block therefore glues the next result's title onto it. Each
+    result has exactly one linked title, so titles and bodies are walked in
+    document order instead: a body belongs to the linked title right before it.
+    """
+    from lxml import html as lxml_html
+
+    tree = lxml_html.fromstring(page)
+    nodes = tree.xpath(
+        "//*[contains(concat(' ', normalize-space(@class), ' '), ' algo-sr ')]"
+        "//div[contains(concat(' ', normalize-space(@class), ' '), ' compTitle ')"
+        " or contains(concat(' ', normalize-space(@class), ' '), ' compText ')]"
+    )
+    rows: list[dict] = []
+    open_row: dict | None = None  # last linked title still waiting for its body
+    for node in nodes:
+        classes = f" {node.get('class', '')} "
+        if " compTitle " in classes:
+            open_row = None  # a heading without a link ("Related searches") ends the result
+            heading = node.xpath(".//h3[1]")
+            if not heading:
+                continue
+            # desktop: <a><h3>title</h3></a>; mobile: <h3><a aria-label="title">site › crumbs</a></h3>
+            link = heading[0].xpath("ancestor::a[1]") or heading[0].xpath(".//a[@href][1]")
+            if not link or not link[0].get("href"):
+                continue
+            title = link[0].get("aria-label") or heading[0].text_content()
+            open_row = {"title": _clean(title), "url": _yahoo_target(link[0].get("href")), "snippet": ""}
+            rows.append(open_row)
+        elif open_row is not None:
+            open_row["snippet"] = _clean(node.text_content())
+            open_row = None
+    return [row for row in rows if row["title"] and row["url"].startswith("http")]
+
+
+def yahoo_search(query: str, max_results: int) -> list[dict]:
+    """One request to search.yahoo.com through the HTTP client ddgs ships (browser impersonation)."""
+    from ddgs.http_client import HttpClient
+
+    response = HttpClient(timeout=SEARCH_TIMEOUT).get(YAHOO_SEARCH_URL, params={"p": query})
+    if response.status_code != 200:
+        return []
+    return parse_yahoo_results(response.text or "")[:max_results]
+
+
+def ddg_search(query: str, max_results: int) -> list[dict]:
+    """Search rows tagged with the path that produced them (``via``: ``yahoo`` or ``ddgs``)."""
     global _last_search
     wait = _last_search + SEARCH_SPACING - time.monotonic()
     if wait > 0:
         time.sleep(wait)
-    region = "kr-kr" if re.search(r"[가-힣]", query) else "us-en"
     try:
-        rows = DDGS().text(query, max_results=max_results, region=region)
+        try:
+            rows = yahoo_search(query, max_results)
+        except Exception:  # noqa: BLE001 - markup or client changed: use the library path
+            rows = []
+        if rows:
+            return [{**row, "via": "yahoo"} for row in rows]
+        from ddgs import DDGS
+
+        found = DDGS(timeout=SEARCH_TIMEOUT).text(query, max_results=max_results, region=SEARCH_REGION)
     finally:
         _last_search = time.monotonic()
     return [
-        {"title": r.get("title", ""), "url": r.get("href", ""), "snippet": r.get("body", "")}
-        for r in rows or []
+        {"title": r.get("title", ""), "url": r.get("href", ""), "snippet": r.get("body", ""), "via": "ddgs"}
+        for r in found or []
     ]
 
 
@@ -440,25 +644,32 @@ def collect_evidence(
     rows: list[dict] = []
     seen: set[str] = set()
     search_errors: list[str] = []
+    off_market: list[str] = []
+    listing: list[str] = []
+    search_via: dict[str, int] = {}  # queries answered per search path
     for query, kind in queries:
         try:
             found = _search(searcher, query)
         except Exception as exc:  # noqa: BLE001 - one failed query must not end the run
             search_errors.append(f"{query} ({type(exc).__name__}: {_clean(str(exc))[:60]})")
             continue
+        if found and found[0].get("via"):
+            search_via[found[0]["via"]] = search_via.get(found[0]["via"], 0) + 1
         for rank, row in enumerate(_unmerge(found)):
             parts = urlsplit(row["url"])
             domain = parts.netloc.lower().removeprefix("www.")
             key = (parts.netloc.lower() + parts.path).rstrip("/")
-            if (
-                parts.scheme not in {"http", "https"}
-                or key in seen
-                or any(domain == host or domain.endswith("." + host) for host in _NON_SOURCE_HOSTS)
-            ):
+            if parts.scheme not in {"http", "https"} or key in seen or _host_in(domain, _NON_SOURCE_HOSTS):
                 continue
             seen.add(key)
+            if _outside_us(domain, f"{row['title']} {row['snippet']}"):
+                off_market.append(domain)
+                continue
+            if _listing_page(domain, parts.path):
+                listing.append(row["url"])
+                continue
             rows.append({**row, "domain": domain, "kind": kind, "query": query, "rank": rank})
-    # Round-robin across queries so every evidence kind gets page bodies.
+    # Rank order across queries: every query's first hit, then every second hit, …
     rows.sort(key=lambda r: r["rank"])
 
     def _body(row: dict) -> str:
@@ -467,36 +678,46 @@ def collect_evidence(
         except Exception:  # noqa: BLE001 - blocked/slow page: fall back to the snippet
             return ""
 
+    # Fetch slots go to pages that can be read, shared out per kind; the rest keep their snippet.
+    readable = [i for i, row in enumerate(rows) if not _host_in(row["domain"], _NO_FETCH_HOSTS)]
+    to_fetch = _allocate(rows, readable, FETCH_QUOTA, MAX_FETCH)
+    bodies = [""] * len(rows)
     with ThreadPoolExecutor(max_workers=8) as pool:
-        bodies = list(pool.map(_body, rows[:MAX_FETCH]))
-    bodies += [""] * (len(rows) - len(bodies))
+        for index, body in zip(to_fetch, pool.map(_body, [rows[i] for i in to_fetch])):
+            bodies[index] = body
 
     terms = scope_terms(brief)
     excerpt_terms = [t for t in re.split(r"[,/·]", brief.focus) if t.strip()] + terms
-    evidence: list[Evidence] = []
-    per_domain: dict[str, int] = {}
+    usable: list[int] = []
+    excerpts: dict[int, tuple[str, str]] = {}
     off_topic = 0
-    for row, body in zip(rows, bodies):
+    for index, (row, body) in enumerate(zip(rows, bodies)):
         head_ok = on_topic(terms, f"{row['title']} {row['snippet']}")
         body_ok = len(body) >= MIN_BODY_CHARS and on_topic(terms, body)
         from_body = _excerpt(body, excerpt_terms) if body_ok else ""
         if not from_body and not head_ok:
             off_topic += 1
             continue
-        if per_domain.get(row["domain"], 0) >= MAX_PER_DOMAIN or len(evidence) >= MAX_EVIDENCE:
-            continue
-        excerpt = from_body or row["snippet"]
-        if not excerpt:
-            continue
-        per_domain[row["domain"]] = per_domain.get(row["domain"], 0) + 1
+        if excerpt := from_body or row["snippet"]:
+            usable.append(index)
+            excerpts[index] = (excerpt, "본문" if from_body else "요약문")
+    kind_order = {kind: n for n, (kind, _label) in enumerate(KIND_LABELS)}
+    chosen = sorted(
+        _allocate(rows, usable, KIND_QUOTA, MAX_EVIDENCE, MAX_PER_DOMAIN),
+        key=lambda i: (kind_order.get(rows[i]["kind"], len(kind_order)), i),
+    )
+    evidence: list[Evidence] = []
+    for number, index in enumerate(chosen, 1):  # numbered in the order the pack lists them
+        row = rows[index]
+        excerpt, source = excerpts[index]
         evidence.append(
             Evidence(
-                id=f"E{len(evidence) + 1}",
+                id=f"E{number}",
                 kind=row["kind"],
                 title=row["title"][:140],
                 url=row["url"],
                 domain=row["domain"],
-                source="본문" if from_body else "요약문",
+                source=source,
                 excerpt=excerpt[:720],
                 prices=list(dict.fromkeys(_clean(p) for p in _PRICE_RE.findall(excerpt)))[:5],
                 query=row["query"],
@@ -505,12 +726,18 @@ def collect_evidence(
     stats = {
         "queries": len(queries),
         "search_errors": search_errors,
-        "results": len(rows),
-        "fetch_attempted": min(len(rows), MAX_FETCH),
+        "search_via": search_via,
+        "results": len(rows) + len(off_market) + len(listing),
+        "off_market_dropped": len(off_market),
+        "off_market_domains": sorted(set(off_market)),
+        "listing_dropped": len(listing),
+        "fetch_attempted": len(to_fetch),
         "fetch_ok": sum(1 for b in bodies if len(b) >= MIN_BODY_CHARS),
         "off_topic_dropped": off_topic,
         "evidence": len(evidence),
         "evidence_body": sum(1 for e in evidence if e.source == "본문"),
+        "kind_quota": dict(KIND_QUOTA),
+        "evidence_by_kind": {kind: sum(1 for e in evidence if e.kind == kind) for kind, _label in KIND_LABELS},
     }
     return evidence, stats
 
@@ -525,6 +752,11 @@ def _brief_table(brief: ResearchBrief) -> list[str]:
         value = getattr(brief, name)
         value = ", ".join(value) if isinstance(value, list) else value
         lines.append(f"| {label} | {_cell(value) or '미지정'} | {brief.origin.get(name, '-') if value else '-'} |")
+    if left_out := _unsearchable(brief):
+        lines += [
+            "",
+            "한국어로 적혀 미국 시장 검색에 쓰지 않은 값: " + ", ".join(left_out) + ". 영어로 적으면 검색에 반영됩니다.",
+        ]
     lines += ["", f"해석이 틀렸거나 항목을 더 지정하려면 필드로 다시 요청하세요: `{FIELD_EXAMPLE}`"]
     return lines
 
@@ -537,7 +769,12 @@ def render_markdown(
     session_id: str,
     dry_run: bool = False,
 ) -> str:
-    out = [f"# 시장조사 근거 팩 — {brief.scope}", "", f"- 세션: `{session_id}`"]
+    out = [
+        f"# 시장조사 근거 팩 — {brief.scope}",
+        "",
+        f"- 세션: `{session_id}`",
+        f"- 대상 시장: {MARKET_LABEL} (영어 검색어 · 다른 나라 도메인과 한글 등 비라틴 문자 페이지 제외)",
+    ]
     if brief.raw:
         out.append(f"- 요청 원문: {_clean(brief.raw)}")
     out += ["", "## 브리프 해석", "", *_brief_table(brief), ""]
@@ -552,17 +789,32 @@ def render_markdown(
         ]
         return "\n".join(out)
 
+    dropped_from = f"({', '.join(stats['off_market_domains'][:8])})" if stats["off_market_domains"] else ""
     out += [
         "> 웹에서 수집해 브리프 주제와 맞는지 확인한 근거 모음입니다. 발췌는 원문 그대로입니다. "
         "시장 공백·페르소나·시장 규모·가격 전략 같은 종합 결론은 이 문서에 없습니다.",
         "",
         "## 수집 요약",
         "",
-        f"- 검색 {stats['queries']}회, 결과 {stats['results']}건, 주제와 무관해 제외 {stats['off_topic_dropped']}건",
+        f"- 검색 {stats['queries']}회, 결과 {stats['results']}건, "
+        f"미국 외 출처라 제외 {stats['off_market_dropped']}건{dropped_from}, "
+        f"Amazon 상품 목록 페이지라 제외 {stats.get('listing_dropped', 0)}건, "
+        f"주제와 무관해 제외 {stats['off_topic_dropped']}건",
         f"- 본문 수집 {stats['fetch_ok']}/{stats['fetch_attempted']}건",
         f"- 채택 근거 {stats['evidence']}건 (본문 {stats['evidence_body']}건, "
         f"검색 요약문만 {stats['evidence'] - stats['evidence_body']}건)",
     ]
+    quota = stats.get("kind_quota") or {}
+    by_kind = stats.get("evidence_by_kind") or {}
+    if quota:
+        out.append(
+            "- 종류별 채택 건수(할당): "
+            + ", ".join(f"{label} {by_kind.get(kind, 0)}({quota.get(kind, 0)})" for kind, label in KIND_LABELS)
+            + ". 할당을 못 채운 종류의 남은 자리는 다른 종류가 씁니다."
+        )
+    if via := stats.get("search_via"):
+        labels = {"yahoo": "Yahoo 직접 조회", "ddgs": "ddgs 라이브러리(대체 경로)"}
+        out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
     if stats["search_errors"]:
         out.append(f"- 실패한 검색 {len(stats['search_errors'])}회: " + "; ".join(stats["search_errors"]))
     out.append("")
@@ -573,6 +825,8 @@ def render_markdown(
         if not items:
             missing.append(f"{label}: 0건")
             continue
+        if len(items) < quota.get(kind, 0):
+            missing.append(f"{label}: 할당 {quota[kind]}건 중 {len(items)}건만 확보")
         out += [f"## {label} ({len(items)}건)", ""]
         for item in items:
             out += [f"### {item.id}. {item.title}", "", f"- 출처: {item.domain} · {item.source} · 검색어 `{item.query}`"]
@@ -608,6 +862,7 @@ def run_evidence_pack(
         json.dumps(
             {
                 "schema": PACK_SCHEMA,
+                "market": MARKET,
                 "session_id": session_id,
                 "dry_run": dry_run,
                 "brief": asdict(brief),
