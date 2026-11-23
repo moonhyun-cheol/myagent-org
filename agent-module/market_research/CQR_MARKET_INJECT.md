@@ -116,6 +116,8 @@ Only when the user asks to turn a pack into market gaps, a competitor comparison
 - Write for the US market. Do not mix in cases or prices from Korea or other markets.
 - Cite an evidence id (`E3`, `E7`) on every statement. No brand, price, figure or quote that is not in a pack excerpt.
 - `요약문` evidence is a search-result summary and may be out of context. Do not assert from it alone; prefer `본문` evidence saying the same thing.
+- `소비자 발언` evidence (field `voice`: Reddit threads read through the API, store review pages `소비자 발언(리뷰)`, forum threads `소비자 발언(포럼)`) is what users wrote. Use it for complaints and use cases only; never as a price, ranking or market figure. Label it `[E5 · 소비자 발언]` when citing.
+- `오래된 글(2016년)` marks a consumer post more than 3 years old. Say its year when you cite it, and do not present it as a current complaint or trend.
 - Count, do not estimate: 「리뷰·불만 근거 8건 중 3건(E4, E7, E11)」. No percentages.
 - Items under 「근거가 없는 항목」 stay marked as missing evidence.
 - Market sizing, personas and pricing strategy cannot be written from the pack alone. If the user insists, prefix `가정:` and name the missing evidence.

@@ -41,6 +41,30 @@ target customer's products.
 On a market page the lines that state a market figure (USD 41.07 Billion, CAGR) are kept
 even when they do not repeat the product name: a US outerwear report gave a 127-character
 excerpt without them.
+
+A trend study also reads Google Trends (US web search interest) for the product's English
+name and its gendered search, from the year before the period to today (``google_trends``).
+It is the one series that compares years on one scale, so it is measured on a fixed basis
+(the same calendar window every year, partial point dropped, temporary spikes left out) and
+the query conditions and rules go into the pack with the numbers. It becomes the last evidence
+item (source ``데이터``) so the synthesis can cite it; when Google refuses, the pack says so.
+
+Reddit pages refuse unauthenticated fetches, so a Reddit hit normally keeps its snippet only.
+When Reddit API credentials are configured (``reddit_api.reddit_from_env``), the pack also
+searches Reddit for review threads and reads each thread's post and top comments through the
+official API. Reddit evidence is labelled ``소비자 발언``: it is what users wrote, for complaints
+and use cases, not a price or market figure.
+
+Review evidence also comes from pages a plain fetch can read: retailer review pages that print
+their reviews in the HTML (Zappos, store review pages) and forum threads. A review-query page
+whose markup shows consumer posts (``consumer_posts``: several schema.org Review items, review
+marks such as "Verified Buyer" / "out of 5 stars", or forum post markers such as "Joined" /
+"Messages" / "… said:") is labelled ``소비자 발언`` with ``voice_from`` 리뷰 or 포럼. An editor's
+review (one Review item, first-person prose) is not. A consumer post more than
+``OLD_POST_YEARS`` old is marked ``old_post``: forum threads are often a decade old.
+
+Every page fetch that fails records why (HTTP status, timeout, empty or script-only body), so
+the pack can say which sources were blocked instead of only "13/16 read".
 """
 
 from __future__ import annotations
@@ -57,6 +81,16 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Callable
 from urllib.parse import unquote_plus, urlsplit
+
+from .google_trends import (
+    TRENDS_DOMAIN,
+    TRENDS_SOURCE,
+    TrendsFetcher,
+    fetch_trends,
+    study_trends,
+    trends_keywords,
+)
+from .reddit_api import RedditClient, reddit_from_env
 
 PACK_SCHEMA = "cqr.market_research.evidence_pack/1"
 MIN_EVIDENCE = 3
@@ -133,6 +167,26 @@ _NON_SOURCE_HOSTS = ("bing.com", "duckduckgo.com", "google.com", "search.yahoo.c
 # Hosts whose pages never gave a readable body in measured runs (login wall /
 # bot page). Their search snippet is still used; no fetch slot is spent on them.
 _NO_FETCH_HOSTS = ("reddit.com", "amazon.com")
+REDDIT_HOSTS = ("reddit.com",)
+VOICE_LABEL = "소비자 발언"
+VOICE_REVIEW = "리뷰"
+VOICE_FORUM = "포럼"
+OLD_POST_YEARS = 3  # a consumer post older than this is marked old: products and complaints change
+# Consumer posts on a page (measured on MA-1 review and forum results, 2026-11). An editor's
+# review has one schema.org Review item and first-person prose, so neither counts alone.
+_LD_REVIEW_RE = re.compile(r"\"@type\"\s*:\s*\"Review\"")
+_REVIEW_MARK_RE = re.compile(
+    r"verified (?:buyer|purchase|reviewer|owner)|out of 5 stars|(?<![\d.])\d(?:\.\d)? out of 5\b"
+    r"|was this review helpful|reviewed in the united states",
+    re.IGNORECASE,
+)
+# XenForo / vBulletin / phpBB post furniture: "Joined: Mar 5, 2012", "Messages: 1,204", "Bob said:".
+_FORUM_MARK_RE = re.compile(r"\b(?:Joined|Messages|Reaction score)\b|\b(?:said|wrote):")
+_FORUM_PATH_RE = re.compile(r"/(?:threads?|forums?|topic|t|community|discussion)/|showthread|viewtopic", re.IGNORECASE)
+_BLOCKED_STATUSES = frozenset({"HTTP 401", "HTTP 403", "HTTP 429", "HTTP 503"})
+EMPTY_BODY = "본문 없음(스크립트로 그리는 페이지 등)"
+REDDIT_RESULTS = 8  # threads per Reddit API search
+REDDIT_MAX_THREADS = 8  # threads read through the API per run
 _SENTENCE_END_RE = re.compile(r"[.!?…](?:\s|$)")
 MARKET = "US"
 MARKET_LABEL = "미국"
@@ -370,6 +424,13 @@ class Evidence:
     undated: bool = False
     # Found by a query without the target gender (market size): may cover every gender.
     all_genders: bool = False
+    # "소비자 발언" for forum/community posts (Reddit): complaints and use cases, not prices.
+    voice: str = ""
+    # Where a consumer post came from: "reddit" | "리뷰" (review page) | "포럼" (forum thread).
+    voice_from: str = ""
+    # Consumer post older than OLD_POST_YEARS (year in ``post_year``).
+    old_post: bool = False
+    post_year: int = 0
 
 
 def content_date(item: Evidence) -> str:
@@ -694,9 +755,13 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
     if brief.product:
         add(f"{who} review complaints problems", "review")
         add(f"{who} reddit issues worth it", "review")
+        # Forum threads and owners' reviews (measured: heritage forums and store review pages
+        # print their posts in the HTML; see consumer_posts).
+        add(f"{term} review forum", "review")
         if focus:
             add(f"{who} {focus} complaints", "review")
         add(f"{who} {channel} customer reviews 1 star", "review")
+        add(f"{who} product specifications materials fit", "competitor")
         for name in competitors[:4]:
             add(f"{name} {term} review price", "competitor")
         if not competitors:
@@ -709,6 +774,7 @@ def build_queries(brief: ResearchBrief) -> list[tuple[str, str]]:
         for name in competitors[:5]:
             add(f"{name} {term} review complaints quality", "review")
         add(f"{who} brands customer complaints reddit", "review")
+        add(f"{term} review forum", "review")
         add(f"{who} brands price comparison {price}", "competitor")
         for target in styled:
             add(f"best {target} brands", "competitor")
@@ -853,6 +919,33 @@ class Page(str):
     via: str = "urllib"
     published: str = ""
     updated: str = ""
+    consumer: str = ""  # VOICE_REVIEW / VOICE_FORUM when the page shows consumer posts
+
+
+def consumer_posts(html: str, text: str, url: str = "") -> str:
+    """``리뷰`` / ``포럼`` when the page carries posts consumers wrote, else ''.
+
+    Reviews: two or more schema.org Review items, or two or more review marks (Verified Buyer,
+    out of 5 stars, "Was this review helpful"). Forum: three or more post markers (Joined,
+    Messages, "… said:"), or one on a thread URL. An editor's review is neither.
+    """
+    if len(_LD_REVIEW_RE.findall(html or "")) >= 2 or len(_REVIEW_MARK_RE.findall(text or "")) >= 2:
+        return VOICE_REVIEW
+    marks = len(_FORUM_MARK_RE.findall(text or ""))
+    if marks >= 3 or (marks and _FORUM_PATH_RE.search(urlsplit(url or "").path + "?" + urlsplit(url or "").query)):
+        return VOICE_FORUM
+    return ""
+
+
+def fetch_failure(exc: BaseException) -> str:
+    """Short reason a page fetch failed: ``HTTP 403``, ``시간 초과``, or the error type."""
+    if isinstance(exc, urllib.error.HTTPError):
+        return f"HTTP {exc.code}"
+    if isinstance(exc, TimeoutError) or isinstance(getattr(exc, "reason", None), TimeoutError):
+        return "시간 초과"
+    if (message := _clean(str(exc))).startswith("HTTP "):
+        return message[:12]
+    return type(exc).__name__
 
 
 def _usd(value: object) -> str:
@@ -993,6 +1086,7 @@ def fetch_text(url: str, timeout: float = 8.0) -> str:
     page.published = page_published(html)
     page.updated = page_updated(html)
     page.via = via
+    page.consumer = consumer_posts(html, page, url)
     return page
 
 
@@ -1263,9 +1357,13 @@ def collect_evidence(
     brief: ResearchBrief,
     searcher: Searcher | None = None,
     fetcher: Fetcher | None = None,
+    reddit: RedditClient | None = None,
+    today: date | None = None,
 ) -> tuple[list[Evidence], dict]:
+    """``reddit``: an API client (``reddit_api``); with one, Reddit threads are searched and read."""
     searcher = searcher or ddg_search
     fetcher = fetcher or fetch_text
+    current_year = (today or date.today()).year
     queries = build_queries(brief)
     rows: list[dict] = []
     seen: set[str] = set()
@@ -1281,6 +1379,24 @@ def collect_evidence(
         off_market.append(domain)
         off_market_by[reason] = off_market_by.get(reason, 0) + 1
 
+    def _take(row: dict, rank: int, kind: str, query: str) -> None:
+        parts = urlsplit(row["url"])
+        domain = parts.netloc.lower().removeprefix("www.")
+        key = (parts.netloc.lower() + parts.path).rstrip("/")
+        if parts.scheme not in {"http", "https"} or key in seen or _host_in(domain, _NON_SOURCE_HOSTS):
+            return
+        seen.add(key)
+        if reason := _off_market_reason(domain, f"{row['title']} {row['snippet']}"):
+            _drop_off_market(domain, reason)
+            return
+        if _listing_page(domain, parts.path):
+            listing.append(row["url"])
+            return
+        if _off_target(brief.gender, row["title"]):
+            off_target.append(row["url"])
+            return
+        rows.append({**row, "domain": domain, "kind": kind, "query": query, "rank": rank})
+
     for query, kind in queries:
         try:
             found = _search(searcher, query)
@@ -1292,31 +1408,28 @@ def collect_evidence(
         if found and found[0].get("via"):
             search_via[found[0]["via"]] = search_via.get(found[0]["via"], 0) + 1
         for rank, row in enumerate(_unmerge(found)):
-            parts = urlsplit(row["url"])
-            domain = parts.netloc.lower().removeprefix("www.")
-            key = (parts.netloc.lower() + parts.path).rstrip("/")
-            if parts.scheme not in {"http", "https"} or key in seen or _host_in(domain, _NON_SOURCE_HOSTS):
-                continue
-            seen.add(key)
-            if reason := _off_market_reason(domain, f"{row['title']} {row['snippet']}"):
-                _drop_off_market(domain, reason)
-                continue
-            if _listing_page(domain, parts.path):
-                listing.append(row["url"])
-                continue
-            if _off_target(brief.gender, row["title"]):
-                off_target.append(row["url"])
-                continue
-            rows.append({**row, "domain": domain, "kind": kind, "query": query, "rank": rank})
+            _take(row, rank, kind, query)
+    reddit_queries_run: list[str] = []
+    if reddit is not None:
+        for query in reddit_queries(brief):
+            reddit_queries_run.append(query)
+            for rank, row in enumerate(reddit.search(query, REDDIT_RESULTS)):
+                _take(row, rank, "review", f"Reddit API: {query}")
     results = len(rows) + len(off_market) + len(listing) + len(off_target)
     # Rank order across queries: every query's first hit, then every second hit, …
     rows.sort(key=lambda r: r["rank"])
 
+    failures: dict[str, str] = {}  # url -> why its body was not read
+
     def _body(row: dict) -> str:
         try:
-            return fetcher(row["url"])
-        except Exception:  # noqa: BLE001 - blocked/slow page: fall back to the snippet
+            body = fetcher(row["url"])
+        except Exception as exc:  # noqa: BLE001 - blocked/slow page: fall back to the snippet
+            failures[row["url"]] = fetch_failure(exc)
             return ""
+        if len(body or "") < MIN_BODY_CHARS:
+            failures[row["url"]] = EMPTY_BODY
+        return body or ""
 
     # Fetch slots go to pages that can be read, shared out per kind; the rest keep their snippet.
     trend = brief.study == STUDY_TREND
@@ -1327,6 +1440,18 @@ def collect_evidence(
     with ThreadPoolExecutor(max_workers=8) as pool:
         for index, body in zip(to_fetch, pool.map(_body, [rows[i] for i in to_fetch])):
             bodies[index] = body
+    # Reddit threads are read through the API (one call each, spaced), outside the fetch slots.
+    reddit_read: list[int] = []
+    if reddit is not None:
+        threads = [i for i, row in enumerate(rows) if _host_in(row["domain"], REDDIT_HOSTS) and _is_thread(row["url"])]
+        for index in threads[:REDDIT_MAX_THREADS]:
+            reddit_read.append(index)
+            thread = reddit.thread(rows[index]["url"])
+            if thread.get("text"):
+                page = Page(thread["text"])
+                page.published = thread.get("published", "")
+                page.via = "reddit_api"
+                bodies[index] = page
 
     terms = scope_terms(brief)
     market_terms = scope_terms(brief, "market")
@@ -1358,7 +1483,9 @@ def collect_evidence(
         if excerpt := from_body or row["snippet"]:
             usable.append(index)
             excerpts[index] = (excerpt, "본문" if from_body else "요약문")
-            published = getattr(body, "published", "") or snippet_published(row["snippet"])
+            published = (
+                getattr(body, "published", "") or row.get("published", "") or snippet_published(row["snippet"])
+            )
             dates[index] = (published, getattr(body, "updated", ""))
             when = dates[index][1] or published
             if years:
@@ -1399,6 +1526,16 @@ def collect_evidence(
             if index in figures:
                 detail += f"\n{FIGURE_LINE_MARK} " + " | ".join(figures[index])
         published, updated = dates[index]
+        if _host_in(row["domain"], REDDIT_HOSTS):
+            voice_from = "reddit"
+        elif row["kind"] == "review" and source == "본문":
+            voice_from = getattr(body, "consumer", "")
+        else:
+            voice_from = ""
+        post_year = 0
+        if voice_from:
+            when = updated or published
+            post_year = int(when[:4]) if when[:4].isdigit() else url_year(row["url"], current_year)
         evidence.append(
             Evidence(
                 id=f"E{number}",
@@ -1417,8 +1554,17 @@ def collect_evidence(
                 before_period=index in stale,
                 undated=index in undated,
                 all_genders=brief.gender in {"men", "women"} and not _gender_named(row["query"]),
+                voice=VOICE_LABEL if voice_from else "",
+                voice_from=voice_from,
+                old_post=bool(post_year) and current_year - post_year > OLD_POST_YEARS,
+                post_year=post_year,
             )
         )
+    review_fetched = [i for i in to_fetch if rows[i]["kind"] == "review"]
+    failure_counts: dict[str, int] = {}
+    for index in to_fetch:
+        if reason := failures.get(rows[index]["url"]):
+            failure_counts[reason] = failure_counts.get(reason, 0) + 1
     stats = {
         "queries": len(queries),
         "search_errors": search_errors,
@@ -1431,15 +1577,38 @@ def collect_evidence(
         "listing_dropped": len(listing),
         "off_target_dropped": len(off_target),
         "fetch_attempted": len(to_fetch),
-        "fetch_ok": sum(1 for b in bodies if len(b) >= MIN_BODY_CHARS),
+        "fetch_ok": sum(1 for i in to_fetch if len(bodies[i]) >= MIN_BODY_CHARS),
         "fetch_impersonated_ok": sum(
-            1 for b in bodies if len(b) >= MIN_BODY_CHARS and getattr(b, "via", "") == "impersonated"
+            1 for i in to_fetch if len(bodies[i]) >= MIN_BODY_CHARS and getattr(bodies[i], "via", "") == "impersonated"
         ),
+        "fetch_failures": dict(sorted(failure_counts.items(), key=lambda kv: -kv[1])),
+        "review_pages": {
+            "attempted": len(review_fetched),
+            "ok": sum(1 for i in review_fetched if len(bodies[i]) >= MIN_BODY_CHARS),
+            "consumer": sum(
+                1 for i in review_fetched if len(bodies[i]) >= MIN_BODY_CHARS and getattr(bodies[i], "consumer", "")
+            ),
+            "blocked": sum(1 for i in review_fetched if failures.get(rows[i]["url"]) in _BLOCKED_STATUSES),
+            "evidence": sum(1 for e in evidence if e.voice_from in {VOICE_REVIEW, VOICE_FORUM}),
+            "old_posts": sum(1 for e in evidence if e.old_post and e.voice_from in {VOICE_REVIEW, VOICE_FORUM}),
+        },
         "off_topic_dropped": off_topic,
         "evidence": len(evidence),
         "evidence_body": sum(1 for e in evidence if e.source == "본문"),
         "kind_quota": dict(kind_quota),
         "evidence_by_kind": {kind: sum(1 for e in evidence if e.kind == kind) for kind, _label in KIND_LABELS},
+        "reddit_api": (
+            {
+                "enabled": True,
+                "searches": reddit_queries_run,
+                "threads_attempted": len(reddit_read),
+                "threads_ok": sum(1 for i in reddit_read if len(bodies[i]) >= MIN_BODY_CHARS),
+                "evidence": sum(1 for e in evidence if e.voice_from == "reddit" and e.source == "본문"),
+                "errors": list(reddit.errors),
+            }
+            if reddit is not None
+            else {"enabled": False}
+        ),
     }
     if trend:
         stats["years"] = years
@@ -1455,6 +1624,26 @@ def about_year(item: Evidence, year: int) -> bool:
     if content_date(item).startswith(str(year)):
         return True
     return bool(re.search(rf"(?<!\d){year}(?!\d)", f"{item.title} {item.excerpt} {item.detail}"))
+
+
+def _is_thread(url: str) -> bool:
+    return bool(_REDDIT_POST_RE.search(urlsplit(url or "").path))
+
+
+def reddit_queries(brief: ResearchBrief) -> list[str]:
+    """Reddit API searches: the English product name, and with the brief's English focus.
+
+    Reddit search matches post titles and text, so the long web review queries (``… review
+    complaints problems``) find little there; the bare product name finds the threads.
+    """
+    term = brief.search_term
+    if not term:
+        return []
+    focus = " ".join(p for p in _parts(brief.focus) if not _has_korean(p))
+    out = [term]
+    if focus:
+        out.append(f"{term} {focus}")
+    return out
 
 
 def _cell(text: str) -> str:
@@ -1499,6 +1688,7 @@ def render_markdown(
     queries: list[tuple[str, str]],
     session_id: str,
     dry_run: bool = False,
+    trends: dict | None = None,
 ) -> str:
     out = [
         f"# 시장조사 근거 팩 — {brief.scope}",
@@ -1545,10 +1735,26 @@ def render_markdown(
     fallback = stats.get("fetch_impersonated_ok", 0)
     out += [
         f"- 본문 수집 {stats['fetch_ok']}/{stats['fetch_attempted']}건"
-        + (f" (일반 요청이 막혀 브라우저형 요청으로 읽은 {fallback}건 포함)" if fallback else ""),
+        + (f" (일반 요청이 막혀 브라우저형 요청으로 읽은 {fallback}건 포함)" if fallback else "")
+        + (
+            " — 못 읽은 이유: " + ", ".join(f"{reason} {n}건" for reason, n in failed.items())
+            if (failed := stats.get("fetch_failures"))
+            else ""
+        ),
         f"- 채택 근거 {stats['evidence']}건 (본문 {stats['evidence_body']}건, "
         f"검색 요약문만 {stats['evidence'] - stats['evidence_body']}건)",
     ]
+    if (pages := stats.get("review_pages")) and pages.get("attempted"):
+        line = (
+            f"- 리뷰·포럼 페이지(Reddit 제외): 본문 수집 {pages['ok']}/{pages['attempted']}건, "
+            f"소비자 리뷰·포럼 글로 판정 {pages['consumer']}건, 채택 {pages['evidence']}건 "
+            f"({VOICE_LABEL} — 불만·사용 사례 근거, 가격·시장 수치 근거 아님)"
+        )
+        if pages.get("blocked"):
+            line += f", 차단 {pages['blocked']}건"
+        if pages.get("old_posts"):
+            line += f", {OLD_POST_YEARS}년 넘은 글 {pages['old_posts']}건(근거에 `오래된 글` 표시)"
+        out.append(line)
     quota = stats.get("kind_quota") or {}
     by_kind = stats.get("evidence_by_kind") or {}
     if quota:
@@ -1573,6 +1779,21 @@ def render_markdown(
     if via := stats.get("search_via"):
         labels = {"yahoo": "Yahoo 직접 조회", "ddgs": "ddgs 라이브러리(대체 경로)"}
         out.append("- 검색 경로: " + ", ".join(f"{labels.get(k, k)} {n}회" for k, n in sorted(via.items())))
+    reddit = stats.get("reddit_api") or {}
+    if reddit.get("enabled"):
+        line = (
+            f"- Reddit 공식 API: 검색 {len(reddit.get('searches', []))}회, "
+            f"스레드 본문·댓글 수집 {reddit.get('threads_ok', 0)}/{reddit.get('threads_attempted', 0)}건, "
+            f"채택 {reddit.get('evidence', 0)}건 ({VOICE_LABEL} — 불만·사용 사례 근거, 가격·시장 수치 근거 아님)"
+        )
+        if errors := reddit.get("errors"):
+            line += f". 실패 {len(errors)}회: " + "; ".join(errors[:5])
+        out.append(line)
+    elif "reddit_api" in stats:
+        out.append(
+            "- Reddit 공식 API: 설정 안 됨 — Reddit 결과는 검색 요약문만 사용 "
+            "(`REDDIT_CLIENT_ID`·`REDDIT_CLIENT_SECRET` 설정 시 스레드 본문과 댓글을 읽습니다)"
+        )
     if stats["search_errors"]:
         out.append(f"- 실패한 검색 {len(stats['search_errors'])}회: " + "; ".join(stats["search_errors"]))
     if empty := stats.get("empty_queries"):
@@ -1598,10 +1819,15 @@ def render_markdown(
                 published += " · 게시일 확인 불가"
             if item.all_genders:
                 published += " · 성별 구분 없는 검색 결과"
+            voice = f" · {item.voice}" if item.voice else ""
+            if item.voice_from in {VOICE_REVIEW, VOICE_FORUM}:
+                voice += f"({item.voice_from})"
+            if item.old_post:
+                published += f" · 오래된 글({item.post_year}년)"
             out += [
                 f"### {item.id}. {item.title}",
                 "",
-                f"- 출처: {item.domain} · {item.source}{published} · 검색어 `{item.query}`",
+                f"- 출처: {item.domain}{voice} · {item.source}{published} · 검색어 `{item.query}`",
             ]
             if item.prices:
                 out.append(f"- 발췌 안 가격 표기: {', '.join(item.prices)}")
@@ -1613,6 +1839,44 @@ def render_markdown(
         if not any(low in f"{e.title} {e.excerpt}".lower() for e in evidence):
             missing.append(f"경쟁사 `{name}`: 이 브랜드를 언급한 근거 0건")
     missing += [f"{year}년: 그해를 다룬 근거 0건" for year, n in by_year.items() if not n]
+    if trends is not None:
+        out += ["## 검색 관심도 (Google Trends)", ""]
+        if trends.get("status") == "ok":
+            cond = trends["conditions"]
+            out += [
+                f"- 근거 번호: {trends.get('evidence_id', '-')} · {trends['url']}",
+                f"- 조회 조건: 검색어 {', '.join(f'`{k}`' for k in cond['keywords'])} · 미국 · {cond['category']} · "
+                f"{cond['property']} · {cond['time'].replace(' ', '~')} · "
+                f"{'월별' if trends['resolution'] == 'MONTH' else '주별'} · 시간대 {cond['timezone']} · 조회일 {cond['fetched']}",
+                "",
+                f"| 연도 | {trends['window']} 평균 (전년 대비) | 최근 {trends['recent_window']} 평균 (전년 대비) "
+                "| 연간 평균(끝난 해) | 최고 | 최저 |",
+                "|---|---|---|---|---|---|",
+            ]
+
+            def _avg_cell(avg, pct, way) -> str:
+                if avg is None:
+                    return "—"
+                return f"{avg:g}" + (f" ({pct:+.1f}%, {way})" if pct is not None else "")
+
+            for row in trends["years"]:
+                full = "—" if row["full_avg"] is None else f"{row['full_avg']:g}"
+                high = f"{row['high_label']} {row['high']}" if row["high"] is not None else "—"
+                low = f"{row['low_label']} {row['low']}" if row["low"] is not None else "—"
+                avg = _avg_cell(row["window_avg"], row["yoy_pct"], row["direction"])
+                recent = _avg_cell(row["recent_avg"], row["recent_yoy_pct"], row["recent_direction"])
+                label = f"{row['year']}" + ("" if row["in_period"] else " (비교 기준 해)")
+                out.append(f"| {label} | {avg} | {recent} | {full} | {high} | {low} |")
+            # Lines after the per-year ones: the other bases, spikes, keywords, scale.
+            out += ["", *[f"- {line}" for line in trends["lines"][2 + len(trends["years"]):]]]
+            out += ["", "규칙:", *[f"- {rule}" for rule in trends["rules"].values()], ""]
+        else:
+            out += [
+                f"- 조회하지 못했습니다({trends.get('error') or trends.get('status')}). 연도별 수요 변화를 비교할 수치 근거가 없습니다.",
+                f"- 같은 조회: {trends['url']}",
+                "",
+            ]
+            missing.append(f"검색 관심도(Google Trends): 조회 실패({trends.get('error') or trends.get('status')})")
     missing.append("시장 규모·페르소나·세그먼트·가격 전략·컨셉 후보: 이 파이프라인은 산출하지 않습니다(종합 단계 없음)")
     out += ["## 근거가 없는 항목", "", *[f"- {m}" for m in missing], ""]
     out += ["## 실행한 검색어", "", *[f"- `{q}`" for q, _ in queries], ""]
@@ -1626,13 +1890,39 @@ def run_evidence_pack(
     dry_run: bool = False,
     searcher: Searcher | None = None,
     fetcher: Fetcher | None = None,
+    trends_fetcher: TrendsFetcher | None = None,
+    today: date | None = None,
+    reddit: RedditClient | None = None,
 ) -> dict:
-    """Write the pack. ``status`` is ``ok`` or ``insufficient_evidence`` (no report written)."""
+    """Write the pack. ``status`` is ``ok`` or ``insufficient_evidence`` (no report written).
+
+    A trend study reads Google Trends with ``trends_fetcher``; a live run (no injected
+    ``searcher``) uses ``fetch_trends``, a test that injects a searcher gets no Trends call
+    unless it injects a trends fetcher too.
+
+    Reddit threads are read through the API with ``reddit``; a live run uses the client
+    ``reddit_from_env`` builds when credentials are configured (none otherwise).
+    """
     queries = build_queries(brief)
     evidence: list[Evidence] = []
     stats: dict = {"queries": len(queries)}
+    trends: dict | None = None
     if not dry_run:
-        evidence, stats = collect_evidence(brief, searcher, fetcher)
+        if reddit is None and searcher is None:
+            reddit = reddit_from_env()
+        evidence, stats = collect_evidence(brief, searcher, fetcher, reddit, today)
+        fetch = trends_fetcher or (fetch_trends if searcher is None else None)
+        if brief.study == STUDY_TREND and fetch is not None:
+            keywords = trends_keywords(brief.search_term, brief.gender)
+            trends = study_trends(keywords, study_years(brief), fetch, today)
+            stats["trends"] = trends["status"]
+            if trends["status"] == "ok":
+                trends["evidence_id"] = f"E{len(evidence) + 1}"
+                evidence.append(trends_evidence(trends))
+                stats["evidence_data"] = 1
+            elif trends.get("error"):
+                stats["trends_error"] = trends["error"]
+    web_evidence = sum(1 for e in evidence if e.source != TRENDS_SOURCE)
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "evidence_pack.json").write_text(
         json.dumps(
@@ -1645,6 +1935,7 @@ def run_evidence_pack(
                 "queries": [{"query": q, "kind": k} for q, k in queries],
                 "stats": stats,
                 "evidence": [asdict(e) for e in evidence],
+                **({"trends": trends} if trends is not None else {}),
             },
             ensure_ascii=False,
             indent=2,
@@ -1652,10 +1943,32 @@ def run_evidence_pack(
         encoding="utf-8",
     )
     result = {"status": "ok", "evidence_count": len(evidence), "stats": stats, "dry_run": dry_run}
-    if not dry_run and len(evidence) < MIN_EVIDENCE:
+    if not dry_run and web_evidence < MIN_EVIDENCE:
         result["status"] = "insufficient_evidence"
         return result
-    markdown = render_markdown(brief, evidence, stats, queries, session_id, dry_run)
+    markdown = render_markdown(brief, evidence, stats, queries, session_id, dry_run, trends)
     (output_dir / "research_report.md").write_text(markdown, encoding="utf-8")
     result["markdown"] = markdown
     return result
+
+
+def trends_evidence(trends: dict) -> Evidence:
+    """The Trends metrics as an evidence item, so the synthesis cites them like any other source."""
+    cond = trends["conditions"]
+    lines = trends["lines"]
+    return Evidence(
+        id=trends["evidence_id"],
+        kind="market",
+        title=(
+            f"Google Trends 미국 검색 관심도 — {', '.join(cond['keywords'])} "
+            f"({cond['time'].replace(' ', '~')}, {'월별' if trends['resolution'] == 'MONTH' else '주별'})"
+        ),
+        url=trends["url"],
+        domain=TRENDS_DOMAIN,
+        source=TRENDS_SOURCE,
+        excerpt=" ".join(lines[: 2 + len(trends["years"])])[:EXCERPT_CHARS],
+        prices=[],
+        query=", ".join(cond["keywords"]),
+        detail="\n".join(lines),
+        # No publication date: the lines name every year they measure (and the day it was read).
+    )

@@ -992,3 +992,163 @@ def test_market_size_results_without_the_gender_are_marked():
     assert not any("men's" in q for q in marked)
     md = render_markdown(brief, evidence, stats, [], "s")
     assert "성별 구분 없는 검색 결과" in md
+
+
+COMPLAINT = (
+    "My bomber jacket zipper broke after two months and the cuffs stretched out completely. "
+    "The bomber jacket lining also pilled badly, so I would not buy this one again. "
+)
+
+
+class _FakeReddit:
+    def __init__(self):
+        self.searched, self.read, self.errors = [], [], []
+
+    def search(self, query, limit=8):
+        self.searched.append(query)
+        return [
+            {
+                "title": "Bomber jacket zipper broke",
+                "url": "https://www.reddit.com/r/malefashionadvice/comments/1abcdef/bomber_zipper/",
+                "snippet": "zipper broke",
+                "published": "2025-03-05",
+                "via": "reddit_api",
+            },
+            {"title": "Women's bomber jacket", "url": "https://www.reddit.com/r/x/comments/1zzzzzz/w/", "snippet": ""},
+        ]
+
+    def thread(self, url):
+        self.read.append(url)
+        return {"text": "Bomber jacket zipper broke\n" + COMPLAINT * 3, "published": "2025-03-05", "comments": 3}
+
+
+def test_reddit_threads_are_read_through_the_api_and_labelled_as_consumer_voice():
+    brief = parse_brief("", {**BOMBER, "gender": "men"})
+    reddit = _FakeReddit()
+    evidence, stats = collect_evidence(brief, lambda q, n: [], lambda url: "", reddit)
+    assert reddit.searched and reddit.searched[0] == brief.search_term
+    # The women's thread is dropped by the gender filter before any API call.
+    assert reddit.read == ["https://www.reddit.com/r/malefashionadvice/comments/1abcdef/bomber_zipper/"]
+    (item,) = evidence
+    assert item.voice == "소비자 발언" and item.source == "본문" and item.kind == "review"
+    assert "zipper broke after two months" in item.excerpt
+    assert item.published == "2025-03-05"
+    assert stats["reddit_api"]["threads_ok"] == 1 and stats["reddit_api"]["evidence"] == 1
+    assert stats["fetch_attempted"] == 0  # API reads do not use the page-fetch slots
+    md = render_markdown(brief, evidence, stats, [], "s")
+    assert "reddit.com · 소비자 발언 · 본문" in md and "Reddit 공식 API: 검색" in md
+
+
+def test_without_reddit_credentials_the_pack_says_snippets_only():
+    brief = parse_brief("", {**BOMBER, "gender": "men"})
+    evidence, stats = collect_evidence(brief, _searcher, _fetcher)
+    assert stats["reddit_api"] == {"enabled": False}
+    md = render_markdown(brief, evidence, stats, [], "s")
+    assert "Reddit 공식 API: 설정 안 됨" in md
+
+
+def test_reddit_client_parses_a_thread_and_skips_removed_comments():
+    from cqr_product_pipeline.agents import reddit_api
+
+    client = reddit_api.RedditClient("id", "secret")
+    long = "The collar rubs my neck and the sleeves run about two inches too long for me."
+    payload = [
+        {"data": {"children": [{"kind": "t3", "data": {"title": "MA-1 sizing", "selftext": "Bought one.\n\nThoughts?", "created_utc": 1735689600}}]}},
+        {"data": {"children": [
+            {"kind": "t1", "data": {"author": "AutoModerator", "body": long}},
+            {"kind": "t1", "data": {"author": "a", "body": "[removed]"}},
+            {"kind": "t1", "data": {"author": "b", "body": long, "replies": {"data": {"children": [
+                {"kind": "t1", "data": {"author": "c", "body": "Same here, " + long}},
+            ]}}}},
+            {"kind": "more", "data": {}},
+        ]}},
+    ]
+    client._get = lambda path, params: payload
+    thread = client.thread("https://www.reddit.com/r/x/comments/1abcdef/ma1/")
+    assert thread["comments"] == 2 and thread["published"] == "2025-01-01"
+    assert thread["text"].split("\n")[:3] == ["MA-1 sizing", "Bought one.", "Thoughts?"]
+    assert client.thread("https://www.reddit.com/r/x/") == {}
+
+
+def test_reddit_client_needs_credentials():
+    from cqr_product_pipeline.agents.reddit_api import reddit_from_env
+
+    assert reddit_from_env({}) is None
+    client = reddit_from_env({"REDDIT_CLIENT_ID": "i", "REDDIT_CLIENT_SECRET": "s"})
+    assert client is not None and client.user_agent.startswith("python:cqr-market-research")
+
+
+def test_product_queries_include_a_review_forum_search():
+    queries = build_queries(parse_brief("", {**BOMBER, "gender": "men"}))
+    assert ("bomber jacket review forum", "review") in queries
+
+
+def test_consumer_posts_tells_reviews_and_forums_from_an_editors_review():
+    from cqr_product_pipeline.agents.evidence_pack import consumer_posts
+
+    one_review = '<script type="application/ld+json">{"@type": "Review", "author": "Editor"}</script>'
+    assert consumer_posts(one_review, "I bought this jacket and I wear it daily.") == ""
+    assert consumer_posts(one_review * 2, "") == "리뷰"
+    assert consumer_posts("", "Verified Buyer\nGreat jacket\nVerified Buyer\nZipper broke") == "리뷰"
+    assert consumer_posts("", "5.0 out of 5 stars Warm\n1 out of 5 stars Cuffs stretched") == "리뷰"
+    forum = "Joined Mar 5, 2012 Messages 1,204\nBob said: the MA-1 runs long\nJoined Jan 2, 2015"
+    assert consumer_posts("", forum) == "포럼"
+    assert consumer_posts("", "Bob said: the MA-1 runs long", "https://f.example/threads/ma-1.19480/") == "포럼"
+    assert consumer_posts("", "Bob said: the MA-1 runs long", "https://f.example/style/ma-1/") == ""
+
+
+def test_fetch_failure_reasons():
+    import urllib.error
+
+    from cqr_product_pipeline.agents.evidence_pack import fetch_failure
+
+    assert fetch_failure(urllib.error.HTTPError("u", 403, "Forbidden", {}, None)) == "HTTP 403"
+    assert fetch_failure(OSError("HTTP 429")) == "HTTP 429"
+    assert fetch_failure(urllib.error.URLError(TimeoutError())) == "시간 초과"
+    assert fetch_failure(ValueError("x")) == "ValueError"
+
+
+def test_review_and_forum_pages_are_consumer_voice_and_old_posts_are_marked():
+    from datetime import date
+
+    from cqr_product_pipeline.agents.evidence_pack import Page
+
+    rows = [
+        {"title": "MA-1 bomber jacket thread", "url": "https://forum.example/threads/ma-1.1/", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket reviews", "url": "https://store.example/reviews/1", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket review", "url": "https://mag.example/review", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket thread", "url": "https://blocked.example/threads/2/", "snippet": "bomber jacket"},
+        {"title": "Bomber jacket app", "url": "https://script.example/p", "snippet": "bomber jacket"},
+    ]
+
+    def page(kind, published):
+        body = Page("Bob said: " + COMPLAINT * 4)
+        body.consumer, body.published = kind, published
+        return body
+
+    def fetcher(url):
+        if "forum." in url:
+            return page("포럼", "2016-09-27")
+        if "store." in url:
+            return page("리뷰", "2025-05-01")
+        if "mag." in url:
+            return page("", "2026-01-10")
+        if "blocked." in url:
+            raise OSError("HTTP 403")
+        return ""
+
+    brief = parse_brief("", {**BOMBER, "gender": "men"})
+    evidence, stats = collect_evidence(brief, lambda q, n: rows, fetcher, today=date(2026, 11, 18))
+    by_domain = {e.domain: e for e in evidence}
+    forum, store, mag = by_domain["forum.example"], by_domain["store.example"], by_domain["mag.example"]
+    assert (forum.voice, forum.voice_from, forum.old_post, forum.post_year) == ("소비자 발언", "포럼", True, 2016)
+    assert (store.voice, store.voice_from, store.old_post) == ("소비자 발언", "리뷰", False)
+    assert mag.voice == "" and not mag.old_post  # an editor's review is not consumer voice
+    pages = stats["review_pages"]
+    assert pages["consumer"] == 2 and pages["evidence"] == 2 and pages["blocked"] == 1 and pages["old_posts"] == 1
+    assert stats["fetch_failures"]["HTTP 403"] == 1 and stats["fetch_failures"]["본문 없음(스크립트로 그리는 페이지 등)"] == 1
+    md = render_markdown(brief, evidence, stats, [], "s")
+    assert "forum.example · 소비자 발언(포럼) · 본문" in md and "오래된 글(2016년)" in md
+    assert "store.example · 소비자 발언(리뷰) · 본문" in md
+    assert "못 읽은 이유: " in md and "HTTP 403 1건" in md
+    assert "리뷰·포럼 페이지(Reddit 제외): 본문 수집 3/5건" in md and "차단 1건" in md
